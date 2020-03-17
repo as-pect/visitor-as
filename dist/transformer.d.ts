@@ -1,6 +1,5 @@
 import { BaseVisitor } from './base';
-import { Transform, Program } from './assemblyscript';
-import { OutputStream } from 'assemblyscript/cli/asc';
+import { Transform, Program, OutputStream } from './as';
 export declare abstract class ASTTransformVisitor extends BaseVisitor implements Transform {
     program: Program;
     baseDir: string;

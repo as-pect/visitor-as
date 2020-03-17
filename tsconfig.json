@@ -17,5 +17,5 @@
     "experimentalDecorators": true,
     "declaration": true
   },
-  "include": ["src/**/*"]
+  "include": ["./src/**/*"]
 }
