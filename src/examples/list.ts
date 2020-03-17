@@ -5,7 +5,7 @@ import {
     FieldDeclaration, 
     FieldPrototype, 
     MethodDeclaration
-} from '../assemblyscript';
+} from '../as';
 import { hasDecorator } from '../utils';
 
 

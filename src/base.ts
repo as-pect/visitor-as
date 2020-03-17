@@ -73,8 +73,9 @@ import {
   ConstructorExpression,
   Statement,
   VoidStatement,
-  CommentNode
-} from "./assemblyscript";
+  LiteralKind,
+  CommentNode,
+} from "./as";
 
 import { AbstractVisitor } from "./visitor";
 
@@ -414,7 +415,34 @@ export class BaseVisitor extends AbstractVisitor<Node> {
   }
 
   visitLiteralExpression(node: LiteralExpression): void {
-    // node.
+    switch (node.literalKind) {
+      case LiteralKind.ARRAY: {
+        this.visitArrayLiteralExpression(<ArrayLiteralExpression>node);
+        break;
+      }
+      case LiteralKind.FLOAT: {
+        this.visitFloatLiteralExpression(<FloatLiteralExpression>node);
+        break;
+      }
+      case LiteralKind.INTEGER: {
+        this.visitIntegerLiteralExpression(<IntegerLiteralExpression>node);
+        break;
+      }
+      case LiteralKind.OBJECT: {
+        this.visitObjectLiteralExpression(<ObjectLiteralExpression>node);
+        break;
+      }
+      case LiteralKind.REGEXP: {
+        this.visitRegexpLiteralExpression(<RegexpLiteralExpression>node);
+        break;
+      }
+      case LiteralKind.STRING: {
+        this.visitStringLiteralExpression(<StringLiteralExpression>node);
+        break;
+      }
+      default: 
+        throw new Error("Invalid LiteralKind: " + node.literalKind);
+    }
   }
 
   visitFloatLiteralExpression(node: FloatLiteralExpression): void {}
