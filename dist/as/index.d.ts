@@ -1,3 +1,3 @@
-export var Transform: any;
-declare const _exports: any;
-export = _exports;
+export * from "assemblyscript";
+export * from "assemblyscript/cli/transform";
+export * from "assemblyscript/cli/asc";

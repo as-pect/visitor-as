@@ -15,7 +15,7 @@ module.exports = {
     // "--textFile": ["output.wat"],
     /** A runtime must be provided here. */
     "--runtime": ["none"], // Acceptable values are: full, half, stub (arena), and none
-    // "--transform": ["./src/examples/list.ts"],
+    "--transform": ["./src/examples/capitalize.ts"],
   },
   /**
    * A set of regexp that will disclude source files from testing.

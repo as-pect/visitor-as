@@ -7,52 +7,41 @@
 The transformer:
 
 ```ts
-import { ASTTransformVisitor } from '../transformer';
 import {
-    ClassDeclaration,
-    Program,
-    FieldDeclaration, 
-    FieldPrototype, 
-    MethodDeclaration
-} from '../as';
-import { hasDecorator } from '../utils';
+  ClassDeclaration,
+  FieldDeclaration,
+  MethodDeclaration,
+} from "../../as";
+import { ClassDecorator, registerDecorator } from "../decorator";
+import { toString } from "../utils";
 
+class ListMembers extends ClassDecorator {
+  visitFieldDeclaration(node: FieldDeclaration): void {
+    if (!node.name) console.log(toString(node) + "\n");
+    const name = toString(node.name);
+    const _type = toString(node.type!);
+    this.stdout.write(name + ": " + _type + "\n");
+  }
 
-
-class ListVisitor extends ASTTransformVisitor {
-
-    visitFieldDeclaration(node: FieldDeclaration): void {
-        const mem = <FieldPrototype>this.program.getElementByDeclaration(node);
-        const name = mem.name;
-        const _type = this.program.resolver.resolveType(mem.typeNode!, mem)!;
-        this.stdout.write(name + ": " + _type.toString() + "\n");
+  visitMethodDeclaration(node: MethodDeclaration): void {
+    const name = toString(node.name);
+    if (name == "constructor") {
+      return;
     }
+    const sig = toString(node.signature);
+    this.stdout.write(name + ": " + sig + "\n");
+  }
 
-    visitMethodDeclaration(node: MethodDeclaration): void { }
+  visitClassDeclaration(node: ClassDeclaration): void {
+    this.visit(node.members);
+  }
 
-    visitClassDeclaration(node: ClassDeclaration): void {
-        if (hasDecorator(node, "list")) {
-            super.visit(node.members);
-        }
-    }
-
-    afterInitialize(program: Program): void {
-        this.visit(program.sources);
-    }
+  get name(): string {
+    return "list";
+  }
 }
 
-export = ListVisitor;
-```
-
-Example usage:
-
-```ts
-@list
-class Foo {
-  a: u8;
-  b: bool;
-  i: i32;
-}
+export = registerDecorator(new ListMembers());
 ```
 
 And then compile with `--transform` flag:

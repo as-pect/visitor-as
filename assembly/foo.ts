@@ -1,4 +1,3 @@
-
 @list
 class Foo {
   a: u8;

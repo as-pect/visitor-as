@@ -1,30 +1,22 @@
-import { ASTTransformVisitor } from '../transformer';
-import { isLibrary, not } from '../utils';
-import {
-    ClassDeclaration,
-    Program,
-    FieldDeclaration, 
-    FieldPrototype, 
-    MethodDeclaration,
-    StringLiteralExpression,
-    Parser,
-    Source
-} from '../as';
+import { cloneNode } from "../utils";
+import { VariableDecorator, registerDecorator } from "../decorator";
+import { StringLiteralExpression, VariableDeclaration } from "../../as";
 
+class CapitalizeVisitor extends VariableDecorator {
+  visitVariableDeclaration(node: VariableDeclaration): void {
+    this.visit(node.initializer);
+  }
 
+  get name(): string {
+    return "capitalize";
+  }
 
-class CapitalizeVisitor extends ASTTransformVisitor {
-
-
-    visitStringLiteralExpression(node: StringLiteralExpression): void {
-      node.value = node.value.toUpperCase();
-      this.stdout.write(node.value + "\n");
-    }
-
-    afterInitialize(program: Program): void {
-      const sources = program.sources.filter(not(isLibrary));
-      this.visit(sources);
-    }
+  visitStringLiteralExpression(node: StringLiteralExpression): void {
+    const newNode = cloneNode(node);
+    newNode.value = node.value.toUpperCase();
+    this.replaceCurrentNode(newNode);
+    this.stdout.write(node.value + " -> " + newNode.value + "\n");
+  }
 }
 
-export = CapitalizeVisitor;
+export = registerDecorator(new CapitalizeVisitor());

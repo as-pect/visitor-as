@@ -1,9 +1,15 @@
-import { Node, Source, NamedTypeNode, FunctionTypeNode, TypeName, TypeParameterNode, IdentifierExpression, AssertionExpression, BinaryExpression, CallExpression, ClassExpression, CommaExpression, ElementAccessExpression, FunctionExpression, InstanceOfExpression, LiteralExpression, NewExpression, ParenthesizedExpression, PropertyAccessExpression, TernaryExpression, UnaryPostfixExpression, UnaryPrefixExpression, BlockStatement, BreakStatement, ContinueStatement, DoStatement, EmptyStatement, ExportStatement, ExportDefaultStatement, ExportImportStatement, ExpressionStatement, ForStatement, IfStatement, ImportStatement, ReturnStatement, SwitchStatement, ThrowStatement, TryStatement, VariableStatement, WhileStatement, ClassDeclaration, EnumDeclaration, EnumValueDeclaration, FieldDeclaration, FunctionDeclaration, ImportDeclaration, IndexSignatureDeclaration, InterfaceDeclaration, MethodDeclaration, NamespaceDeclaration, TypeDeclaration, VariableDeclaration, DecoratorNode, ExportMember, ParameterNode, SwitchCase, TypeNode, ArrayLiteralExpression, ObjectLiteralExpression, FloatLiteralExpression, IntegerLiteralExpression, StringLiteralExpression, RegexpLiteralExpression, UnaryExpression, SuperExpression, FalseExpression, TrueExpression, ThisExpression, NullExpression, ConstructorExpression, Statement, VoidStatement, CommentNode } from "../as";
+/// <reference types="assemblyscript/std/portable" />
+import { TypeNode, Node, Source, NamedTypeNode, FunctionTypeNode, TypeParameterNode, IdentifierExpression, CallExpression, ClassExpression, ElementAccessExpression, FunctionExpression, InstanceOfExpression, LiteralExpression, NewExpression, ParenthesizedExpression, PropertyAccessExpression, TernaryExpression, UnaryPostfixExpression, UnaryPrefixExpression, BlockStatement, BreakStatement, ContinueStatement, DoStatement, EmptyStatement, ExportStatement, ExportDefaultStatement, ExportImportStatement, ExpressionStatement, ForStatement, IfStatement, ImportStatement, ReturnStatement, SwitchStatement, ThrowStatement, TryStatement, VariableStatement, WhileStatement, ClassDeclaration, EnumDeclaration, EnumValueDeclaration, FieldDeclaration, FunctionDeclaration, ImportDeclaration, IndexSignatureDeclaration, InterfaceDeclaration, MethodDeclaration, NamespaceDeclaration, TypeDeclaration, VariableDeclaration, DecoratorNode, ExportMember, ParameterNode, SwitchCase, TypeName, ArrayLiteralExpression, ObjectLiteralExpression, FloatLiteralExpression, StringLiteralExpression, RegexpLiteralExpression, UnaryExpression, Statement, DeclarationStatement, AssertionExpression, BinaryExpression, CommaExpression, IntegerLiteralExpression } from "../as";
 import { AbstractVisitor } from "./visitor";
-export declare class BaseVisitor extends AbstractVisitor<Node> {
-    depth: number;
+/** An AST builder. */
+export declare class ASTBuilder extends AbstractVisitor<Node> {
+    /** Rebuilds the textual source from the specified AST, as far as possible. */
+    static build(node: Node): string;
+    private sb;
+    private indentLevel;
     _visit(node: Node): void;
-    visitSource(node: Source): void;
+    visitNode(node: Node): void;
+    visitSource(source: Source): void;
     visitTypeNode(node: TypeNode): void;
     visitTypeName(node: TypeName): void;
     visitNamedTypeNode(node: NamedTypeNode): void;
@@ -15,6 +21,7 @@ export declare class BaseVisitor extends AbstractVisitor<Node> {
     visitAssertionExpression(node: AssertionExpression): void;
     visitBinaryExpression(node: BinaryExpression): void;
     visitCallExpression(node: CallExpression): void;
+    private visitArguments;
     visitClassExpression(node: ClassExpression): void;
     visitCommaExpression(node: CommaExpression): void;
     visitElementAccessExpression(node: ElementAccessExpression): void;
@@ -23,7 +30,7 @@ export declare class BaseVisitor extends AbstractVisitor<Node> {
     visitFloatLiteralExpression(node: FloatLiteralExpression): void;
     visitInstanceOfExpression(node: InstanceOfExpression): void;
     visitIntegerLiteralExpression(node: IntegerLiteralExpression): void;
-    visitStringLiteral(str: string, singleQuoted?: boolean): void;
+    visitStringLiteral(str: string, singleQuoted?: bool): void;
     visitStringLiteralExpression(node: StringLiteralExpression): void;
     visitRegexpLiteralExpression(node: RegexpLiteralExpression): void;
     visitNewExpression(node: NewExpression): void;
@@ -33,20 +40,14 @@ export declare class BaseVisitor extends AbstractVisitor<Node> {
     visitUnaryExpression(node: UnaryExpression): void;
     visitUnaryPostfixExpression(node: UnaryPostfixExpression): void;
     visitUnaryPrefixExpression(node: UnaryPrefixExpression): void;
-    visitSuperExpression(node: SuperExpression): void;
-    visitFalseExpression(node: FalseExpression): void;
-    visitTrueExpression(node: TrueExpression): void;
-    visitThisExpression(node: ThisExpression): void;
-    visitNullExperssion(node: NullExpression): void;
-    visitConstructorExpression(node: ConstructorExpression): void;
     visitNodeAndTerminate(statement: Statement): void;
     visitBlockStatement(node: BlockStatement): void;
     visitBreakStatement(node: BreakStatement): void;
     visitContinueStatement(node: ContinueStatement): void;
-    visitClassDeclaration(node: ClassDeclaration, isDefault?: boolean): void;
+    visitClassDeclaration(node: ClassDeclaration, isDefault?: bool): void;
     visitDoStatement(node: DoStatement): void;
     visitEmptyStatement(node: EmptyStatement): void;
-    visitEnumDeclaration(node: EnumDeclaration, isDefault?: boolean): void;
+    visitEnumDeclaration(node: EnumDeclaration, isDefault?: bool): void;
     visitEnumValueDeclaration(node: EnumValueDeclaration): void;
     visitExportImportStatement(node: ExportImportStatement): void;
     visitExportMember(node: ExportMember): void;
@@ -55,15 +56,15 @@ export declare class BaseVisitor extends AbstractVisitor<Node> {
     visitExpressionStatement(node: ExpressionStatement): void;
     visitFieldDeclaration(node: FieldDeclaration): void;
     visitForStatement(node: ForStatement): void;
-    visitFunctionDeclaration(node: FunctionDeclaration, isDefault?: boolean): void;
+    visitFunctionDeclaration(node: FunctionDeclaration, isDefault?: bool): void;
     visitFunctionCommon(node: FunctionDeclaration): void;
     visitIfStatement(node: IfStatement): void;
     visitImportDeclaration(node: ImportDeclaration): void;
     visitImportStatement(node: ImportStatement): void;
     visitIndexSignatureDeclaration(node: IndexSignatureDeclaration): void;
-    visitInterfaceDeclaration(node: InterfaceDeclaration, isDefault?: boolean): void;
+    visitInterfaceDeclaration(node: InterfaceDeclaration, isDefault?: bool): void;
     visitMethodDeclaration(node: MethodDeclaration): void;
-    visitNamespaceDeclaration(node: NamespaceDeclaration, isDefault?: boolean): void;
+    visitNamespaceDeclaration(node: NamespaceDeclaration, isDefault?: bool): void;
     visitReturnStatement(node: ReturnStatement): void;
     visitSwitchCase(node: SwitchCase): void;
     visitSwitchStatement(node: SwitchStatement): void;
@@ -73,8 +74,9 @@ export declare class BaseVisitor extends AbstractVisitor<Node> {
     visitVariableDeclaration(node: VariableDeclaration): void;
     visitVariableStatement(node: VariableStatement): void;
     visitWhileStatement(node: WhileStatement): void;
-    visitVoidStatement(node: VoidStatement): void;
-    visitComment(node: CommentNode): void;
-    visitDecoratorNode(node: DecoratorNode): void;
-    visitParameter(node: ParameterNode): void;
+    serializeDecorator(node: DecoratorNode): void;
+    serializeParameter(node: ParameterNode): void;
+    serializeExternalModifiers(node: DeclarationStatement): void;
+    serializeAccessModifiers(node: DeclarationStatement): void;
+    finish(): string;
 }

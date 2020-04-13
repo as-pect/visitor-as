@@ -1,6 +1,6 @@
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
+  preset: "ts-jest",
+  testEnvironment: "node",
   testMatch: ["**/*.spec.ts"],
   testPathIgnorePatterns: ["/assembly/", "/node_modules/"],
 };

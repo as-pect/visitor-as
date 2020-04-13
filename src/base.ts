@@ -75,7 +75,7 @@ import {
   VoidStatement,
   LiteralKind,
   CommentNode,
-} from "./as";
+} from "../as";
 
 import { AbstractVisitor } from "./visitor";
 
@@ -324,7 +324,8 @@ export class BaseVisitor extends AbstractVisitor<Node> {
         this.visitSwitchCase(<SwitchCase>node);
         break;
       }
-      default: assert(false);
+      default:
+        assert(false);
     }
   }
 
@@ -440,7 +441,7 @@ export class BaseVisitor extends AbstractVisitor<Node> {
         this.visitStringLiteralExpression(<StringLiteralExpression>node);
         break;
       }
-      default: 
+      default:
         throw new Error("Invalid LiteralKind: " + node.literalKind);
     }
   }
@@ -752,5 +753,4 @@ export class BaseVisitor extends AbstractVisitor<Node> {
     if (node.initializer) this.visit(node.initializer);
     this.visit(node.type);
   }
-
 }

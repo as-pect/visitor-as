@@ -1,6 +1,12 @@
 language: node_js
+os:
+  - linux
+  - osx
 node_js:
-  - "lts/*"
-  - "node"
+  - 12
+env:
+  - YARN_GPG=no
+cache: yarn
 script:
-  - npm run test
+  - yarn build
+  - yarn test
