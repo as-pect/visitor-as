@@ -1,22 +1,30 @@
 "use strict";
 //@ts-ignore
 const path = require("path");
-let ascPath = Object.getOwnPropertyNames(require.cache).filter(s => s.endsWith("asc.js"))[0];
+let ascPath = Object.getOwnPropertyNames(require.cache).filter((s) =>
+  s.endsWith("asc.js")
+)[0];
 //@ts-ignore
-let assemblyscriptPath = Object.getOwnPropertyNames(require.cache).filter(s => s.endsWith("assemblyscript.js"))[0];
+let assemblyscriptPath = Object.getOwnPropertyNames(require.cache).filter((s) =>
+  s.endsWith("assemblyscript.js")
+)[0];
 let transformerPath;
 if (assemblyscriptPath) {
-    let splitPath = assemblyscriptPath.split(path.sep).slice(0, -2);
-    transformerPath = splitPath.concat(["cli", "transform"]).join(path.sep);
-}
-else {
-    assemblyscriptPath = require.resolve("assemblyscript");
-    ascPath = require.resolve("assemblyscript/cli/asc");
-    transformerPath = require.resolve("assemblyscript/cli/transform");
+  let splitPath = assemblyscriptPath.split(path.sep).slice(0, -2);
+  transformerPath = splitPath.concat(["cli", "transform"]).join(path.sep);
+} else {
+  assemblyscriptPath = require.resolve("assemblyscript");
+  ascPath = require.resolve("assemblyscript/cli/asc");
+  transformerPath = require.resolve("assemblyscript/cli/transform");
 }
 const assemblyscript = require(assemblyscriptPath);
 //@ts-ignore
 module.exports.Transform = require(transformerPath).Transform;
-module.exports = Object.assign(Object.assign(Object.assign(Object.assign({}, require(ascPath)), module.exports), assemblyscript), assemblyscript.util // Need to add because newer version adds namespace
+module.exports = Object.assign(
+  Object.assign(
+    Object.assign(Object.assign({}, require(ascPath)), module.exports),
+    assemblyscript
+  ),
+  assemblyscript.util // Need to add because newer version adds namespace
 );
 //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvYXMvaW5kZXguanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLFlBQVk7QUFDWixNQUFNLElBQUksR0FBRyxPQUFPLENBQUMsTUFBTSxDQUFDLENBQUM7QUFFN0IsSUFBSSxPQUFPLEdBQUcsTUFBTSxDQUFDLG1CQUFtQixDQUFDLE9BQU8sQ0FBQyxLQUFLLENBQUMsQ0FBQyxNQUFNLENBQUMsQ0FBQyxDQUFDLEVBQUUsQ0FBQyxDQUFDLENBQUMsUUFBUSxDQUFDLFFBQVEsQ0FBQyxDQUFDLENBQUMsQ0FBQyxDQUFDLENBQUM7QUFFN0YsWUFBWTtBQUNaLElBQUksa0JBQWtCLEdBQUcsTUFBTSxDQUFDLG1CQUFtQixDQUFDLE9BQU8sQ0FBQyxLQUFLLENBQUMsQ0FBQyxNQUFNLENBQUMsQ0FBQyxDQUFDLEVBQUUsQ0FBQyxDQUFDLENBQUMsUUFBUSxDQUFDLG1CQUFtQixDQUFDLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQztBQUVuSCxJQUFJLGVBQWUsQ0FBQztBQUNwQixJQUFJLGtCQUFrQixFQUFFO0lBQ3RCLElBQUksU0FBUyxHQUFHLGtCQUFrQixDQUFDLEtBQUssQ0FBQyxJQUFJLENBQUMsR0FBRyxDQUFDLENBQUMsS0FBSyxDQUFDLENBQUMsRUFBRSxDQUFDLENBQUMsQ0FBQyxDQUFDO0lBQ2hFLGVBQWUsR0FBSSxTQUFTLENBQUMsTUFBTSxDQUFDLENBQUUsS0FBSyxFQUFFLFdBQVcsQ0FBQyxDQUFDLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxHQUFHLENBQUMsQ0FBQztDQUMzRTtLQUFNO0lBQ0wsa0JBQWtCLEdBQUcsT0FBTyxDQUFDLE9BQU8sQ0FBQyxnQkFBZ0IsQ0FBQyxDQUFDO0lBQ3ZELE9BQU8sR0FBRyxPQUFPLENBQUMsT0FBTyxDQUFDLHdCQUF3QixDQUFDLENBQUM7SUFDcEQsZUFBZSxHQUFHLE9BQU8sQ0FBQyxPQUFPLENBQUMsOEJBQThCLENBQUMsQ0FBQztDQUNuRTtBQUNELE1BQU0sY0FBYyxHQUFHLE9BQU8sQ0FBQyxrQkFBa0IsQ0FBQyxDQUFDO0FBRW5ELFlBQVk7QUFDWixNQUFNLENBQUMsT0FBTyxDQUFDLFNBQVMsR0FBRyxPQUFPLENBQUMsZUFBZSxDQUFDLENBQUMsU0FBUyxDQUFDO0FBQzlELE1BQU0sQ0FBQyxPQUFPLCtEQUNPLE9BQU8sQ0FBQyxPQUFPLENBQUMsR0FDaEIsTUFBTSxDQUFDLE9BQU8sR0FDZCxjQUFjLEdBQ2QsY0FBYyxDQUFDLElBQUksQ0FBQyxtREFBbUQ7Q0FDM0UsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8vQHRzLWlnbm9yZVxuY29uc3QgcGF0aCA9IHJlcXVpcmUoXCJwYXRoXCIpO1xuXG5sZXQgYXNjUGF0aCA9IE9iamVjdC5nZXRPd25Qcm9wZXJ0eU5hbWVzKHJlcXVpcmUuY2FjaGUpLmZpbHRlcihzID0+IHMuZW5kc1dpdGgoXCJhc2MuanNcIikpWzBdO1xuXG4vL0B0cy1pZ25vcmVcbmxldCBhc3NlbWJseXNjcmlwdFBhdGggPSBPYmplY3QuZ2V0T3duUHJvcGVydHlOYW1lcyhyZXF1aXJlLmNhY2hlKS5maWx0ZXIocyA9PiBzLmVuZHNXaXRoKFwiYXNzZW1ibHlzY3JpcHQuanNcIikpWzBdO1xuXG5sZXQgdHJhbnNmb3JtZXJQYXRoO1xuaWYgKGFzc2VtYmx5c2NyaXB0UGF0aCkge1xuICBsZXQgc3BsaXRQYXRoID0gYXNzZW1ibHlzY3JpcHRQYXRoLnNwbGl0KHBhdGguc2VwKS5zbGljZSgwLCAtMik7XG4gIHRyYW5zZm9ybWVyUGF0aCA9ICBzcGxpdFBhdGguY29uY2F0KFsgXCJjbGlcIiwgXCJ0cmFuc2Zvcm1cIl0pLmpvaW4ocGF0aC5zZXApO1xufSBlbHNlIHtcbiAgYXNzZW1ibHlzY3JpcHRQYXRoID0gcmVxdWlyZS5yZXNvbHZlKFwiYXNzZW1ibHlzY3JpcHRcIik7XG4gIGFzY1BhdGggPSByZXF1aXJlLnJlc29sdmUoXCJhc3NlbWJseXNjcmlwdC9jbGkvYXNjXCIpO1xuICB0cmFuc2Zvcm1lclBhdGggPSByZXF1aXJlLnJlc29sdmUoXCJhc3NlbWJseXNjcmlwdC9jbGkvdHJhbnNmb3JtXCIpO1xufVxuY29uc3QgYXNzZW1ibHlzY3JpcHQgPSByZXF1aXJlKGFzc2VtYmx5c2NyaXB0UGF0aCk7XG5cbi8vQHRzLWlnbm9yZVxubW9kdWxlLmV4cG9ydHMuVHJhbnNmb3JtID0gcmVxdWlyZSh0cmFuc2Zvcm1lclBhdGgpLlRyYW5zZm9ybTtcbm1vZHVsZS5leHBvcnRzID0ge1xuICAgICAgICAgICAgICAgICAgLi4ucmVxdWlyZShhc2NQYXRoKSxcbiAgICAgICAgICAgICAgICAgIC4uLm1vZHVsZS5leHBvcnRzLFxuICAgICAgICAgICAgICAgICAgLi4uYXNzZW1ibHlzY3JpcHQsXG4gICAgICAgICAgICAgICAgICAuLi5hc3NlbWJseXNjcmlwdC51dGlsIC8vIE5lZWQgdG8gYWRkIGJlY2F1c2UgbmV3ZXIgdmVyc2lvbiBhZGRzIG5hbWVzcGFjZVxuICAgICAgICAgICAgICAgIH07Il19

@@ -2,60 +2,55 @@
 # yarn lockfile v1
 
 
-"@as-pect/assembly@^3.1.0-beta.3":
-  version "3.1.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@as-pect/assembly/-/assembly-3.1.0-beta.3.tgz#e65fae94a6e05c7abbc789194cae956a5a10b0d6"
-  integrity sha512-NYMzh8c4mloGJHQEyEz7Gw4DFKDjepyuSkojca0agSOVsjJcaTy6DtM42Lq7DTLwNoM4xt+YI7nQNTWcrhhHGw==
+"@as-pect/assembly@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@as-pect/assembly/-/assembly-3.1.2.tgz#3b8a3e17386ac76897a0c097c87b17a6e7eb8b0c"
+  integrity sha512-RHmiU5D8sFVWA2BgoAioKmewnGibN592vT8kCweYN6fQ0TL2UGvGEdMvAdAgGdc0fgdWcAy9PIXGxsfBXpR4MA==
 
-"@as-pect/cli@^3.1.0-beta.3":
-  version "3.1.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@as-pect/cli/-/cli-3.1.0-beta.3.tgz#f199db69cf39fddcaadfa5772d1776f1feb62c02"
-  integrity sha512-Orz7tFwhMHy63IS6mAHpg4Hr2R7EodhYznSr6I2mFyZi7fRz8kqAZ59F6NGmbQ3N/XnvbkyQKevp+l7ZT9IcQg==
+"@as-pect/cli@^3.1.4":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@as-pect/cli/-/cli-3.1.4.tgz#805ed82611583084e104a1592e008d607e7c5d31"
+  integrity sha512-0SNeUhn0ZW126qsoR/VUHvvqEjCg8l4IeTStqzHyb97usPEHLRuBI/dNZzJtqJBQLt1rb7xdQ2lZAdSSDTrBQA==
   dependencies:
-    "@as-pect/assembly" "^3.1.0-beta.3"
-    "@as-pect/core" "^3.1.0-beta.3"
+    "@as-pect/assembly" "^3.1.2"
+    "@as-pect/core" "^3.1.4"
     chalk "^3.0.0"
     glob "^7.1.6"
   optionalDependencies:
-    "@as-pect/csv-reporter" "^3.1.0-beta.3"
-    "@as-pect/json-reporter" "^3.1.0-beta.3"
+    "@as-pect/csv-reporter" "^3.1.4"
+    "@as-pect/json-reporter" "^3.1.4"
 
-"@as-pect/core@^3.1.0-beta.3":
-  version "3.1.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@as-pect/core/-/core-3.1.0-beta.3.tgz#a6e62f05f1200a7b24bc8f3efe758c01e41a61dd"
-  integrity sha512-/i3wzOYEvvzECRKLPWm7FGKnPgtD6RdaPFWAT6nA4OHtsHdHz2BvvGdCecheLRG3GoRk00LfCSRB8/L3IJnS/A==
+"@as-pect/core@^3.1.4":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@as-pect/core/-/core-3.1.4.tgz#a6903717f6977af5b813d6f23a4cd0099e1ac00a"
+  integrity sha512-qLW0KxZXeNvWl0ZxM65O9AD8JZmHR5jUWPvfGvcshq5rVcH3g/Ny6MG5Atg5qy4RFR8n4aXhQNOS/axjAtZI+Q==
   dependencies:
-    "@as-pect/assembly" "^3.1.0-beta.3"
-    "@as-pect/snapshots" "^3.1.0-beta.3"
+    "@as-pect/assembly" "^3.1.2"
+    "@as-pect/snapshots" "^3.1.4"
     chalk "^3.0.0"
     long "^4.0.0"
 
-"@as-pect/csv-reporter@^3.1.0-beta.3":
-  version "3.1.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@as-pect/csv-reporter/-/csv-reporter-3.1.0-beta.3.tgz#6da90f7d7c3092bb926cc58a6ad8e59bc502dcda"
-  integrity sha512-iK7q9oYZ6/NOnQfm3myzm23IsJ9GeLWNLIfpFAnwQPhl0+TGGMhwxMiWhzHYOnZPpTjvfwTiCgkpPhoJIdWUIg==
+"@as-pect/csv-reporter@^3.1.4":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@as-pect/csv-reporter/-/csv-reporter-3.1.4.tgz#1f65b89ed514f6f7f77621e0a2bbd6028ed84297"
+  integrity sha512-tLXrrqUgH2gIPMFxSXoGpXyggqUkfuiJMJXoUnRpe8omzEvE4sW1OueXW+t+LKCI1ha2BYNl9ALR163G3gaOEw==
   dependencies:
-    "@as-pect/core" "^3.1.0-beta.3"
+    "@as-pect/core" "^3.1.4"
 
-"@as-pect/json-reporter@^3.1.0-beta.3":
-  version "3.1.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@as-pect/json-reporter/-/json-reporter-3.1.0-beta.3.tgz#128218a69c7ff7420b50f6477d8ba8dc7d4356c2"
-  integrity sha512-Q81k/IebQTyh13aCm0Psh8OhJZdW9RiPxdqwuqjgkIQpR78hxSmrdO3OLyPXRgrvoQbr+/XB+5xMpL3Q3EhuMg==
+"@as-pect/json-reporter@^3.1.4":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@as-pect/json-reporter/-/json-reporter-3.1.4.tgz#f985f8f6ef3fb2b59a5db38a7851c41be6a7a29a"
+  integrity sha512-mVzZ045tG022hTFv1d7d7+ge8nipwi8wtmK/ZoiEvxlgnH33tSyOk39TGv2bdXGp0wM1aKhZ+3wnfd1RUr5sBg==
   dependencies:
-    "@as-pect/core" "^3.1.0-beta.3"
+    "@as-pect/core" "^3.1.4"
 
-"@as-pect/snapshots@^3.1.0-beta.3":
-  version "3.1.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@as-pect/snapshots/-/snapshots-3.1.0-beta.3.tgz#fbd3edccff01ba658f89cd054951c8de9f6399f5"
-  integrity sha512-hL+a3/ByQQAhLLVsY9Qtd0eAb9UTZbMeJyh4mKQQS4X9KXhpVHADjoK31PbOlM+E3TUbR/KbZFFPu2Z79T3How==
+"@as-pect/snapshots@^3.1.4":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@as-pect/snapshots/-/snapshots-3.1.4.tgz#4303bc5ef925f1f1ba4aa5445073d0202e45d99d"
+  integrity sha512-Gx7JHR2VJFDlrrBCC40YYkK00zF3B7q/bq4NwNOrOXVXW9ty6qH3ITc0Y8IufF3mLl8D8q6xCswXF2wVgxBPhg==
   dependencies:
     diff "^4.0.2"
     nearley "^2.19.1"
-
-"@assemblyscript/loader@^0.9.2":
-  version "0.9.4"
-  resolved "https://registry.yarnpkg.com/@assemblyscript/loader/-/loader-0.9.4.tgz#a483c54c1253656bb33babd464e3154a173e1577"
-  integrity sha512-HazVq9zwTVwGmqdwYzu7WyQ6FQVZ7SwET0KKQuKm55jD0IfUpZgN0OPIiZG3zV1iSrVYcN0bdwLRXI/VNCYsUA==
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.8.3":
   version "7.8.3"
@@ -2252,6 +2247,11 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
+lodash.clonedeep@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+  integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
+
 lodash.memoize@4.x:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -2685,6 +2685,11 @@ prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
+
+prettier@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.4.tgz#2d1bae173e355996ee355ec9830a7a1ee05457ef"
+  integrity sha512-SVJIQ51spzFDvh4fIbCLvciiDMCrRhlN3mbZvv/+ycjvmF5E73bKdGfU8QDLNmjYJf+lsGnDBC4UUnvTe5OO0w==
 
 pretty-format@^25.1.0:
   version "25.1.0"
@@ -3297,6 +3302,11 @@ ts-jest@^25.2.1:
     resolve "1.x"
     semver "^5.5"
     yargs-parser "^16.1.0"
+
+ts-mixer@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/ts-mixer/-/ts-mixer-5.1.0.tgz#4edc3792d30e706db9bdd2e9442758146a3a2189"
+  integrity sha512-u6caArZIK/XXKq80fWyE8JOnWSOod7Q7lGdJKZ/d2xP0g8cBj5+rHpJzCz3mvy5sUwnfN42bH9BWHuek/pSH5g==
 
 ts-node@^8.6.2:
   version "8.6.2"

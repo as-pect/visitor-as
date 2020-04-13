@@ -1,0 +1,74 @@
+import { PathTransformVisitor, mergeTransformer } from "./transformer";
+import {
+  ClassDeclaration,
+  FieldDeclaration,
+  MethodDeclaration,
+  Parser,
+  DeclarationStatement,
+  VariableDeclaration,
+  FunctionDeclaration,
+  Source,
+  Transform,
+  Node,
+  DecoratorNode,
+} from "../as";
+import { decorates, not, isLibrary } from "./utils";
+
+export function registerDecorator(decorator: DecoratorVisitor) {
+  TopLevelDecorator.registerVisitor(decorator);
+  return TopLevelDecorator;
+}
+
+interface DecoratorVisitor extends PathTransformVisitor {
+  name: string;
+  sourceFilter: (s: Source) => bool;
+}
+
+export class TopLevelDecorator extends PathTransformVisitor {
+  private static _visitor: DecoratorVisitor;
+
+  static registerVisitor(visitor: DecoratorVisitor): void {
+    TopLevelDecorator._visitor = visitor;
+  }
+
+  private get visitor(): DecoratorVisitor {
+    return TopLevelDecorator._visitor;
+  }
+
+  visitDecoratorNode(node: DecoratorNode) {
+    if (decorates(node, this.visitor.name)) {
+      this.visitor.currentPath = this.cuerrentParentPath;
+      this.visitor.visit(this.currentParent);
+    }
+  }
+
+  afterParse(_: Parser): void {
+    mergeTransformer(this, this.visitor);
+    this.visit(this.program.sources.filter(this.visitor.sourceFilter));
+  }
+}
+
+export abstract class Decorator extends PathTransformVisitor {
+  /**
+   * Default filter that 
+   */
+  get sourceFilter(): (s: Source) => bool {
+    return not(isLibrary);
+  }
+
+  abstract get name(): string;
+}
+
+export abstract class ClassDecorator extends Decorator {
+  abstract visitFieldDeclaration(node: FieldDeclaration): void;
+  abstract visitMethodDeclaration(node: MethodDeclaration): void;
+  abstract visitClassDeclaration(node: ClassDeclaration): void;
+}
+
+export abstract class FunctionDecorator extends Decorator {
+  abstract visitFunctionDeclaration(node: FunctionDeclaration): void;
+}
+
+export abstract class VariableDecorator extends Decorator {
+  abstract visitVariableDeclaration(node: VariableDeclaration): void;
+}

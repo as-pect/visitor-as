@@ -1,7 +1,2 @@
-import { ASTTransformVisitor } from '../transformer';
-import { Program, StringLiteralExpression } from '../as';
-declare class CapitalizeVisitor extends ASTTransformVisitor {
-    visitStringLiteralExpression(node: StringLiteralExpression): void;
-    afterInitialize(program: Program): void;
-}
-export = CapitalizeVisitor;
+declare const _default: typeof import("../decorator").TopLevelDecorator;
+export = _default;
