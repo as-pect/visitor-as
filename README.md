@@ -44,6 +44,16 @@ class ListMembers extends ClassDecorator {
 export = registerDecorator(new ListMembers());
 ```
 
+assembly/foo.ts:
+```ts
+@list
+class Foo {
+  a: u8;
+  b: bool;
+  i: i32;
+}
+```
+
 And then compile with `--transform` flag:
 
 ```
