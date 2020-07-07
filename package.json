@@ -1,6 +1,6 @@
 {
   "name": "visitor-as",
-  "version": "0.2.0-0",
+  "version": "0.2.0-1",
   "description": "A generic visitor framework for AssemblyScript",
   "main": "dist",
   "types": "dist",
