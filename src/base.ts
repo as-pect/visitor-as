@@ -46,15 +46,15 @@ import {
   FieldDeclaration,
   FunctionDeclaration,
   ImportDeclaration,
-  IndexSignatureDeclaration,
   InterfaceDeclaration,
   MethodDeclaration,
   NamespaceDeclaration,
   TypeDeclaration,
   VariableDeclaration,
   DecoratorNode,
-  ExportMember,
+  IndexSignatureNode,
   ParameterNode,
+  ExportMember,
   SwitchCase,
   TypeNode,
   ArrayLiteralExpression,
@@ -281,10 +281,6 @@ export class BaseVisitor extends AbstractVisitor<Node> {
         this.visitImportDeclaration(<ImportDeclaration>node);
         break;
       }
-      case NodeKind.INDEXSIGNATUREDECLARATION: {
-        this.visitIndexSignatureDeclaration(<IndexSignatureDeclaration>node);
-        break;
-      }
       case NodeKind.INTERFACEDECLARATION: {
         this.visitInterfaceDeclaration(<InterfaceDeclaration>node);
         break;
@@ -322,6 +318,10 @@ export class BaseVisitor extends AbstractVisitor<Node> {
       }
       case NodeKind.SWITCHCASE: {
         this.visitSwitchCase(<SwitchCase>node);
+        break;
+      }
+      case NodeKind.INDEXSIGNATURE: {
+        this.visitIndexSignature(<IndexSignatureNode>node);
         break;
       }
       default:
@@ -394,8 +394,11 @@ export class BaseVisitor extends AbstractVisitor<Node> {
 
   visitCallExpression(node: CallExpression): void {
     this.visit(node.expression);
-    this.visit(node.typeArguments);
-    this.visit(node.arguments);
+    this.visitArguments(node.typeArguments, node.args);
+  }
+
+  visitArguments(typeArguments: TypeNode[] | null, args: Expression[]): void {
+
   }
 
   visitClassExpression(node: ClassExpression): void {
@@ -463,7 +466,7 @@ export class BaseVisitor extends AbstractVisitor<Node> {
 
   visitNewExpression(node: NewExpression): void {
     this.visit(node.typeArguments);
-    this.visit(node.arguments);
+    this.visitArguments(node.typeArguments, node.args);
   }
 
   visitParenthesizedExpression(node: ParenthesizedExpression): void {
@@ -642,7 +645,7 @@ export class BaseVisitor extends AbstractVisitor<Node> {
     this.visit(node.declarations);
   }
 
-  visitIndexSignatureDeclaration(node: IndexSignatureDeclaration): void {
+  visitIndexSignature(node: IndexSignatureNode): void {
     // this.visit(node.name);
     // this.visit(node.keyType);
     // this.visit(node.valueType);
@@ -742,7 +745,7 @@ export class BaseVisitor extends AbstractVisitor<Node> {
 
   visitDecoratorNode(node: DecoratorNode): void {
     this.visit(node.name);
-    this.visit(node.arguments);
+    this.visit(node.args);
   }
 
   visitParameter(node: ParameterNode): void {

@@ -4,12 +4,9 @@ import {
   FieldDeclaration,
   MethodDeclaration,
   Parser,
-  DeclarationStatement,
   VariableDeclaration,
   FunctionDeclaration,
   Source,
-  Transform,
-  Node,
   DecoratorNode,
 } from "../as";
 import { decorates, not, isLibrary } from "./utils";
@@ -50,7 +47,7 @@ export class TopLevelDecorator extends PathTransformVisitor {
 
 export abstract class Decorator extends PathTransformVisitor {
   /**
-   * Default filter that 
+   * Default filter that removes library files
    */
   get sourceFilter(): (s: Source) => bool {
     return not(isLibrary);
