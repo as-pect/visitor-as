@@ -27,5 +27,8 @@
   "dependencies": {
     "lodash.clonedeep": "^4.5.0",
     "ts-mixer": "^5.1.0"
+  },
+  "peerDependencies": {
+    "assemblyscript": "^0.13.3"
   }
 }
