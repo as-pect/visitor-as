@@ -15,7 +15,7 @@ export declare class TopLevelDecorator extends PathTransformVisitor {
 }
 export declare abstract class Decorator extends PathTransformVisitor {
     /**
-     * Default filter that
+     * Default filter that removes library files
      */
     get sourceFilter(): (s: Source) => bool;
     abstract get name(): string;

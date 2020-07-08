@@ -47,7 +47,6 @@ import {
   FieldDeclaration,
   FunctionDeclaration,
   ImportDeclaration,
-  IndexSignatureDeclaration,
   InterfaceDeclaration,
   MethodDeclaration,
   NamespaceDeclaration,
@@ -78,6 +77,8 @@ import {
   isTypeOmitted,
   operatorTokenToString,
   indent,
+  ForOfStatement,
+  IndexSignatureNode,
 } from "../as";
 import { AbstractVisitor } from "./visitor";
 
@@ -86,6 +87,10 @@ import { AbstractVisitor } from "./visitor";
 
 /** An AST builder. */
 export class ASTBuilder extends AbstractVisitor<Node> {
+  _visit(node: Node): void {
+    this.visitNode(node);
+  }
+
   /** Rebuilds the textual source from the specified AST, as far as possible. */
   static build(node: Node): string {
     var builder = new ASTBuilder();
@@ -95,10 +100,6 @@ export class ASTBuilder extends AbstractVisitor<Node> {
 
   private sb: string[] = [];
   private indentLevel: i32 = 0;
-
-  _visit(node: Node): void {
-    this.visitNode(node);
-  }
 
   visitNode(node: Node): void {
     switch (node.kind) {
@@ -237,6 +238,10 @@ export class ASTBuilder extends AbstractVisitor<Node> {
         this.visitForStatement(<ForStatement>node);
         break;
       }
+      case NodeKind.FOROF: {
+        this.visitForOfStatement(<ForOfStatement>node);
+        break;
+      }
       case NodeKind.IF: {
         this.visitIfStatement(<IfStatement>node);
         break;
@@ -296,10 +301,6 @@ export class ASTBuilder extends AbstractVisitor<Node> {
         this.visitImportDeclaration(<ImportDeclaration>node);
         break;
       }
-      case NodeKind.INDEXSIGNATUREDECLARATION: {
-        this.visitIndexSignatureDeclaration(<IndexSignatureDeclaration>node);
-        break;
-      }
       case NodeKind.INTERFACEDECLARATION: {
         this.visitInterfaceDeclaration(<InterfaceDeclaration>node);
         break;
@@ -337,6 +338,10 @@ export class ASTBuilder extends AbstractVisitor<Node> {
       }
       case NodeKind.SWITCHCASE: {
         this.visitSwitchCase(<SwitchCase>node);
+        break;
+      }
+      case NodeKind.INDEXSIGNATURE: {
+        this.visitIndexSignature(<IndexSignatureNode>node);
         break;
       }
       default:
@@ -454,10 +459,12 @@ export class ASTBuilder extends AbstractVisitor<Node> {
     var elements = node.elementExpressions;
     var numElements = elements.length;
     if (numElements) {
-      if (elements[0]) this.visitNode(<Expression>elements[0]);
+      let element = elements[0];
+      if (element) this.visitNode(element);
       for (let i = 1; i < numElements; ++i) {
+        element = elements[i];
         sb.push(", ");
-        if (elements[i]) this.visitNode(<Expression>elements[i]);
+        if (element) this.visitNode(element);
       }
     }
     sb.push("]");
@@ -517,6 +524,11 @@ export class ASTBuilder extends AbstractVisitor<Node> {
         sb.push("!");
         break;
       }
+      case AssertionKind.CONST: {
+        this.visitNode(node.expression);
+        sb.push(" as const");
+        break;
+      }
       default:
         assert(false);
     }
@@ -532,33 +544,8 @@ export class ASTBuilder extends AbstractVisitor<Node> {
   }
 
   visitCallExpression(node: CallExpression): void {
-    var sb = this.sb;
     this.visitNode(node.expression);
-    var typeArguments = node.typeArguments;
-    if (typeArguments) {
-      let numTypeArguments = typeArguments.length;
-      if (numTypeArguments) {
-        sb.push("<");
-        this.visitTypeNode(typeArguments[0]);
-        for (let i = 1; i < numTypeArguments; ++i) {
-          sb.push(", ");
-          this.visitTypeNode(typeArguments[i]);
-        }
-        sb.push(">(");
-      }
-    } else {
-      sb.push("(");
-    }
-    var args = node.arguments;
-    var numArgs = args.length;
-    if (numArgs) {
-      this.visitNode(args[0]);
-      for (let i = 1; i < numArgs; ++i) {
-        sb.push(", ");
-        this.visitNode(args[i]);
-      }
-    }
-    sb.push(")");
+    this.visitArguments(node.typeArguments, node.args);
   }
 
   private visitArguments(
@@ -663,7 +650,7 @@ export class ASTBuilder extends AbstractVisitor<Node> {
   }
 
   visitFloatLiteralExpression(node: FloatLiteralExpression): void {
-    this.sb.push(node.value.toString(10));
+    this.sb.push(node.value.toString());
   }
 
   visitInstanceOfExpression(node: InstanceOfExpression): void {
@@ -777,7 +764,7 @@ export class ASTBuilder extends AbstractVisitor<Node> {
   visitNewExpression(node: NewExpression): void {
     this.sb.push("new ");
     this.visitTypeName(node.typeName);
-    this.visitArguments(node.typeArguments, node.arguments);
+    this.visitArguments(node.typeArguments, node.args);
   }
 
   visitParenthesizedExpression(node: ParenthesizedExpression): void {
@@ -829,13 +816,13 @@ export class ASTBuilder extends AbstractVisitor<Node> {
 
   // statements
 
-  visitNodeAndTerminate(statement: Statement): void {
-    this.visitNode(statement);
+  visitNodeAndTerminate(node: Node): void {
+    this.visitNode(node);
     var sb = this.sb;
     if (
       !sb.length || // leading EmptyStatement
-      statement.kind == NodeKind.VARIABLE || // potentially assigns a FunctionExpression
-      statement.kind == NodeKind.EXPRESSION // potentially assigns a FunctionExpression
+      node.kind == NodeKind.VARIABLE || // potentially assigns a FunctionExpression
+      node.kind == NodeKind.EXPRESSION // potentially assigns a FunctionExpression
     ) {
       sb.push(";\n");
     } else {
@@ -912,7 +899,7 @@ export class ASTBuilder extends AbstractVisitor<Node> {
       sb.push("class");
     }
     var typeParameters = node.typeParameters;
-    if (typeParameters && typeParameters.length) {
+    if (typeParameters != null && typeParameters.length > 0) {
       sb.push("<");
       this.visitTypeParameter(typeParameters[0]);
       for (let i = 1, k = typeParameters.length; i < k; ++i) {
@@ -938,11 +925,16 @@ export class ASTBuilder extends AbstractVisitor<Node> {
         }
       }
     }
+    var indexSignature = node.indexSignature;
     var members = node.members;
     var numMembers = members.length;
-    if (numMembers) {
+    if (indexSignature !== null || numMembers) {
       sb.push(" {\n");
       let indentLevel = ++this.indentLevel;
+      if (indexSignature) {
+        indent(sb, indentLevel);
+        this.visitNodeAndTerminate(indexSignature);
+      }
       for (let i = 0, k = members.length; i < k; ++i) {
         let member = members[i];
         if (
@@ -975,7 +967,9 @@ export class ASTBuilder extends AbstractVisitor<Node> {
     sb.push(")");
   }
 
-  visitEmptyStatement(node: EmptyStatement): void {}
+  visitEmptyStatement(node: EmptyStatement): void {
+    /* nop */
+  }
 
   visitEnumDeclaration(node: EnumDeclaration, isDefault: bool = false): void {
     var sb = this.sb;
@@ -1009,9 +1003,10 @@ export class ASTBuilder extends AbstractVisitor<Node> {
 
   visitEnumValueDeclaration(node: EnumValueDeclaration): void {
     this.visitIdentifierExpression(node.name);
-    if (node.value) {
+    var initializer = node.initializer;
+    if (initializer) {
       this.sb.push(" = ");
-      this.visitNode(node.value);
+      this.visitNode(initializer);
     }
   }
 
@@ -1037,7 +1032,7 @@ export class ASTBuilder extends AbstractVisitor<Node> {
       sb.push("declare ");
     }
     var members = node.members;
-    if (members && members.length) {
+    if (members != null && members.length > 0) {
       let numMembers = members.length;
       sb.push("export {\n");
       let indentLevel = ++this.indentLevel;
@@ -1103,7 +1098,7 @@ export class ASTBuilder extends AbstractVisitor<Node> {
     this.serializeAccessModifiers(node);
     this.visitIdentifierExpression(node.name);
     var sb = this.sb;
-    if (node.flags & CommonFlags.DEFINITE_ASSIGNMENT) {
+    if (node.flags & CommonFlags.DEFINITELY_ASSIGNED) {
       sb.push("!");
     }
     var type = node.type;
@@ -1139,6 +1134,16 @@ export class ASTBuilder extends AbstractVisitor<Node> {
     } else {
       sb.push(";");
     }
+    sb.push(") ");
+    this.visitNode(node.statement);
+  }
+
+  visitForOfStatement(node: ForOfStatement): void {
+    var sb = this.sb;
+    sb.push("for (");
+    this.visitNode(node.variable);
+    sb.push(" of ");
+    this.visitNode(node.iterable);
     sb.push(") ");
     this.visitNode(node.statement);
   }
@@ -1307,7 +1312,7 @@ export class ASTBuilder extends AbstractVisitor<Node> {
     this.visitStringLiteralExpression(node.path);
   }
 
-  visitIndexSignatureDeclaration(node: IndexSignatureDeclaration): void {
+  visitIndexSignature(node: IndexSignatureNode): void {
     var sb = this.sb;
     sb.push("[key: ");
     this.visitTypeNode(node.keyType);
@@ -1334,7 +1339,7 @@ export class ASTBuilder extends AbstractVisitor<Node> {
     sb.push("interface ");
     this.visitIdentifierExpression(node.name);
     var typeParameters = node.typeParameters;
-    if (typeParameters && typeParameters.length) {
+    if (typeParameters != null && typeParameters.length > 0) {
       sb.push("<");
       this.visitTypeParameter(typeParameters[0]);
       for (let i = 1, k = typeParameters.length; i < k; ++i) {
@@ -1531,7 +1536,7 @@ export class ASTBuilder extends AbstractVisitor<Node> {
     this.visitIdentifierExpression(node.name);
     var type = node.type;
     var sb = this.sb;
-    if (node.flags & CommonFlags.DEFINITE_ASSIGNMENT) {
+    if (node.flags & CommonFlags.DEFINITELY_ASSIGNED) {
       sb.push("!");
     }
     if (type) {
@@ -1590,7 +1595,7 @@ export class ASTBuilder extends AbstractVisitor<Node> {
     var sb = this.sb;
     sb.push("@");
     this.visitNode(node.name);
-    var args = node.arguments;
+    var args = node.args;
     if (args) {
       sb.push("(");
       let numArgs = args.length;

@@ -1,4 +1,4 @@
-import { Node, Source, NamedTypeNode, FunctionTypeNode, TypeName, TypeParameterNode, IdentifierExpression, AssertionExpression, BinaryExpression, CallExpression, ClassExpression, CommaExpression, ElementAccessExpression, FunctionExpression, InstanceOfExpression, LiteralExpression, NewExpression, ParenthesizedExpression, PropertyAccessExpression, TernaryExpression, UnaryPostfixExpression, UnaryPrefixExpression, BlockStatement, BreakStatement, ContinueStatement, DoStatement, EmptyStatement, ExportStatement, ExportDefaultStatement, ExportImportStatement, ExpressionStatement, ForStatement, IfStatement, ImportStatement, ReturnStatement, SwitchStatement, ThrowStatement, TryStatement, VariableStatement, WhileStatement, ClassDeclaration, EnumDeclaration, EnumValueDeclaration, FieldDeclaration, FunctionDeclaration, ImportDeclaration, IndexSignatureDeclaration, InterfaceDeclaration, MethodDeclaration, NamespaceDeclaration, TypeDeclaration, VariableDeclaration, DecoratorNode, ExportMember, ParameterNode, SwitchCase, TypeNode, ArrayLiteralExpression, ObjectLiteralExpression, FloatLiteralExpression, IntegerLiteralExpression, StringLiteralExpression, RegexpLiteralExpression, UnaryExpression, SuperExpression, FalseExpression, TrueExpression, ThisExpression, NullExpression, ConstructorExpression, Statement, VoidStatement, CommentNode } from "../as";
+import { Node, Source, NamedTypeNode, FunctionTypeNode, TypeName, TypeParameterNode, IdentifierExpression, AssertionExpression, BinaryExpression, CallExpression, ClassExpression, CommaExpression, ElementAccessExpression, FunctionExpression, InstanceOfExpression, LiteralExpression, NewExpression, ParenthesizedExpression, PropertyAccessExpression, TernaryExpression, UnaryPostfixExpression, UnaryPrefixExpression, BlockStatement, BreakStatement, ContinueStatement, DoStatement, EmptyStatement, ExportStatement, ExportDefaultStatement, ExportImportStatement, ExpressionStatement, ForStatement, IfStatement, ImportStatement, ReturnStatement, SwitchStatement, ThrowStatement, TryStatement, VariableStatement, WhileStatement, ClassDeclaration, EnumDeclaration, EnumValueDeclaration, FieldDeclaration, FunctionDeclaration, ImportDeclaration, InterfaceDeclaration, MethodDeclaration, NamespaceDeclaration, TypeDeclaration, VariableDeclaration, DecoratorNode, IndexSignatureNode, ParameterNode, ExportMember, SwitchCase, TypeNode, ArrayLiteralExpression, Expression, ObjectLiteralExpression, FloatLiteralExpression, IntegerLiteralExpression, StringLiteralExpression, RegexpLiteralExpression, UnaryExpression, SuperExpression, FalseExpression, TrueExpression, ThisExpression, NullExpression, ConstructorExpression, Statement, VoidStatement, CommentNode } from "../as";
 import { AbstractVisitor } from "./visitor";
 export declare class BaseVisitor extends AbstractVisitor<Node> {
     depth: number;
@@ -15,6 +15,7 @@ export declare class BaseVisitor extends AbstractVisitor<Node> {
     visitAssertionExpression(node: AssertionExpression): void;
     visitBinaryExpression(node: BinaryExpression): void;
     visitCallExpression(node: CallExpression): void;
+    visitArguments(typeArguments: TypeNode[] | null, args: Expression[]): void;
     visitClassExpression(node: ClassExpression): void;
     visitCommaExpression(node: CommaExpression): void;
     visitElementAccessExpression(node: ElementAccessExpression): void;
@@ -60,7 +61,7 @@ export declare class BaseVisitor extends AbstractVisitor<Node> {
     visitIfStatement(node: IfStatement): void;
     visitImportDeclaration(node: ImportDeclaration): void;
     visitImportStatement(node: ImportStatement): void;
-    visitIndexSignatureDeclaration(node: IndexSignatureDeclaration): void;
+    visitIndexSignature(node: IndexSignatureNode): void;
     visitInterfaceDeclaration(node: InterfaceDeclaration, isDefault?: boolean): void;
     visitMethodDeclaration(node: MethodDeclaration): void;
     visitNamespaceDeclaration(node: NamespaceDeclaration, isDefault?: boolean): void;

@@ -1,13 +1,13 @@
 /// <reference types="assemblyscript/std/portable" />
-import { TypeNode, Node, Source, NamedTypeNode, FunctionTypeNode, TypeParameterNode, IdentifierExpression, CallExpression, ClassExpression, ElementAccessExpression, FunctionExpression, InstanceOfExpression, LiteralExpression, NewExpression, ParenthesizedExpression, PropertyAccessExpression, TernaryExpression, UnaryPostfixExpression, UnaryPrefixExpression, BlockStatement, BreakStatement, ContinueStatement, DoStatement, EmptyStatement, ExportStatement, ExportDefaultStatement, ExportImportStatement, ExpressionStatement, ForStatement, IfStatement, ImportStatement, ReturnStatement, SwitchStatement, ThrowStatement, TryStatement, VariableStatement, WhileStatement, ClassDeclaration, EnumDeclaration, EnumValueDeclaration, FieldDeclaration, FunctionDeclaration, ImportDeclaration, IndexSignatureDeclaration, InterfaceDeclaration, MethodDeclaration, NamespaceDeclaration, TypeDeclaration, VariableDeclaration, DecoratorNode, ExportMember, ParameterNode, SwitchCase, TypeName, ArrayLiteralExpression, ObjectLiteralExpression, FloatLiteralExpression, StringLiteralExpression, RegexpLiteralExpression, UnaryExpression, Statement, DeclarationStatement, AssertionExpression, BinaryExpression, CommaExpression, IntegerLiteralExpression } from "../as";
+import { TypeNode, Node, Source, NamedTypeNode, FunctionTypeNode, TypeParameterNode, IdentifierExpression, CallExpression, ClassExpression, ElementAccessExpression, FunctionExpression, InstanceOfExpression, LiteralExpression, NewExpression, ParenthesizedExpression, PropertyAccessExpression, TernaryExpression, UnaryPostfixExpression, UnaryPrefixExpression, BlockStatement, BreakStatement, ContinueStatement, DoStatement, EmptyStatement, ExportStatement, ExportDefaultStatement, ExportImportStatement, ExpressionStatement, ForStatement, IfStatement, ImportStatement, ReturnStatement, SwitchStatement, ThrowStatement, TryStatement, VariableStatement, WhileStatement, ClassDeclaration, EnumDeclaration, EnumValueDeclaration, FieldDeclaration, FunctionDeclaration, ImportDeclaration, InterfaceDeclaration, MethodDeclaration, NamespaceDeclaration, TypeDeclaration, VariableDeclaration, DecoratorNode, ExportMember, ParameterNode, SwitchCase, TypeName, ArrayLiteralExpression, ObjectLiteralExpression, FloatLiteralExpression, StringLiteralExpression, RegexpLiteralExpression, UnaryExpression, DeclarationStatement, AssertionExpression, BinaryExpression, CommaExpression, IntegerLiteralExpression, ForOfStatement, IndexSignatureNode } from "../as";
 import { AbstractVisitor } from "./visitor";
 /** An AST builder. */
 export declare class ASTBuilder extends AbstractVisitor<Node> {
+    _visit(node: Node): void;
     /** Rebuilds the textual source from the specified AST, as far as possible. */
     static build(node: Node): string;
     private sb;
     private indentLevel;
-    _visit(node: Node): void;
     visitNode(node: Node): void;
     visitSource(source: Source): void;
     visitTypeNode(node: TypeNode): void;
@@ -40,7 +40,7 @@ export declare class ASTBuilder extends AbstractVisitor<Node> {
     visitUnaryExpression(node: UnaryExpression): void;
     visitUnaryPostfixExpression(node: UnaryPostfixExpression): void;
     visitUnaryPrefixExpression(node: UnaryPrefixExpression): void;
-    visitNodeAndTerminate(statement: Statement): void;
+    visitNodeAndTerminate(node: Node): void;
     visitBlockStatement(node: BlockStatement): void;
     visitBreakStatement(node: BreakStatement): void;
     visitContinueStatement(node: ContinueStatement): void;
@@ -56,12 +56,13 @@ export declare class ASTBuilder extends AbstractVisitor<Node> {
     visitExpressionStatement(node: ExpressionStatement): void;
     visitFieldDeclaration(node: FieldDeclaration): void;
     visitForStatement(node: ForStatement): void;
+    visitForOfStatement(node: ForOfStatement): void;
     visitFunctionDeclaration(node: FunctionDeclaration, isDefault?: bool): void;
     visitFunctionCommon(node: FunctionDeclaration): void;
     visitIfStatement(node: IfStatement): void;
     visitImportDeclaration(node: ImportDeclaration): void;
     visitImportStatement(node: ImportStatement): void;
-    visitIndexSignatureDeclaration(node: IndexSignatureDeclaration): void;
+    visitIndexSignature(node: IndexSignatureNode): void;
     visitInterfaceDeclaration(node: InterfaceDeclaration, isDefault?: bool): void;
     visitMethodDeclaration(node: MethodDeclaration): void;
     visitNamespaceDeclaration(node: NamespaceDeclaration, isDefault?: bool): void;
