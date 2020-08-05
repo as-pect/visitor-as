@@ -9,8 +9,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "test-full": "jest && asp",
-    "test": "asp",
+    "test": "jest && asp",
     "build": "rimraf dist/ && tsc"
   },
   "devDependencies": {
