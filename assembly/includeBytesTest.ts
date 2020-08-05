@@ -1,5 +1,5 @@
-export function getByteArray(): StaticArray<u8> {
-  var result = includeBytes('test.dat');
+export function usingIncludeBytes(): StaticArray<u8> {
+  var result = includeBytes('data.dat');
   return result;
 }
 
