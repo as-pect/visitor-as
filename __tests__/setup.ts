@@ -11,10 +11,6 @@ interface MemoryResult extends CompileStringResultType {
 
 export function compileExample(code: string, transform: string): string[] {
   const res = compile(code, transform);
-  const errStr = res.stderr.toString();
-  if (errStr) {
-    throw new Error(errStr);
-  }
   return res.stdout.toString().trim().split("\n");
 }
 
@@ -24,15 +20,15 @@ function compile(code: string, transform: string): MemoryResult {
     transform,
     baseDir,
   });
+  const errStr = res.stderr.toString();
+  if (errStr) {
+    throw new Error(errStr);
+  }
   return res;
 }
 
 export function compileAndRun(code: string, transform: string): void {
   const res = compile(code, transform);
-  const errStr = res.stderr.toString();
-  if (errStr) {
-    throw new Error(errStr);
-  }
   const imports = { /* imports go here */ };
   const wasmModule = loader.instantiateSync(res.binary!.buffer, imports);
 
