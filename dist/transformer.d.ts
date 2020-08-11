@@ -2,6 +2,7 @@ import { BaseVisitor } from "./base";
 import { Transform as _Transform } from "../as";
 import { ASTBuilder } from "./astBuilder";
 import { PathVisitor } from "./path";
+import { BaseTransformVisitor } from "./baseTransform";
 declare class Transform extends _Transform {
 }
 declare const ASTTransformVisitor_base: import("ts-mixer/dist/types").Class<[], BaseVisitor & Transform, {
@@ -27,4 +28,11 @@ declare const PathTransformVisitor_base: import("ts-mixer/dist/types").Class<[],
 export declare class PathTransformVisitor extends PathTransformVisitor_base {
 }
 export declare function mergeTransformer(from: Transform, to: Transform): void;
+declare const TransformVisitor_base: import("ts-mixer/dist/types").Class<[], BaseTransformVisitor & Transform, {
+    prototype: BaseTransformVisitor;
+} & {
+    prototype: Transform;
+}>;
+export declare class TransformVisitor extends TransformVisitor_base {
+}
 export {};

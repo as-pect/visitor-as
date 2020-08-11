@@ -34,7 +34,7 @@ export class TopLevelDecorator extends PathTransformVisitor {
 
   visitDecoratorNode(node: DecoratorNode) {
     if (decorates(node, this.visitor.name)) {
-      this.visitor.currentPath = this.cuerrentParentPath;
+      this.visitor.currentPath = this.currentParentPath;
       this.visitor.visit(this.currentParent);
     }
   }

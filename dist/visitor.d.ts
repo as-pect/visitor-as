@@ -8,3 +8,7 @@ export declare abstract class AbstractVisitor<T extends object> {
     visit(node: Collection<T> | null): void;
     protected abstract _visit(node: T): void;
 }
+export declare abstract class AbstractTransformVisitor<T extends object> {
+    visit(node: Collection<T> | null): Collection<T> | null;
+    protected abstract _visit(node: T): T;
+}

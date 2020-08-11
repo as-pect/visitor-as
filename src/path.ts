@@ -23,7 +23,7 @@ export class PathVisitor extends BaseVisitor {
     return this.currentPath[this.currentPath.length - 2];
   }
 
-  get cuerrentParentPath(): Node[] {
+  get currentParentPath(): Node[] {
     return this.currentPath.slice(0, this.currentPath.length - 1);
   }
 

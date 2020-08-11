@@ -1,4 +1,5 @@
 import * as asc from "assemblyscript/cli/asc";
+import * as loader from "assemblyscript/lib/loader";
 
 const CompileStringResult = (false as true) && asc.compileString("");
 type CompileStringResultType = typeof CompileStringResult;
@@ -19,4 +20,20 @@ export function compileExample(code: string, transform: string): string[] {
     throw new Error(errStr);
   }
   return res.stdout.toString().trim().split("\n");
+}
+
+export function compileAndRun(code: string, transform: string): void {
+  const res = <MemoryResult>asc.compileString(code, {
+    transform,
+    baseDir: process.cwd(),
+    runtime: "none",
+  });
+  const errStr = res.stderr.toString();
+  if (errStr) {
+    throw new Error(errStr);
+  }
+  const imports = { /* imports go here */ };
+  console.log(res.text)
+  const wasmModule = loader.instantiateSync(res.binary!.buffer, imports);
+
 }

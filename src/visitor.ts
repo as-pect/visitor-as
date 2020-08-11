@@ -36,3 +36,31 @@ export abstract class AbstractVisitor<T extends object> {
 
   protected abstract _visit(node: T): void;
 }
+
+export abstract class AbstractTransformVisitor<T extends object> {
+  visit(node: Collection<T> | null): Collection<T> | null {
+    if (node == null) return null;
+    if (node instanceof Array) {
+      return node.map((node) => this.visit(node) as T);
+    } else if (node instanceof Map) {
+      let res = new Map();
+      for (let [key, _node] of node.entries()) {
+         res.set(key, this.visit(_node));
+      }
+      return res;
+    } else if (isIterable(node)) {
+      let res: T[] = [];
+      //TODO: Find better way to test if iterable
+      // @ts-ignore is iterable
+      for (let _node of node) {
+        res.push(this.visit(_node) as T);
+      }
+      return res;
+    } else {
+      ///@ts-ignore Node is not iterable.
+      return this._visit(node);
+    }
+  }
+
+  protected abstract _visit(node: T): T;
+}
