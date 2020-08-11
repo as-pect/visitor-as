@@ -33,7 +33,6 @@ export function compileAndRun(code: string, transform: string): void {
     throw new Error(errStr);
   }
   const imports = { /* imports go here */ };
-  console.log(res.text)
   const wasmModule = loader.instantiateSync(res.binary!.buffer, imports);
 
 }

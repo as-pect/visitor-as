@@ -333,9 +333,7 @@ export class BaseTransformVisitor extends AbstractTransformVisitor<Node> {
   }
 
   visitArrayLiteralExpression(node: ArrayLiteralExpression): ArrayLiteralExpression {
-    node.elementExpressions = node.elementExpressions.map((e: Expression) => {
-      return this.visit(e) as Expression | null
-    });
+    node.elementExpressions = node.elementExpressions.map(e => this.visit(e) as Expression);
     return node;
   }
 

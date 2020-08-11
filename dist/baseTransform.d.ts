@@ -15,7 +15,7 @@ export declare class BaseTransformVisitor extends AbstractTransformVisitor<Node>
     visitObjectLiteralExpression(node: ObjectLiteralExpression): ObjectLiteralExpression;
     visitAssertionExpression(node: AssertionExpression): AssertionExpression;
     visitBinaryExpression(node: BinaryExpression): BinaryExpression;
-    visitCallExpression(node: CallExpression): CallExpression;
+    visitCallExpression(node: CallExpression): Expression;
     visitArguments(typeArguments: TypeNode[] | null, args: Expression[]): void;
     visitClassExpression(node: ClassExpression): ClassExpression;
     visitCommaExpression(node: CommaExpression): CommaExpression;

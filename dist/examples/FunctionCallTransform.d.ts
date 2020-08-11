@@ -1,7 +1,7 @@
 import { TransformVisitor } from "..";
-import { FunctionExpression, Expression, Parser } from "../../as";
+import { Expression, Parser, CallExpression } from "../../as";
 declare class FunctionCallTransform extends TransformVisitor {
-    visitFunctionExpression(node: FunctionExpression): Expression;
+    visitCallExpression(node: CallExpression): Expression;
     afterParse(_: Parser): void;
 }
 declare const _default: FunctionCallTransform;

@@ -6,10 +6,8 @@ class FunctionCallTransform extends TransformVisitor {
   visitCallExpression(node: CallExpression): Expression {
     if (node.expression instanceof IdentifierExpression){
       if (node.expression.text == "foo") {
-        console.log("changeing to 'hello world'")
         let res = SimpleParser.parseExpression('"hello world"');
         res.range = node.range;
-        console.log(res);
         return res;
       }
     }
