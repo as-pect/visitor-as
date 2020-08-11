@@ -1,4 +1,4 @@
-import {compileAndRun} from "./setup";
+import { compileAndRun } from "./setup";
 
 
 describe('hello world transform', () => {
