@@ -10,11 +10,7 @@ interface MemoryResult extends CompileStringResultType {
 }
 
 export function compileExample(code: string, transform: string): string[] {
-  const baseDir = process.cwd();
-  const res = <MemoryResult>asc.compileString(code, {
-    transform,
-    baseDir,
-  });
+  const res = compile(code, transform);
   const errStr = res.stderr.toString();
   if (errStr) {
     throw new Error(errStr);
@@ -22,12 +18,17 @@ export function compileExample(code: string, transform: string): string[] {
   return res.stdout.toString().trim().split("\n");
 }
 
-export function compileAndRun(code: string, transform: string): void {
+function compile(code: string, transform: string): MemoryResult {
+  const baseDir = process.cwd();
   const res = <MemoryResult>asc.compileString(code, {
     transform,
-    baseDir: process.cwd(),
-    runtime: "none",
+    baseDir,
   });
+  return res;
+}
+
+export function compileAndRun(code: string, transform: string): void {
+  const res = compile(code, transform);
   const errStr = res.stderr.toString();
   if (errStr) {
     throw new Error(errStr);
