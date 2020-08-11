@@ -1,5 +1,5 @@
 import { compileExample } from "./setup";
-import { SimpleParser, ASTBuilder } from '../dist';
+import { SimpleParser, ASTBuilder } from '../src';
 
 const FOO: string = `
 @list

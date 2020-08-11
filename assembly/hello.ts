@@ -1,0 +1,2 @@
+
+assert("hello world" == foo());

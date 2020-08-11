@@ -3,6 +3,7 @@ import { Transform as _Transform } from "../as";
 import { ASTBuilder } from "./astBuilder";
 import { PathVisitor } from "./path";
 import { Mixin } from "ts-mixer";
+import { BaseTransformVisitor } from "./baseTransform";
 
 class Transform extends _Transform {}
 
@@ -27,3 +28,5 @@ export function mergeTransformer(from: Transform, to: Transform): void {
   to.readFile = from.readFile;
   to.listFiles = from.listFiles;
 }
+
+export class TransformVisitor extends Mixin(BaseTransformVisitor, Transform) {}
