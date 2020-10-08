@@ -4,6 +4,7 @@ import {
   DeclarationStatement,
   Source,
   Node,
+  SourceKind,
 } from "../as";
 import { ASTBuilder } from "./astBuilder";
 
@@ -17,12 +18,26 @@ export function isDecorator(name: string): (node: DecoratorNode) => boolean {
   return (node) => decorates(node, name);
 }
 
+
 export function hasDecorator(
-  node: DeclarationStatement,
+  node: DeclarationStatement | {declaration: DeclarationStatement},
   name: string
 ): boolean {
+  let decl;
+  if (node instanceof DeclarationStatement) {
+    decl = node;
+  } else {
+    decl = node.declaration; 
+  } 
   // because it could be undefined
-  return node.decorators?.some(isDecorator(name)) == true;
+  return decl.decorators?.some(isDecorator(name)) == true;
+}
+
+export function getDecorator(
+  node: DeclarationStatement,
+  name: string
+): DecoratorNode {
+  return node.decorators?.find(isDecorator(name))!;
 }
 
 export function isLibrary(node: Source): boolean {
@@ -39,4 +54,8 @@ export function toString(node: Node): string {
 
 export function cloneNode<T extends Node>(node: T): T {
   return cloneDeep(node);
+}
+
+export function isUserEntry(source: Source): boolean {
+  return source.sourceKind == SourceKind.USER_ENTRY;
 }

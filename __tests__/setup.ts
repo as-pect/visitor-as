@@ -14,7 +14,7 @@ export function compileExample(code: string, transform: string): string[] {
   return res.stdout.toString().trim().split("\n");
 }
 
-function compile(code: string, transform: string): MemoryResult {
+export function compile(code: string, transform: string): MemoryResult {
   const baseDir = process.cwd();
   const res = <MemoryResult>asc.compileString(code, {
     transform,
@@ -27,9 +27,8 @@ function compile(code: string, transform: string): MemoryResult {
   return res;
 }
 
-export function compileAndRun(code: string, transform: string): void {
+export function compileAndInit(code: string, transform: string) {
   const res = compile(code, transform);
   const imports = { /* imports go here */ };
-  const wasmModule = loader.instantiateSync(res.binary!.buffer, imports);
-
+  return loader.instantiateSync(res.binary!.buffer, imports);
 }

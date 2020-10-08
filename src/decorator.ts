@@ -8,8 +8,9 @@ import {
   FunctionDeclaration,
   Source,
   DecoratorNode,
+  DeclarationStatement,
 } from "../as";
-import { decorates, not, isLibrary } from "./utils";
+import { decorates, not, isLibrary, getDecorator } from "./utils";
 
 export function registerDecorator(decorator: DecoratorVisitor) {
   TopLevelDecorator.registerVisitor(decorator);
@@ -43,6 +44,7 @@ export class TopLevelDecorator extends PathTransformVisitor {
     mergeTransformer(this, this.visitor);
     this.visit(this.program.sources.filter(this.visitor.sourceFilter));
   }
+
 }
 
 export abstract class Decorator extends PathTransformVisitor {
@@ -54,6 +56,10 @@ export abstract class Decorator extends PathTransformVisitor {
   }
 
   abstract get name(): string;
+
+  getDecorator(node: DeclarationStatement): DecoratorNode {
+    return getDecorator(node, this.name);
+  }
 }
 
 export abstract class ClassDecorator extends Decorator {
