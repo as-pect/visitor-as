@@ -1,4 +1,4 @@
-import { compileExample } from "./setup";
+import { compile, compileAndInit, compileExample } from "./setup";
 import { SimpleParser, ASTBuilder } from '../src';
 
 const FOO: string = `
@@ -81,3 +81,17 @@ describe("Parser", () => {
   });
 
 });
+
+const EXPORT_AS = `
+@exportAs("new")
+export function main(): u32 {
+  return 42;
+}
+`
+
+describe("exportAs", () => {
+  it("should rename exported function", () => {
+    let res = compileAndInit(EXPORT_AS, "./src/examples/exportAs.ts");
+    expect((<any>res.exports)["new"]()).toBe(42);
+  })
+})
