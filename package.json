@@ -13,10 +13,10 @@
     "build": "rimraf dist/ && tsc"
   },
   "devDependencies": {
-    "@as-pect/cli": "^4.0.0",
+    "@as-pect/cli": "^6.0.0",
     "@types/jest": "^25.1.4",
     "@types/node": "^13.9.1",
-    "assemblyscript": "^0.14.8",
+    "assemblyscript": "^0.18.9",
     "jest": "^25.1.0",
     "prettier": "^2.0.4",
     "rimraf": "^3.0.2",

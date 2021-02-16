@@ -1,5 +1,5 @@
 import * as asc from "assemblyscript/cli/asc";
-import * as loader from "assemblyscript/lib/loader";
+import * as loader from "assemblyscript/lib/loader/umd";
 
 const CompileStringResult = (false as true) && asc.compileString("");
 type CompileStringResultType = typeof CompileStringResult;
