@@ -17,12 +17,16 @@ export abstract class AbstractVisitor<T extends object> {
   visit(node: Collection<T> | null): void {
     if (node == null) return;
     if (node instanceof Array) {
-      node.map((node) => this.visit(node));
+      for (let i = 0; i < node.length; i++) {
+        this.visit(node[i]);
+      }
     } else if (node instanceof Map) {
+      console.log("hello here map");
       for (let _node of node.values()) {
         this.visit(_node);
       }
     } else if (isIterable(node)) {
+      console.log("hello here")
       //TODO: Find better way to test if iterable
       // @ts-ignore is iterable
       for (let _node of node) {

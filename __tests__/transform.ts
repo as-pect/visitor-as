@@ -1,8 +1,8 @@
-import { compileAndRun } from "./setup";
+import { compileAndInit } from "./setup";
 
 
 describe('hello world transform', () => {
   it("should not throw", () => {
-    compileAndRun("assert(foo() == 'hello world', 'should equal')", "./src/examples/functionCallTransform.ts")
+    compileAndInit("assert(foo() == 'hello world', 'should equal')", "./src/examples/functionCallTransform.ts")
   });
 });

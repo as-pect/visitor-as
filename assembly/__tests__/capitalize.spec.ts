@@ -1,4 +1,4 @@
-import { helloWorld } from "../strings";
+import { helloWorld } from "./strings";
 
 describe("Capitalize Visitor", () => {
   it("hello world --> HELLO WORLD", () => {

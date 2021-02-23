@@ -5,6 +5,8 @@ import {
   Source,
   Node,
   SourceKind,
+  FunctionDeclaration,
+  TypeNode,
 } from "../as";
 import { ASTBuilder } from "./astBuilder";
 
@@ -58,4 +60,36 @@ export function cloneNode<T extends Node>(node: T): T {
 
 export function isUserEntry(source: Source): boolean {
   return source.sourceKind == SourceKind.USER_ENTRY;
+}
+
+export function returnsVoid(node: FunctionDeclaration): boolean {
+  return toString(node.signature.returnType) === "void";
+}
+
+export function numOfParameters(node: FunctionDeclaration): number {
+  return node.signature.parameters.length;
+}
+
+export function isEntry(source: Source | Node): boolean {
+  return source.range.source.sourceKind == SourceKind.USER_ENTRY;
+}
+
+export function isClass(type: Node): boolean {
+  return type.kind == NodeKind.CLASSDECLARATION;
+}
+
+export function isField(mem: DeclarationStatement) {
+  return mem.kind == NodeKind.FIELDDECLARATION;
+}
+
+export function typeName(type: TypeNode | ClassDeclaration): string {
+  if (!isClass(type)) {
+    return toString(type);
+  }
+  type = <ClassDeclaration>type;
+  let className = toString(type.name);
+  if (type.isGeneric) {
+    className += "<" + type.typeParameters!.map(toString).join(", ") + ">";
+  }
+  return className;
 }

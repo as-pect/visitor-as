@@ -1,5 +1,12 @@
 {
+  "entries": [
+    "assembly/as/wasm/index.ts"
+  ],
   "options": {
-    "runtime": "stub"
+    "explicitStart": true,
+    "exportRuntime": true,
+    "initialMemory": 256,
+    "runtime": "incremental",
+    "measure": true
   }
 }

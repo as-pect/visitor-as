@@ -1,4 +1,4 @@
-import { usingIncludeBytes, hardCodedSAu8 } from '../includeBytesTest'
+import { usingIncludeBytes, hardCodedSAu8 } from './includeBytesTest'
 
 
 describe('function call replacement', () => {
