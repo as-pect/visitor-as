@@ -1,5 +1,5 @@
 /// <reference types="assemblyscript/std/portable" />
-import { TypeNode, Node, Source, NamedTypeNode, FunctionTypeNode, TypeParameterNode, IdentifierExpression, CallExpression, ClassExpression, ElementAccessExpression, FunctionExpression, InstanceOfExpression, LiteralExpression, NewExpression, ParenthesizedExpression, PropertyAccessExpression, TernaryExpression, UnaryPostfixExpression, UnaryPrefixExpression, BlockStatement, BreakStatement, ContinueStatement, DoStatement, EmptyStatement, ExportStatement, ExportDefaultStatement, ExportImportStatement, ExpressionStatement, ForStatement, IfStatement, ImportStatement, ReturnStatement, SwitchStatement, ThrowStatement, TryStatement, VariableStatement, WhileStatement, ClassDeclaration, EnumDeclaration, EnumValueDeclaration, FieldDeclaration, FunctionDeclaration, ImportDeclaration, InterfaceDeclaration, MethodDeclaration, NamespaceDeclaration, TypeDeclaration, VariableDeclaration, DecoratorNode, ExportMember, ParameterNode, SwitchCase, TypeName, ArrayLiteralExpression, ObjectLiteralExpression, FloatLiteralExpression, StringLiteralExpression, RegexpLiteralExpression, UnaryExpression, DeclarationStatement, AssertionExpression, BinaryExpression, CommaExpression, IntegerLiteralExpression, ForOfStatement, IndexSignatureNode } from "../as";
+import { TypeNode, Node, Source, NamedTypeNode, FunctionTypeNode, TypeParameterNode, IdentifierExpression, CallExpression, ClassExpression, ElementAccessExpression, FunctionExpression, InstanceOfExpression, LiteralExpression, NewExpression, ParenthesizedExpression, PropertyAccessExpression, TernaryExpression, UnaryPostfixExpression, UnaryPrefixExpression, BlockStatement, BreakStatement, ContinueStatement, DoStatement, EmptyStatement, ExportStatement, ExportDefaultStatement, ExportImportStatement, ExpressionStatement, ForStatement, IfStatement, ImportStatement, ReturnStatement, SwitchStatement, ThrowStatement, TryStatement, VariableStatement, WhileStatement, ClassDeclaration, EnumDeclaration, EnumValueDeclaration, FieldDeclaration, FunctionDeclaration, ImportDeclaration, InterfaceDeclaration, MethodDeclaration, NamespaceDeclaration, TypeDeclaration, VariableDeclaration, DecoratorNode, ExportMember, ParameterNode, SwitchCase, TypeName, ArrayLiteralExpression, ObjectLiteralExpression, FloatLiteralExpression, StringLiteralExpression, RegexpLiteralExpression, UnaryExpression, DeclarationStatement, AssertionExpression, BinaryExpression, CommaExpression, IntegerLiteralExpression, ForOfStatement, IndexSignatureNode, TemplateLiteralExpression } from "../as";
 import { AbstractVisitor } from "./visitor";
 /** An AST builder. */
 export declare class ASTBuilder extends AbstractVisitor<Node> {
@@ -30,8 +30,10 @@ export declare class ASTBuilder extends AbstractVisitor<Node> {
     visitFloatLiteralExpression(node: FloatLiteralExpression): void;
     visitInstanceOfExpression(node: InstanceOfExpression): void;
     visitIntegerLiteralExpression(node: IntegerLiteralExpression): void;
-    visitStringLiteral(str: string, singleQuoted?: bool): void;
+    visitStringLiteral(str: string): void;
+    private visitRawString;
     visitStringLiteralExpression(node: StringLiteralExpression): void;
+    visitTemplateLiteralExpression(node: TemplateLiteralExpression): void;
     visitRegexpLiteralExpression(node: RegexpLiteralExpression): void;
     visitNewExpression(node: NewExpression): void;
     visitParenthesizedExpression(node: ParenthesizedExpression): void;

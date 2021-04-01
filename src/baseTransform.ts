@@ -76,6 +76,7 @@ import {
   LiteralKind,
   CommentNode,
   DeclarationStatement,
+  TemplateLiteralExpression,
 } from "../as";
 
 import { AbstractTransformVisitor } from "./visitor";
@@ -397,27 +398,24 @@ export class BaseTransformVisitor extends AbstractTransformVisitor<Node> {
     switch (node.literalKind) {
       case LiteralKind.ARRAY: {
         return this.visitArrayLiteralExpression(<ArrayLiteralExpression>node);
-        break;
       }
       case LiteralKind.FLOAT: {
         return this.visitFloatLiteralExpression(<FloatLiteralExpression>node);
-        break;
       }
       case LiteralKind.INTEGER: {
         return this.visitIntegerLiteralExpression(<IntegerLiteralExpression>node);
-        break;
       }
       case LiteralKind.OBJECT: {
         return this.visitObjectLiteralExpression(<ObjectLiteralExpression>node);
-        break;
       }
       case LiteralKind.REGEXP: {
         return this.visitRegexpLiteralExpression(<RegexpLiteralExpression>node);
-        break;
       }
       case LiteralKind.STRING: {
         return this.visitStringLiteralExpression(<StringLiteralExpression>node);
-        break;
+      }
+      case LiteralKind.TEMPLATE: {
+        return this.visitTemplateLiteralExpression(<TemplateLiteralExpression>node);
       }
       default:
         throw new Error("Invalid LiteralKind: " + node.literalKind);
@@ -440,6 +438,8 @@ export class BaseTransformVisitor extends AbstractTransformVisitor<Node> {
     node.value = this.visitStringLiteral(node.value);
     return node; 
   }
+
+  visitTemplateLiteralExpression(node: TemplateLiteralExpression): TemplateLiteralExpression { return node; }
 
   visitRegexpLiteralExpression(node: RegexpLiteralExpression): RegexpLiteralExpression { return node; }
 
