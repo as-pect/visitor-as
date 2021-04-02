@@ -95,3 +95,12 @@ describe("exportAs", () => {
     expect((<any>res.exports)["new"]()).toBe(42);
   })
 })
+
+describe('hello world transform', () => {
+  it("should not throw", () => {
+    compileAndInit("assert(foo() == 'hello world', 'should equal')", "./src/examples/functionCallTransform.ts")
+  });
+  it("should handle \`'s", () => {
+    compileAndInit("assert(foo() == `hello world`, 'should equal')", "./src/examples/functionCallTransform.ts")
+  });
+});
