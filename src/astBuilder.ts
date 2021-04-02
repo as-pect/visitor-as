@@ -79,6 +79,7 @@ import {
   indent,
   ForOfStatement,
   IndexSignatureNode,
+  TemplateLiteralExpression,
 } from "../as";
 import { AbstractVisitor } from "./visitor";
 
@@ -90,7 +91,6 @@ export class ASTBuilder extends AbstractVisitor<Node> {
   _visit(node: Node): void {
     this.visitNode(node);
   }
-
   /** Rebuilds the textual source from the specified AST, as far as possible. */
   static build(node: Node): string {
     var builder = new ASTBuilder();
@@ -630,6 +630,10 @@ export class ASTBuilder extends AbstractVisitor<Node> {
         this.visitStringLiteralExpression(<StringLiteralExpression>node);
         break;
       }
+      case LiteralKind.TEMPLATE: {
+        this.visitTemplateLiteralExpression(<TemplateLiteralExpression>node);
+        break;
+      }
       case LiteralKind.REGEXP: {
         this.visitRegexpLiteralExpression(<RegexpLiteralExpression>node);
         break;
@@ -663,11 +667,16 @@ export class ASTBuilder extends AbstractVisitor<Node> {
     this.sb.push(i64_to_string(node.value));
   }
 
-  visitStringLiteral(str: string, singleQuoted: bool = false): void {
+  visitStringLiteral(str: string): void {
+    var sb = this.sb;
+    sb.push('"');
+    this.visitRawString(str, CharCode.DOUBLEQUOTE);
+    sb.push('"');
+  }
+
+  private visitRawString(str: string, quote: CharCode): void {
     var sb = this.sb;
     var off = 0;
-    var quote = singleQuoted ? "'" : '"';
-    sb.push(quote);
     var i = 0;
     for (let k = str.length; i < k; ) {
       switch (str.charCodeAt(i)) {
@@ -714,7 +723,7 @@ export class ASTBuilder extends AbstractVisitor<Node> {
           break;
         }
         case CharCode.DOUBLEQUOTE: {
-          if (!singleQuoted) {
+          if (quote == CharCode.DOUBLEQUOTE) {
             if (i > off) sb.push(str.substring(off, i));
             sb.push('\\"');
             off = ++i;
@@ -724,7 +733,7 @@ export class ASTBuilder extends AbstractVisitor<Node> {
           break;
         }
         case CharCode.SINGLEQUOTE: {
-          if (singleQuoted) {
+          if (quote == CharCode.SINGLEQUOTE) {
             if (i > off) sb.push(str.substring(off, i));
             sb.push("\\'");
             off = ++i;
@@ -739,6 +748,16 @@ export class ASTBuilder extends AbstractVisitor<Node> {
           off = ++i;
           break;
         }
+        case CharCode.BACKTICK: {
+          if (quote == CharCode.BACKTICK) {
+            if (i > off) sb.push(str.substring(off, i));
+            sb.push("\\`");
+            off = ++i;
+          } else {
+            ++i;
+          }
+          break;
+        }
         default: {
           ++i;
           break;
@@ -746,11 +765,28 @@ export class ASTBuilder extends AbstractVisitor<Node> {
       }
     }
     if (i > off) sb.push(str.substring(off, i));
-    sb.push(quote);
   }
 
   visitStringLiteralExpression(node: StringLiteralExpression): void {
     this.visitStringLiteral(node.value);
+  }
+
+  visitTemplateLiteralExpression(node: TemplateLiteralExpression): void {
+    var sb = this.sb;
+    var tag = node.tag;
+    var parts = node.parts;
+    var expressions = node.expressions;
+    if (tag) this.visitNode(tag);
+    sb.push("`");
+    this.visitRawString(parts[0], CharCode.BACKTICK);
+    assert(parts.length == expressions.length + 1);
+    for (let i = 0, k = expressions.length; i < k; ++i) {
+      sb.push("${");
+      this.visitNode(expressions[i]);
+      sb.push("}");
+      this.visitRawString(parts[i + 1], CharCode.BACKTICK);
+    }
+    sb.push("`");
   }
 
   visitRegexpLiteralExpression(node: RegexpLiteralExpression): void {

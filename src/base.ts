@@ -75,6 +75,7 @@ import {
   VoidStatement,
   LiteralKind,
   CommentNode,
+  TemplateLiteralExpression,
 } from "../as";
 
 import { AbstractVisitor } from "./visitor";
@@ -397,9 +398,11 @@ export class BaseVisitor extends AbstractVisitor<Node> {
     this.visitArguments(node.typeArguments, node.args);
   }
 
-  visitArguments(typeArguments: TypeNode[] | null, args: Expression[]): void {
+  visitArguments(
+    typeArguments: TypeNode[] | null,
 
-  }
+    args: Expression[]
+  ): void {}
 
   visitClassExpression(node: ClassExpression): void {
     this.visit(node.declaration);
@@ -420,10 +423,6 @@ export class BaseVisitor extends AbstractVisitor<Node> {
 
   visitLiteralExpression(node: LiteralExpression): void {
     switch (node.literalKind) {
-      case LiteralKind.ARRAY: {
-        this.visitArrayLiteralExpression(<ArrayLiteralExpression>node);
-        break;
-      }
       case LiteralKind.FLOAT: {
         this.visitFloatLiteralExpression(<FloatLiteralExpression>node);
         break;
@@ -432,16 +431,24 @@ export class BaseVisitor extends AbstractVisitor<Node> {
         this.visitIntegerLiteralExpression(<IntegerLiteralExpression>node);
         break;
       }
-      case LiteralKind.OBJECT: {
-        this.visitObjectLiteralExpression(<ObjectLiteralExpression>node);
+      case LiteralKind.STRING: {
+        this.visitStringLiteralExpression(<StringLiteralExpression>node);
+        break;
+      }
+      case LiteralKind.TEMPLATE: {
+        this.visitTemplateLiteralExpression(<TemplateLiteralExpression>node);
         break;
       }
       case LiteralKind.REGEXP: {
         this.visitRegexpLiteralExpression(<RegexpLiteralExpression>node);
         break;
       }
-      case LiteralKind.STRING: {
-        this.visitStringLiteralExpression(<StringLiteralExpression>node);
+      case LiteralKind.ARRAY: {
+        this.visitArrayLiteralExpression(<ArrayLiteralExpression>node);
+        break;
+      }
+      case LiteralKind.OBJECT: {
+        this.visitObjectLiteralExpression(<ObjectLiteralExpression>node);
         break;
       }
       default:
@@ -460,7 +467,11 @@ export class BaseVisitor extends AbstractVisitor<Node> {
 
   visitStringLiteral(str: string, singleQuoted?: boolean): void {}
 
-  visitStringLiteralExpression(node: StringLiteralExpression): void {}
+  visitStringLiteralExpression(node: StringLiteralExpression): void {
+    this.visitStringLiteral(node.value);
+  }
+
+  visitTemplateLiteralExpression(node: TemplateLiteralExpression): void {}
 
   visitRegexpLiteralExpression(node: RegexpLiteralExpression): void {}
 
@@ -528,7 +539,11 @@ export class BaseVisitor extends AbstractVisitor<Node> {
     }
   }
 
-  visitClassDeclaration(node: ClassDeclaration, isDefault?: boolean): void {
+  visitClassDeclaration(
+    node: ClassDeclaration,
+
+    isDefault?: boolean
+  ): void {
     this.visit(node.name);
     this.depth++;
     this.visit(node.decorators);
@@ -553,7 +568,11 @@ export class BaseVisitor extends AbstractVisitor<Node> {
 
   visitEmptyStatement(node: EmptyStatement): void {}
 
-  visitEnumDeclaration(node: EnumDeclaration, isDefault?: boolean): void {
+  visitEnumDeclaration(
+    node: EnumDeclaration,
+
+    isDefault?: boolean
+  ): void {
     this.visit(node.name);
     this.visit(node.decorators);
     this.visit(node.values);

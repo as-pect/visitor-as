@@ -1,12 +1,12 @@
-import * as asc from "assemblyscript/cli/asc";
+import { MemoryStream, compileString } from "../as";
 import * as loader from "assemblyscript/lib/loader/umd";
 
-const CompileStringResult = (false as true) && asc.compileString("");
+const CompileStringResult = (false as true) && compileString("");
 type CompileStringResultType = typeof CompileStringResult;
 
 interface MemoryResult extends CompileStringResultType {
-  stdout: asc.MemoryStream;
-  stderr: asc.MemoryStream;
+  stdout: MemoryStream;
+  stderr: MemoryStream;
 }
 
 export function compileExample(code: string, transform: string): string[] {
@@ -16,7 +16,7 @@ export function compileExample(code: string, transform: string): string[] {
 
 export function compile(code: string, transform: string): MemoryResult {
   const baseDir = process.cwd();
-  const res = <MemoryResult>asc.compileString(code, {
+  const res = <MemoryResult>compileString(code, {
     transform,
     baseDir,
   });
