@@ -399,14 +399,8 @@ export class BaseVisitor extends AbstractVisitor<Node> {
   }
 
   visitArguments(typeArguments: TypeNode[] | null, args: Expression[]): void {
-    let typeArgs = typeArguments ? typeArguments : [];
-    for(const typeArg of typeArgs) {
-      this.visitTypeNode(typeArg)
-    }
-
-    for(const arg of args) {
-      this.visit(arg)
-    }
+    this.visit(typeArguments);
+    this.visit(args);
   }
 
   visitClassExpression(node: ClassExpression): void {
