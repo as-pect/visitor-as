@@ -81,13 +81,13 @@ import {
   IndexSignatureNode,
   TemplateLiteralExpression,
 } from "../as";
-import { AbstractVisitor } from "./visitor";
+import { BaseVisitor } from "./base";
 
 // declare function i64_to_string(i: I64): string;
 // import { i64_to_string } from "../../../src/glue/i64"
 
 /** An AST builder. */
-export class ASTBuilder extends AbstractVisitor<Node> {
+export class ASTBuilder extends BaseVisitor {
   _visit(node: Node): void {
     this.visitNode(node);
   }
@@ -548,7 +548,7 @@ export class ASTBuilder extends AbstractVisitor<Node> {
     this.visitArguments(node.typeArguments, node.args);
   }
 
-  private visitArguments(
+  visitArguments(
     typeArguments: TypeNode[] | null,
     args: Expression[]
   ): void {

@@ -398,11 +398,10 @@ export class BaseVisitor extends AbstractVisitor<Node> {
     this.visitArguments(node.typeArguments, node.args);
   }
 
-  visitArguments(
-    typeArguments: TypeNode[] | null,
-
-    args: Expression[]
-  ): void {}
+  visitArguments(typeArguments: TypeNode[] | null, args: Expression[]): void {
+    this.visit(typeArguments);
+    this.visit(args);
+  }
 
   visitClassExpression(node: ClassExpression): void {
     this.visit(node.declaration);
