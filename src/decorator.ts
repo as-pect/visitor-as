@@ -58,7 +58,7 @@ export abstract class Decorator extends PathTransformVisitor {
   abstract get name(): string;
 
   getDecorator(node: DeclarationStatement): DecoratorNode {
-    return getDecorator(node, this.name);
+    return getDecorator(node, this.name)!;
   }
 }
 

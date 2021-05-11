@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { BaseVisitor } from "./base";
 import { Transform as _Transform } from "../as";
 import { ASTBuilder } from "./astBuilder";
@@ -14,15 +15,15 @@ export class ASTBuilderVisitor extends Mixin(ASTBuilder, Transform) {}
 export class PathTransformVisitor extends Mixin(PathVisitor, Transform) {}
 
 export function mergeTransformer(from: Transform, to: Transform): void {
-  //@ts-ignore
+  // @ts-ignore
   to.program = from.program;
-  //@ts-ignore
+  // @ts-ignore
   to.baseDir = from.baseDir;
-  //@ts-ignore
+  // @ts-ignore
   to.stdout = from.stdout;
-  //@ts-ignore
+  // @ts-ignore
   to.stderr = from.stderr;
-  //@ts-ignore
+  // @ts-ignore
   to.log = from.log;
   to.writeFile = from.writeFile;
   to.readFile = from.readFile;

@@ -66,7 +66,6 @@ import {
   StringLiteralExpression,
   RegexpLiteralExpression,
   UnaryExpression,
-  Statement,
   ArrowKind,
   ParameterKind,
   DeclarationStatement,
@@ -914,7 +913,7 @@ export class ASTBuilder extends BaseVisitor {
     }
   }
 
-  visitClassDeclaration(node: ClassDeclaration, isDefault: bool = false): void {
+  visitClassDeclaration(node: ClassDeclaration, isDefault = false): void {
     var decorators = node.decorators;
     if (decorators) {
       for (let i = 0, k = decorators.length; i < k; ++i) {
@@ -1007,7 +1006,7 @@ export class ASTBuilder extends BaseVisitor {
     /* nop */
   }
 
-  visitEnumDeclaration(node: EnumDeclaration, isDefault: bool = false): void {
+  visitEnumDeclaration(node: EnumDeclaration, isDefault = false): void {
     var sb = this.sb;
     if (isDefault) {
       sb.push("export default ");
@@ -1186,7 +1185,7 @@ export class ASTBuilder extends BaseVisitor {
 
   visitFunctionDeclaration(
     node: FunctionDeclaration,
-    isDefault: bool = false
+    isDefault = false
   ): void {
     var sb = this.sb;
     var decorators = node.decorators;
@@ -1358,7 +1357,7 @@ export class ASTBuilder extends BaseVisitor {
 
   visitInterfaceDeclaration(
     node: InterfaceDeclaration,
-    isDefault: bool = false
+    isDefault = false
   ): void {
     var decorators = node.decorators;
     if (decorators) {
@@ -1419,7 +1418,7 @@ export class ASTBuilder extends BaseVisitor {
 
   visitNamespaceDeclaration(
     node: NamespaceDeclaration,
-    isDefault: bool = false
+    isDefault = false
   ): void {
     var decorators = node.decorators;
     if (decorators) {

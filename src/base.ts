@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import {
   Node,
   NodeKind,
@@ -81,9 +82,9 @@ import {
 import { AbstractVisitor } from "./visitor";
 
 export class BaseVisitor extends AbstractVisitor<Node> {
-  depth: number = 0;
+  depth = 0;
 
-  _visit(node: Node): void {
+  protected _visit(node: Node): void {
     switch (node.kind) {
       case NodeKind.SOURCE: {
         this.visitSource(<Source>node);
@@ -141,7 +142,9 @@ export class BaseVisitor extends AbstractVisitor<Node> {
         break;
       }
       case NodeKind.ELEMENTACCESS: {
-        this.visitElementAccessExpression(<ElementAccessExpression>node);
+        this.visitElementAccessExpression(
+          <ElementAccessExpression>node
+        );
         break;
       }
       case NodeKind.FUNCTION: {
@@ -161,11 +164,15 @@ export class BaseVisitor extends AbstractVisitor<Node> {
         break;
       }
       case NodeKind.PARENTHESIZED: {
-        this.visitParenthesizedExpression(<ParenthesizedExpression>node);
+        this.visitParenthesizedExpression(
+          <ParenthesizedExpression>node
+        );
         break;
       }
       case NodeKind.PROPERTYACCESS: {
-        this.visitPropertyAccessExpression(<PropertyAccessExpression>node);
+        this.visitPropertyAccessExpression(
+          <PropertyAccessExpression>node
+        );
         break;
       }
       case NodeKind.TERNARY: {
@@ -338,13 +345,11 @@ export class BaseVisitor extends AbstractVisitor<Node> {
     }
   }
 
-  visitTypeNode(node: TypeNode): void {}
+  visitTypeNode(node: TypeNode): void { }
 
   visitTypeName(node: TypeName): void {
     this.visit(node.identifier);
-    if (node.next) {
-      this.visit(node.next);
-    }
+    this.visit(node.next);
   }
 
   visitNamedTypeNode(node: NamedTypeNode): void {
@@ -353,38 +358,30 @@ export class BaseVisitor extends AbstractVisitor<Node> {
   }
 
   visitFunctionTypeNode(node: FunctionTypeNode): void {
-    for (let param of node.parameters) {
-      this.visitParameter(param);
-    }
+    this.visit(node.parameters);
     this.visit(node.returnType);
+    this.visit(node.explicitThisType);
   }
 
   visitTypeParameter(node: TypeParameterNode): void {
     this.visit(node.name);
-    if (node.extendsType) this.visit(node.extendsType);
-    if (node.defaultType) this.visit(node.defaultType);
+    this.visit(node.extendsType);
+    this.visit(node.defaultType);
   }
 
-  visitIdentifierExpression(node: IdentifierExpression): void {}
+  visitIdentifierExpression(node: IdentifierExpression): void { }
 
   visitArrayLiteralExpression(node: ArrayLiteralExpression): void {
-    node.elementExpressions.map((e: Expression) => {
-      if (e) this.visit(e);
-    });
+    this.visit(node.elementExpressions);
   }
 
   visitObjectLiteralExpression(node: ObjectLiteralExpression): void {
-    if (node.values && node.names) {
-      assert(node.values.length == node.names.length);
-      for (let i = 0; i < node.values.length; i++) {
-        this.visit(node.names[i]);
-        this.visit(node.values[i]);
-      }
-    }
+    this.visit(node.names);
+    this.visit(node.values);
   }
 
   visitAssertionExpression(node: AssertionExpression): void {
-    if (node.toType) this.visit(node.toType);
+    this.visit(node.toType);
     this.visit(node.expression);
   }
 
@@ -427,19 +424,27 @@ export class BaseVisitor extends AbstractVisitor<Node> {
         break;
       }
       case LiteralKind.INTEGER: {
-        this.visitIntegerLiteralExpression(<IntegerLiteralExpression>node);
+        this.visitIntegerLiteralExpression(
+          <IntegerLiteralExpression>node
+        );
         break;
       }
       case LiteralKind.STRING: {
-        this.visitStringLiteralExpression(<StringLiteralExpression>node);
+        this.visitStringLiteralExpression(
+          <StringLiteralExpression>node
+        );
         break;
       }
       case LiteralKind.TEMPLATE: {
-        this.visitTemplateLiteralExpression(<TemplateLiteralExpression>node);
+        this.visitTemplateLiteralExpression(
+          <TemplateLiteralExpression>node
+        );
         break;
       }
       case LiteralKind.REGEXP: {
-        this.visitRegexpLiteralExpression(<RegexpLiteralExpression>node);
+        this.visitRegexpLiteralExpression(
+          <RegexpLiteralExpression>node
+        );
         break;
       }
       case LiteralKind.ARRAY: {
@@ -447,7 +452,9 @@ export class BaseVisitor extends AbstractVisitor<Node> {
         break;
       }
       case LiteralKind.OBJECT: {
-        this.visitObjectLiteralExpression(<ObjectLiteralExpression>node);
+        this.visitObjectLiteralExpression(
+          <ObjectLiteralExpression>node
+        );
         break;
       }
       default:
@@ -455,28 +462,29 @@ export class BaseVisitor extends AbstractVisitor<Node> {
     }
   }
 
-  visitFloatLiteralExpression(node: FloatLiteralExpression): void {}
+  visitFloatLiteralExpression(node: FloatLiteralExpression): void { }
 
   visitInstanceOfExpression(node: InstanceOfExpression): void {
     this.visit(node.expression);
     this.visit(node.isType);
   }
 
-  visitIntegerLiteralExpression(node: IntegerLiteralExpression): void {}
+  visitIntegerLiteralExpression(node: IntegerLiteralExpression): void { }
 
-  visitStringLiteral(str: string, singleQuoted?: boolean): void {}
+  visitStringLiteral(str: string, singleQuoted: bool = false): void { }
 
   visitStringLiteralExpression(node: StringLiteralExpression): void {
     this.visitStringLiteral(node.value);
   }
 
-  visitTemplateLiteralExpression(node: TemplateLiteralExpression): void {}
+  visitTemplateLiteralExpression(node: TemplateLiteralExpression): void { }
 
-  visitRegexpLiteralExpression(node: RegexpLiteralExpression): void {}
+  visitRegexpLiteralExpression(node: RegexpLiteralExpression): void { }
 
   visitNewExpression(node: NewExpression): void {
     this.visit(node.typeArguments);
     this.visitArguments(node.typeArguments, node.args);
+    this.visit(node.args);
   }
 
   visitParenthesizedExpression(node: ParenthesizedExpression): void {
@@ -506,19 +514,19 @@ export class BaseVisitor extends AbstractVisitor<Node> {
     this.visit(node.operand);
   }
 
-  visitSuperExpression(node: SuperExpression): void {}
+  visitSuperExpression(node: SuperExpression): void { }
 
-  visitFalseExpression(node: FalseExpression): void {}
+  visitFalseExpression(node: FalseExpression): void { }
 
-  visitTrueExpression(node: TrueExpression): void {}
+  visitTrueExpression(node: TrueExpression): void { }
 
-  visitThisExpression(node: ThisExpression): void {}
+  visitThisExpression(node: ThisExpression): void { }
 
-  visitNullExperssion(node: NullExpression): void {}
+  visitNullExperssion(node: NullExpression): void { }
 
-  visitConstructorExpression(node: ConstructorExpression): void {}
+  visitConstructorExpression(node: ConstructorExpression): void { }
 
-  visitNodeAndTerminate(statement: Statement): void {}
+  visitNodeAndTerminate(statement: Statement): void { }
 
   visitBlockStatement(node: BlockStatement): void {
     this.depth++;
@@ -527,34 +535,24 @@ export class BaseVisitor extends AbstractVisitor<Node> {
   }
 
   visitBreakStatement(node: BreakStatement): void {
-    if (node.label) {
-      this.visit(node.label);
-    }
+    this.visit(node.label);
   }
 
   visitContinueStatement(node: ContinueStatement): void {
-    if (node.label) {
-      this.visit(node.label);
-    }
+    this.visit(node.label);
   }
 
-  visitClassDeclaration(
-    node: ClassDeclaration,
-
-    isDefault?: boolean
-  ): void {
+  visitClassDeclaration(node: ClassDeclaration, isDefault = false): void {
     this.visit(node.name);
     this.depth++;
     this.visit(node.decorators);
     assert(
-      node.isGeneric ? node.typeParameters != null : node.typeParameters == null
+      node.isGeneric
+        ? node.typeParameters != null
+        : node.typeParameters == null
     );
-    if (node.isGeneric) {
-      this.visit(node.typeParameters);
-    }
-    if (node.extendsType) {
-      this.visit(node.extendsType);
-    }
+    this.visit(node.typeParameters);
+    this.visit(node.extendsType);
     this.visit(node.implementsTypes);
     this.visit(node.members);
     this.depth--;
@@ -565,13 +563,9 @@ export class BaseVisitor extends AbstractVisitor<Node> {
     this.visit(node.statement);
   }
 
-  visitEmptyStatement(node: EmptyStatement): void {}
+  visitEmptyStatement(node: EmptyStatement): void { }
 
-  visitEnumDeclaration(
-    node: EnumDeclaration,
-
-    isDefault?: boolean
-  ): void {
+  visitEnumDeclaration(node: EnumDeclaration, isDefault = false): void {
     this.visit(node.name);
     this.visit(node.decorators);
     this.visit(node.values);
@@ -579,9 +573,7 @@ export class BaseVisitor extends AbstractVisitor<Node> {
 
   visitEnumValueDeclaration(node: EnumValueDeclaration): void {
     this.visit(node.name);
-    if (node.initializer) {
-      this.visit(node.initializer);
-    }
+    this.visit(node.initializer);
   }
 
   visitExportImportStatement(node: ExportImportStatement): void {
@@ -595,9 +587,7 @@ export class BaseVisitor extends AbstractVisitor<Node> {
   }
 
   visitExportStatement(node: ExportStatement): void {
-    if (node.path) {
-      this.visit(node.path);
-    }
+    this.visit(node.path);
     this.visit(node.members);
   }
 
@@ -611,45 +601,35 @@ export class BaseVisitor extends AbstractVisitor<Node> {
 
   visitFieldDeclaration(node: FieldDeclaration): void {
     this.visit(node.name);
-    if (node.type) {
-      this.visit(node.type);
-    }
-    if (node.initializer) {
-      this.visit(node.initializer);
-    }
+    this.visit(node.type);
+    this.visit(node.initializer);
     this.visit(node.decorators);
   }
 
   visitForStatement(node: ForStatement): void {
-    if (node.initializer) this.visit(node.initializer);
-    if (node.condition) this.visit(node.condition);
-    if (node.incrementor) this.visit(node.incrementor);
+    this.visit(node.initializer);
+    this.visit(node.condition);
+    this.visit(node.incrementor);
     this.visit(node.statement);
   }
 
   visitFunctionDeclaration(
     node: FunctionDeclaration,
-    isDefault?: boolean
+    isDefault = false
   ): void {
     this.visit(node.name);
     this.visit(node.decorators);
-    if (node.isGeneric) {
-      this.visit(node.typeParameters);
-    }
+    this.visit(node.typeParameters);
     this.visit(node.signature);
     this.depth++;
-    if (node.body) this.visit(node.body);
+    this.visit(node.body);
     this.depth--;
-  }
-
-  visitFunctionCommon(node: FunctionDeclaration): void {
-    // this.visit(node.name)
   }
 
   visitIfStatement(node: IfStatement): void {
     this.visit(node.condition);
     this.visit(node.ifTrue);
-    if (node.ifFalse) this.visit(node.ifFalse);
+    this.visit(node.ifFalse);
   }
 
   visitImportDeclaration(node: ImportDeclaration): void {
@@ -659,26 +639,23 @@ export class BaseVisitor extends AbstractVisitor<Node> {
   }
 
   visitImportStatement(node: ImportStatement): void {
-    if (node.namespaceName) this.visit(node.namespaceName);
+    this.visit(node.namespaceName);
     this.visit(node.declarations);
   }
 
   visitIndexSignature(node: IndexSignatureNode): void {
-    // this.visit(node.name);
-    // this.visit(node.keyType);
-    // this.visit(node.valueType);
+    this.visit(node.keyType);
+    this.visit(node.valueType);
   }
 
   visitInterfaceDeclaration(
     node: InterfaceDeclaration,
-    isDefault?: boolean
+    isDefault = false
   ): void {
     this.visit(node.name);
-    if (node.isGeneric) {
-      this.visit(node.typeParameters);
-    }
+    this.visit(node.typeParameters);
     this.visit(node.implementsTypes);
-    if (node.extendsType) this.visit(node.extendsType);
+    this.visit(node.extendsType);
     this.depth++;
     this.visit(node.members);
     this.depth--;
@@ -686,19 +663,17 @@ export class BaseVisitor extends AbstractVisitor<Node> {
 
   visitMethodDeclaration(node: MethodDeclaration): void {
     this.visit(node.name);
-    if (node.isGeneric) {
-      this.visit(node.typeParameters);
-    }
+    this.visit(node.typeParameters);
     this.visit(node.signature);
     this.visit(node.decorators);
     this.depth++;
-    if (node.body) this.visit(node.body);
+    this.visit(node.body);
     this.depth--;
   }
 
   visitNamespaceDeclaration(
     node: NamespaceDeclaration,
-    isDefault?: boolean
+    isDefault = false
   ): void {
     this.visit(node.name);
     this.visit(node.decorators);
@@ -706,11 +681,11 @@ export class BaseVisitor extends AbstractVisitor<Node> {
   }
 
   visitReturnStatement(node: ReturnStatement): void {
-    if (node.value) this.visit(node.value);
+    this.visit(node.value);
   }
 
   visitSwitchCase(node: SwitchCase): void {
-    if (node.label) this.visit(node.label);
+    this.visit(node.label);
     this.visit(node.statements);
   }
 
@@ -727,7 +702,7 @@ export class BaseVisitor extends AbstractVisitor<Node> {
 
   visitTryStatement(node: TryStatement): void {
     this.visit(node.statements);
-    if (node.catchVariable) this.visit(node.catchVariable);
+    this.visit(node.catchVariable);
     this.visit(node.catchStatements);
     this.visit(node.finallyStatements);
   }
@@ -741,8 +716,8 @@ export class BaseVisitor extends AbstractVisitor<Node> {
 
   visitVariableDeclaration(node: VariableDeclaration): void {
     this.visit(node.name);
-    if (node.type) this.visit(node.type);
-    if (node.initializer) this.visit(node.initializer);
+    this.visit(node.type);
+    this.visit(node.initializer);
   }
 
   visitVariableStatement(node: VariableStatement): void {
@@ -757,9 +732,9 @@ export class BaseVisitor extends AbstractVisitor<Node> {
     this.depth--;
   }
 
-  visitVoidStatement(node: VoidStatement): void {}
+  visitVoidStatement(node: VoidStatement): void { }
 
-  visitComment(node: CommentNode): void {}
+  visitComment(node: CommentNode): void { }
 
   visitDecoratorNode(node: DecoratorNode): void {
     this.visit(node.name);
@@ -768,10 +743,8 @@ export class BaseVisitor extends AbstractVisitor<Node> {
 
   visitParameter(node: ParameterNode): void {
     this.visit(node.name);
-    if (node.implicitFieldDeclaration) {
-      this.visit(node.implicitFieldDeclaration);
-    }
-    if (node.initializer) this.visit(node.initializer);
+    this.visit(node.implicitFieldDeclaration);
+    this.visit(node.initializer);
     this.visit(node.type);
   }
 }
