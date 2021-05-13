@@ -1,5 +1,6 @@
 export * from "./base";
 export * from "./transformer";
+export * from "./baseTransform";
 export * from "./visitor";
 export * from "./astBuilder";
 export * from "./decorator";
