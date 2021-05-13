@@ -1,8 +1,7 @@
-/// <reference types="assemblyscript/std/portable" />
-import { TypeNode, Node, Source, NamedTypeNode, FunctionTypeNode, TypeParameterNode, IdentifierExpression, CallExpression, ClassExpression, ElementAccessExpression, FunctionExpression, InstanceOfExpression, LiteralExpression, NewExpression, ParenthesizedExpression, PropertyAccessExpression, TernaryExpression, UnaryPostfixExpression, UnaryPrefixExpression, BlockStatement, BreakStatement, ContinueStatement, DoStatement, EmptyStatement, ExportStatement, ExportDefaultStatement, ExportImportStatement, ExpressionStatement, ForStatement, IfStatement, ImportStatement, ReturnStatement, SwitchStatement, ThrowStatement, TryStatement, VariableStatement, WhileStatement, ClassDeclaration, EnumDeclaration, EnumValueDeclaration, FieldDeclaration, FunctionDeclaration, ImportDeclaration, InterfaceDeclaration, MethodDeclaration, NamespaceDeclaration, TypeDeclaration, VariableDeclaration, DecoratorNode, ExportMember, ParameterNode, SwitchCase, TypeName, ArrayLiteralExpression, ObjectLiteralExpression, FloatLiteralExpression, StringLiteralExpression, RegexpLiteralExpression, UnaryExpression, DeclarationStatement, AssertionExpression, BinaryExpression, CommaExpression, IntegerLiteralExpression, ForOfStatement, IndexSignatureNode, TemplateLiteralExpression } from "../as";
-import { AbstractVisitor } from "./visitor";
+import { TypeNode, Node, Source, NamedTypeNode, FunctionTypeNode, TypeParameterNode, IdentifierExpression, CallExpression, ClassExpression, ElementAccessExpression, FunctionExpression, InstanceOfExpression, LiteralExpression, NewExpression, ParenthesizedExpression, PropertyAccessExpression, TernaryExpression, UnaryPostfixExpression, UnaryPrefixExpression, BlockStatement, BreakStatement, ContinueStatement, DoStatement, EmptyStatement, ExportStatement, ExportDefaultStatement, ExportImportStatement, ExpressionStatement, ForStatement, IfStatement, ImportStatement, ReturnStatement, SwitchStatement, ThrowStatement, TryStatement, VariableStatement, WhileStatement, ClassDeclaration, EnumDeclaration, EnumValueDeclaration, FieldDeclaration, FunctionDeclaration, ImportDeclaration, InterfaceDeclaration, MethodDeclaration, NamespaceDeclaration, TypeDeclaration, VariableDeclaration, DecoratorNode, ExportMember, ParameterNode, SwitchCase, TypeName, ArrayLiteralExpression, Expression, ObjectLiteralExpression, FloatLiteralExpression, StringLiteralExpression, RegexpLiteralExpression, UnaryExpression, DeclarationStatement, AssertionExpression, BinaryExpression, CommaExpression, IntegerLiteralExpression, ForOfStatement, IndexSignatureNode, TemplateLiteralExpression } from "../as";
+import { BaseVisitor } from "./base";
 /** An AST builder. */
-export declare class ASTBuilder extends AbstractVisitor<Node> {
+export declare class ASTBuilder extends BaseVisitor {
     _visit(node: Node): void;
     /** Rebuilds the textual source from the specified AST, as far as possible. */
     static build(node: Node): string;
@@ -21,7 +20,7 @@ export declare class ASTBuilder extends AbstractVisitor<Node> {
     visitAssertionExpression(node: AssertionExpression): void;
     visitBinaryExpression(node: BinaryExpression): void;
     visitCallExpression(node: CallExpression): void;
-    private visitArguments;
+    visitArguments(typeArguments: TypeNode[] | null, args: Expression[]): void;
     visitClassExpression(node: ClassExpression): void;
     visitCommaExpression(node: CommaExpression): void;
     visitElementAccessExpression(node: ElementAccessExpression): void;
@@ -46,10 +45,10 @@ export declare class ASTBuilder extends AbstractVisitor<Node> {
     visitBlockStatement(node: BlockStatement): void;
     visitBreakStatement(node: BreakStatement): void;
     visitContinueStatement(node: ContinueStatement): void;
-    visitClassDeclaration(node: ClassDeclaration, isDefault?: bool): void;
+    visitClassDeclaration(node: ClassDeclaration, isDefault?: boolean): void;
     visitDoStatement(node: DoStatement): void;
     visitEmptyStatement(node: EmptyStatement): void;
-    visitEnumDeclaration(node: EnumDeclaration, isDefault?: bool): void;
+    visitEnumDeclaration(node: EnumDeclaration, isDefault?: boolean): void;
     visitEnumValueDeclaration(node: EnumValueDeclaration): void;
     visitExportImportStatement(node: ExportImportStatement): void;
     visitExportMember(node: ExportMember): void;
@@ -59,15 +58,15 @@ export declare class ASTBuilder extends AbstractVisitor<Node> {
     visitFieldDeclaration(node: FieldDeclaration): void;
     visitForStatement(node: ForStatement): void;
     visitForOfStatement(node: ForOfStatement): void;
-    visitFunctionDeclaration(node: FunctionDeclaration, isDefault?: bool): void;
+    visitFunctionDeclaration(node: FunctionDeclaration, isDefault?: boolean): void;
     visitFunctionCommon(node: FunctionDeclaration): void;
     visitIfStatement(node: IfStatement): void;
     visitImportDeclaration(node: ImportDeclaration): void;
     visitImportStatement(node: ImportStatement): void;
     visitIndexSignature(node: IndexSignatureNode): void;
-    visitInterfaceDeclaration(node: InterfaceDeclaration, isDefault?: bool): void;
+    visitInterfaceDeclaration(node: InterfaceDeclaration, isDefault?: boolean): void;
     visitMethodDeclaration(node: MethodDeclaration): void;
-    visitNamespaceDeclaration(node: NamespaceDeclaration, isDefault?: bool): void;
+    visitNamespaceDeclaration(node: NamespaceDeclaration, isDefault?: boolean): void;
     visitReturnStatement(node: ReturnStatement): void;
     visitSwitchCase(node: SwitchCase): void;
     visitSwitchStatement(node: SwitchStatement): void;

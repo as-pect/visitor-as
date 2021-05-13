@@ -2,8 +2,7 @@ import { Node, Source, NamedTypeNode, FunctionTypeNode, TypeName, TypeParameterN
 import { AbstractTransformVisitor } from "./visitor";
 export declare class BaseTransformVisitor extends AbstractTransformVisitor<Node> {
     depth: number;
-    _visit(node: Node): Node;
-    visitStatement(node: Statement): Statement;
+    protected _visit(node: Node): Node;
     visitSource(node: Source): Source;
     visitTypeNode(node: TypeNode): TypeNode;
     visitTypeName(node: TypeName): TypeName;
@@ -16,7 +15,6 @@ export declare class BaseTransformVisitor extends AbstractTransformVisitor<Node>
     visitAssertionExpression(node: AssertionExpression): AssertionExpression;
     visitBinaryExpression(node: BinaryExpression): BinaryExpression;
     visitCallExpression(node: CallExpression): Expression;
-    visitArguments(typeArguments: TypeNode[] | null, args: Expression[]): void;
     visitClassExpression(node: ClassExpression): ClassExpression;
     visitCommaExpression(node: CommaExpression): CommaExpression;
     visitElementAccessExpression(node: ElementAccessExpression): ElementAccessExpression;
@@ -59,7 +57,6 @@ export declare class BaseTransformVisitor extends AbstractTransformVisitor<Node>
     visitFieldDeclaration(node: FieldDeclaration): FieldDeclaration;
     visitForStatement(node: ForStatement): ForStatement;
     visitFunctionDeclaration(node: FunctionDeclaration, isDefault?: boolean): FunctionDeclaration;
-    visitFunctionCommon(node: FunctionDeclaration): FunctionDeclaration;
     visitIfStatement(node: IfStatement): IfStatement;
     visitImportDeclaration(node: ImportDeclaration): ImportDeclaration;
     visitImportStatement(node: ImportStatement): ImportStatement;

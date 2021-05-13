@@ -22,7 +22,7 @@ export class SimpleParser {
     return res;
   }
 
-  static parseStatement(s: string, topLevel: boolean = false): Statement {
+  static parseStatement(s: string, topLevel = false): Statement {
     let res = this.parser.parseStatement(this.getTokenizer(s), topLevel);
     if (res == null) {
       throw new Error("Failed to parse the statement: '" + s + "'");
