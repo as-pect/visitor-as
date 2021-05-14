@@ -5,7 +5,10 @@ import {
   SourceKind,
   Expression,
   Statement,
+  ClassDeclaration,
+  Node,
 } from "../as";
+import { RangeTransform } from "./transformRange";
 
 export class SimpleParser {
   private static parser = new Parser();
@@ -28,5 +31,13 @@ export class SimpleParser {
       throw new Error("Failed to parse the statement: '" + s + "'");
     }
     return res;
+  }
+
+  static parseClassMember(s: string, _class: ClassDeclaration): Node {
+    let res = this.parser.parseClassMember(this.getTokenizer(s), _class);
+    if (res == null) {
+      throw new Error("Failed to parse the statement: '" + s + "'");
+    }
+    return RangeTransform.visit(res, _class);
   }
 }
