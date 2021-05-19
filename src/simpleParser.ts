@@ -11,10 +11,10 @@ import {
 import { RangeTransform } from "./transformRange";
 
 export class SimpleParser {
-  private static parser = new Parser();
+  private static get parser(): Parser { return new Parser() };
 
-  private static getTokenizer(s: string): Tokenizer {
-    return new Tokenizer(new Source(SourceKind.USER, "index.ts", s));
+  private static getTokenizer(s: string, file: string  = "index.ts"): Tokenizer {
+    return new Tokenizer(new Source(SourceKind.USER, file, s));
   }
 
   static parseExpression(s: string): Expression {
@@ -34,9 +34,9 @@ export class SimpleParser {
   }
 
   static parseClassMember(s: string, _class: ClassDeclaration): Node {
-    let res = this.parser.parseClassMember(this.getTokenizer(s), _class);
+    let res = this.parser.parseClassMember(this.getTokenizer(s, _class.range.source.normalizedPath), _class);
     if (res == null) {
-      throw new Error("Failed to parse the statement: '" + s + "'");
+      throw new Error("Failed to parse the class member: '" + s + "'");
     }
     return RangeTransform.visit(res, _class);
   }
