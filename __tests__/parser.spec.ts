@@ -1,5 +1,4 @@
-import { ClassDeclaration, Node, NodeKind } from "../as";
-import { ASTBuilder, BaseVisitor, SimpleParser } from "../src";
+import { ASTBuilder, SimpleParser } from "../src";
 
 function expr(s: string): void {
   expect(ASTBuilder.build(SimpleParser.parseExpression(s)))
@@ -37,9 +36,9 @@ describe("Parser", () => {
   });
 
   describe("top level", () => {
-    let _class: ClassDeclaration;
+    let _class: any;
     beforeEach(() => {
-      _class = <ClassDeclaration> SimpleParser.parseTopLevelStatement(foo);
+      _class = SimpleParser.parseTopLevelStatement(foo);
     });
 
     it("should have a field", () => {

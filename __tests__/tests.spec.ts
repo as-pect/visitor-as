@@ -1,5 +1,4 @@
-import { compile, compileAndInit, compileExample } from "./setup";
-import { SimpleParser, ASTBuilder } from '../src';
+import { compileAndInit, compileExample } from "./setup";
 
 const FOO: string = `
 @list
