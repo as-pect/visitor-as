@@ -5,17 +5,18 @@ import {
   SourceKind,
   Expression,
   Statement,
+  NamespaceDeclaration,
 } from "../as";
 
 export class SimpleParser {
-  private static parser = new Parser();
 
   private static getTokenizer(s: string): Tokenizer {
     return new Tokenizer(new Source(SourceKind.USER, "index.ts", s));
   }
 
   static parseExpression(s: string): Expression {
-    let res = this.parser.parseExpression(this.getTokenizer(s));
+    const parser = new Parser();
+    let res = parser.parseExpression(this.getTokenizer(s));
     if (res == null) {
       throw new Error("Failed to parse the expression: '" + s + "'");
     }
@@ -23,10 +24,20 @@ export class SimpleParser {
   }
 
   static parseStatement(s: string, topLevel = false): Statement {
-    let res = this.parser.parseStatement(this.getTokenizer(s), topLevel);
+    const parser = new Parser();
+    let res = parser.parseStatement(this.getTokenizer(s), topLevel);
     if (res == null) {
       throw new Error("Failed to parse the statement: '" + s + "'");
     }
     return res;
   }
+
+  static parseTopLevelStatement(s: string, namespace?: NamespaceDeclaration | null): Statement {
+    const parser = new Parser();
+    let res = parser.parseTopLevelStatement(this.getTokenizer(s), namespace);
+    if (res == null) {
+        throw new Error("Failed to parse the top level statement: '" + s + "'");
+    }
+    return res;
+}
 }
