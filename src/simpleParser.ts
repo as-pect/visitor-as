@@ -16,7 +16,7 @@ export class SimpleParser {
 
   static parseExpression(s: string): Expression {
     const parser = new Parser();
-    let res = parser.parseExpression(this.getTokenizer(s));
+    const res = parser.parseExpression(this.getTokenizer(s));
     if (res == null) {
       throw new Error("Failed to parse the expression: '" + s + "'");
     }
@@ -25,7 +25,7 @@ export class SimpleParser {
 
   static parseStatement(s: string, topLevel = false): Statement {
     const parser = new Parser();
-    let res = parser.parseStatement(this.getTokenizer(s), topLevel);
+    const res = parser.parseStatement(this.getTokenizer(s), topLevel);
     if (res == null) {
       throw new Error("Failed to parse the statement: '" + s + "'");
     }
@@ -34,7 +34,7 @@ export class SimpleParser {
 
   static parseTopLevelStatement(s: string, namespace?: NamespaceDeclaration | null): Statement {
     const parser = new Parser();
-    let res = parser.parseTopLevelStatement(this.getTokenizer(s), namespace);
+    const res = parser.parseTopLevelStatement(this.getTokenizer(s), namespace);
     if (res == null) {
         throw new Error("Failed to parse the top level statement: '" + s + "'");
     }
