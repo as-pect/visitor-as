@@ -1,4 +1,4 @@
-import { DecoratorNode, DeclarationStatement, Source, Node } from "../as";
+import { DecoratorNode, DeclarationStatement, Source, Node, ClassDeclaration } from "../as";
 export declare function decorates(node: DecoratorNode, name: string): boolean;
 export declare function isDecorator(name: string): (node: DecoratorNode) => boolean;
 export declare function hasDecorator(node: DeclarationStatement | {
@@ -10,3 +10,11 @@ export declare function not<T>(fn: (t: T) => boolean): (t: T) => boolean;
 export declare function toString(node: Node): string;
 export declare function cloneNode<T extends Node>(node: T): T;
 export declare function isUserEntry(source: Source): boolean;
+export declare function className(_class: ClassDeclaration): string;
+export declare function isMethodNamed(name: string): (_: DeclarationStatement) => boolean;
+export declare class StringBuilder {
+    private sb;
+    push(s: string): void;
+    finish(separator?: string): string;
+    get last(): string;
+}
