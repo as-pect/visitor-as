@@ -1,10 +1,11 @@
 import {
   ClassDeclaration,
+  DecoratorNode,
   FieldDeclaration,
   MethodDeclaration,
 } from "../../as";
 import { ClassDecorator, registerDecorator } from "../decorator";
-import { toString } from "../utils";
+import { decorates, toString } from "../utils";
 
 class ListMembers extends ClassDecorator {
   visitFieldDeclaration(node: FieldDeclaration): void {
@@ -19,7 +20,7 @@ class ListMembers extends ClassDecorator {
     if (name == "constructor") {
       return;
     }
-    const sig = toString(node.signature);
+    const sig = node.signature.range.toString();
     this.stdout.write(name + ": " + sig + "\n");
   }
 
@@ -27,9 +28,10 @@ class ListMembers extends ClassDecorator {
     this.visit(node.members);
   }
 
-  get name(): string {
-    return "list";
+  get testDecorator(): (node: DecoratorNode) => boolean {
+    return (node) =>  decorates(node, "list");
   }
+
 }
 
 export = registerDecorator(new ListMembers());
