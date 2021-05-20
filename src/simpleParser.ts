@@ -5,20 +5,23 @@ import {
   SourceKind,
   Expression,
   Statement,
+  NamespaceDeclaration,
   ClassDeclaration,
-  Node,
+  DeclarationStatement,
 } from "../as";
 import { RangeTransform } from "./transformRange";
 
 export class SimpleParser {
-  private static get parser(): Parser { return new Parser() };
+  private static get parser(): Parser {
+    return new Parser();
+  }
 
-  private static getTokenizer(s: string, file: string  = "index.ts"): Tokenizer {
+  private static getTokenizer(s: string, file: string = "index.ts"): Tokenizer {
     return new Tokenizer(new Source(SourceKind.USER, file, s));
   }
 
   static parseExpression(s: string): Expression {
-    let res = this.parser.parseExpression(this.getTokenizer(s));
+    const res = this.parser.parseExpression(this.getTokenizer(s));
     if (res == null) {
       throw new Error("Failed to parse the expression: '" + s + "'");
     }
@@ -26,18 +29,32 @@ export class SimpleParser {
   }
 
   static parseStatement(s: string, topLevel = false): Statement {
-    let res = this.parser.parseStatement(this.getTokenizer(s), topLevel);
+    const res = this.parser.parseStatement(this.getTokenizer(s), topLevel);
     if (res == null) {
       throw new Error("Failed to parse the statement: '" + s + "'");
     }
     return res;
   }
 
-  static parseClassMember(s: string, _class: ClassDeclaration): Node {
-    let res = this.parser.parseClassMember(this.getTokenizer(s, _class.range.source.normalizedPath), _class);
+  static parseTopLevelStatement(
+    s: string,
+    namespace?: NamespaceDeclaration | null
+  ): Statement {
+    const res = this.parser.parseTopLevelStatement(this.getTokenizer(s), namespace);
+    if (res == null) {
+      throw new Error("Failed to parse the top level statement: '" + s + "'");
+    }
+    return res;
+  }
+
+  static parseClassMember(s: string, _class: ClassDeclaration): DeclarationStatement {
+    let res = this.parser.parseClassMember(
+      this.getTokenizer(s, _class.range.source.normalizedPath),
+      _class
+    );
     if (res == null) {
       throw new Error("Failed to parse the class member: '" + s + "'");
     }
-    return RangeTransform.visit(res, _class);
+    return <DeclarationStatement>res;
   }
 }
