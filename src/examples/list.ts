@@ -5,7 +5,7 @@ import {
   MethodDeclaration,
 } from "../../as";
 import { ClassDecorator, registerDecorator } from "../decorator";
-import { toString, getName } from "../utils";
+import { getName } from "../utils";
 
 class ListMembers extends ClassDecorator {
   visitFieldDeclaration(node: FieldDeclaration): void {
