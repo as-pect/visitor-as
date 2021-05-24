@@ -1,7 +1,7 @@
 import { ASTTransformVisitor } from "..";
 import { Parser, ClassDeclaration, FieldDeclaration } from "../../as";
 import { SimpleParser } from "../simpleParser";
-import { not, isLibrary, className, toString, isMethodNamed } from '../utils';
+import { not, isLibrary, className, toString, isMethodNamed, getName } from '../utils';
 
 
 
@@ -10,10 +10,7 @@ class ToStringCallTransform extends ASTTransformVisitor {
   fields: string[];
 
   visitFieldDeclaration(node: FieldDeclaration): void {
-    const name = toString(node.name);
-    if (!node.type) {
-      throw new Error(`Field ${name} is missing a type declaration`);
-    }
+    const name = getName(node);
     let rhs = `this.${name}.toString()`;
     this.fields.push(`sb.push(\`${name}: \${${rhs}}\`)`);
     super.visitFieldDeclaration(node);
@@ -28,16 +25,15 @@ class ToStringCallTransform extends ASTTransformVisitor {
     
     this.currentClass = node;
     this.fields = [];
-    this.visit(node.members);
+    this.visit(node.members); // will visit fields and methods
     const method = `
   toString(): string {
     const sb = new Array<string>();
     ${this.fields.join(";\n\t")};
-    return \`${className(node)}:\\n\\t\${sb.join("\\n\\t")}\`
+    return \`${getName(node)}:\\n\\t\${sb.join("\\n\\t")}\`
   }
     `
     let member = SimpleParser.parseClassMember(method, node);
-
     node.members.push(member);
     super.visitClassDeclaration(node);
   }
