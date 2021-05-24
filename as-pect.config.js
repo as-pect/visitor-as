@@ -16,9 +16,10 @@ module.exports = {
     /** A runtime must be provided here. */
     // "--runtime": ["none"], // Acceptable values are: full, half, stub (arena), and none
     "--transform": [
+      "./src/examples/toString.ts",
         "./src/examples/includeBytesTransform.ts",
         "./src/examples/capitalize.ts", 
-        "./src/examples/functionCallTransform.ts"      
+        "./src/examples/functionCallTransform.ts",
       ],
   },
   /**

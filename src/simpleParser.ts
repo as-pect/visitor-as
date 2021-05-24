@@ -9,6 +9,7 @@ import {
   ClassDeclaration,
   DeclarationStatement,
 } from "../as";
+import { RangeTransform } from "./transformRange";
 
 export class SimpleParser {
   private static get parser(): Parser {

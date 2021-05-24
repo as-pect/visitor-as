@@ -994,7 +994,6 @@ export class ASTBuilder extends BaseVisitor {
     if (node.statement.kind == NodeKind.BLOCK) {
       sb.push(" while (");
     } else {
-      sb.push(";\n");
       indent(sb, this.indentLevel);
       sb.push("while (");
     }
