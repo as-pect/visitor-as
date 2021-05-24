@@ -7,7 +7,7 @@ class CapitalizeVisitor extends VariableDecorator {
     this.visit(node.initializer);
   }
 
-  get testDecorator(): (node: DecoratorNode) => boolean {
+  get decoratorMatcher(): (node: DecoratorNode) => boolean {
     return (node) => decorates(node, "capitalize");
   }
 
