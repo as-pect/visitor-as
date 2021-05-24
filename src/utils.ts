@@ -8,6 +8,8 @@ import {
   ClassDeclaration,
   TypeNode,
   NodeKind,
+  NamedTypeNode,
+  InterfaceDeclaration,
 } from "../as";
 import { ASTBuilder } from "./astBuilder";
 
@@ -55,6 +57,21 @@ export function toString(node: Node): string {
   return ASTBuilder.build(node);
 }
 
+interface Named {
+  name: IdentifierExpression;
+}
+
+
+export function getName(node: Node & Named | TypeNode): string {
+  if (node instanceof TypeNode) {
+    return node.range.toString();
+  }
+  if (node instanceof ClassDeclaration || node instanceof InterfaceDeclaration) {
+    return className(node);
+  }
+  return node.name.range.toString();
+}
+
 export function cloneNode<T extends Node>(node: T): T {
   return cloneDeep(node);
 }
@@ -63,15 +80,14 @@ export function isUserEntry(source: Source): boolean {
   return source.sourceKind == SourceKind.USER_ENTRY;
 }
 
-export function className(_class: ClassDeclaration): string {
+export function className(_class: ClassDeclaration |  InterfaceDeclaration): string {
   let name = _class.name.range.toString();
   const typeParameters = _class.typeParameters;
   if (typeParameters) {
-    name += `<${typeParameters.map(p => p.range.toString()).join(", ")}>`;
+    name += `<${typeParameters.map(getName).join(", ")}>`;
   }
   return name;
 }
-
 
 export function isMethodNamed(name: string): (_: DeclarationStatement) => boolean {
   return (stmt: DeclarationStatement) => stmt.kind == NodeKind.METHODDECLARATION && toString(stmt.name) === name;

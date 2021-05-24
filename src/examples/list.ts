@@ -5,22 +5,22 @@ import {
   MethodDeclaration,
 } from "../../as";
 import { ClassDecorator, registerDecorator } from "../decorator";
-import { decorates, toString } from "../utils";
+import { toString, getName } from "../utils";
 
 class ListMembers extends ClassDecorator {
   visitFieldDeclaration(node: FieldDeclaration): void {
-    if (!node.name) console.log(toString(node) + "\n");
-    const name = toString(node.name);
-    const _type = toString(node.type!);
+    if (!node.name) console.log(getName(node) + "\n");
+    const name = getName(node);
+    const _type = getName(node.type!);
     this.stdout.write(name + ": " + _type + "\n");
   }
 
   visitMethodDeclaration(node: MethodDeclaration): void {
-    const name = toString(node.name);
+    const name = getName(node);
     if (name == "constructor") {
       return;
     }
-    const sig = node.signature.range.toString();
+    const sig = getName(node.signature);
     this.stdout.write(name + ": " + sig + "\n");
   }
 

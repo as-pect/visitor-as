@@ -12,18 +12,16 @@ class CapitalizeVisitor extends VariableDecorator {
   }
 
   visitStringLiteralExpression(node: StringLiteralExpression): void {
-    const newNode = cloneNode(node);
-    newNode.value = node.value.toUpperCase();
-    this.replaceCurrentNode(newNode);
-    this.stdout.write(node.value + " -> " + newNode.value + "\n");
+    const oldValue = node.value; 
+    node.value = node.value.toUpperCase();
+    this.stdout.write(oldValue + " -> " + node.value + "\n");
   }
   
   visitTemplateLiteralExpression(node: TemplateLiteralExpression): void {
     if (node.parts.length == 1 && node.expressions.length == 0){
-      const newNode = cloneNode(node);
-      newNode.parts[0] = node.parts[0].toUpperCase();
-      this.replaceCurrentNode(newNode);
-      this.stdout.write(node.parts[0] + " -> " + newNode.parts[0] + "\n");
+      const oldValue = node.parts[0];
+      node.parts[0] = node.parts[0].toUpperCase();
+      this.stdout.write(oldValue + " -> " + node.parts[0] + "\n");
     }
   }
 }
