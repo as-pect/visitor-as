@@ -18,7 +18,7 @@ export function registerDecorator(decorator: DecoratorVisitor) {
 }
 
 interface DecoratorVisitor extends PathTransformVisitor {
-  testDecorator: (node: DecoratorNode) => boolean;
+  decoratorMatcher: (node: DecoratorNode) => boolean;
   sourceFilter: (s: Source) => bool;
 }
 
@@ -34,7 +34,7 @@ export class TopLevelDecorator extends PathTransformVisitor {
   }
 
   visitDecoratorNode(node: DecoratorNode) {
-    if (this.visitor.testDecorator(node)) {
+    if (this.visitor.decoratorMatcher(node)) {
       this.visitor.currentPath = this.currentParentPath;
       this.visitor.visit(this.currentParent);
     }
@@ -55,10 +55,14 @@ export abstract class Decorator extends PathTransformVisitor {
     return not(isLibrary);
   }
 
-  abstract get testDecorator(): (node: DecoratorNode) => boolean;
+  get decoratorMatcher(): (node: DecoratorNode) => boolean {
+    return (node: DecoratorNode) => decorates(node, this.name)
+  }
+
+  get name(): string { return ""; }
 
   getDecorator(node: DeclarationStatement): DecoratorNode | null {
-    return node.decorators && node.decorators.find(this.testDecorator) || null;
+    return node.decorators && node.decorators.find(this.decoratorMatcher) || null;
   }
 }
 

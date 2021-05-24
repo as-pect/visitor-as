@@ -3,7 +3,7 @@ import { PathTransformVisitor } from "./transformer";
 import { ClassDeclaration, FieldDeclaration, MethodDeclaration, Parser, VariableDeclaration, FunctionDeclaration, Source, DecoratorNode, DeclarationStatement } from "../as";
 export declare function registerDecorator(decorator: DecoratorVisitor): typeof TopLevelDecorator;
 interface DecoratorVisitor extends PathTransformVisitor {
-    name: string;
+    decoratorMatcher: (node: DecoratorNode) => boolean;
     sourceFilter: (s: Source) => bool;
 }
 export declare class TopLevelDecorator extends PathTransformVisitor {
@@ -18,8 +18,9 @@ export declare abstract class Decorator extends PathTransformVisitor {
      * Default filter that removes library files
      */
     get sourceFilter(): (s: Source) => bool;
-    abstract get name(): string;
-    getDecorator(node: DeclarationStatement): DecoratorNode;
+    get decoratorMatcher(): (node: DecoratorNode) => boolean;
+    get name(): string;
+    getDecorator(node: DeclarationStatement): DecoratorNode | null;
 }
 export declare abstract class ClassDecorator extends Decorator {
     abstract visitFieldDeclaration(node: FieldDeclaration): void;

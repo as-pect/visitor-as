@@ -28,9 +28,7 @@ class ListMembers extends ClassDecorator {
     this.visit(node.members);
   }
 
-  get testDecorator(): (node: DecoratorNode) => boolean {
-    return (node) =>  decorates(node, "list");
-  }
+  get name(): string { return "list"; }
 
 }
 
