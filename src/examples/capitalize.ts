@@ -1,14 +1,14 @@
-import { cloneNode } from "../utils";
+import { cloneNode, decorates } from "../utils";
 import { VariableDecorator, registerDecorator } from "../decorator";
-import { StringLiteralExpression, TemplateLiteralExpression, VariableDeclaration } from "../../as";
+import { DecoratorNode, StringLiteralExpression, TemplateLiteralExpression, VariableDeclaration } from "../../as";
 
 class CapitalizeVisitor extends VariableDecorator {
   visitVariableDeclaration(node: VariableDeclaration): void {
     this.visit(node.initializer);
   }
 
-  get name(): string {
-    return "capitalize";
+  get decoratorMatcher(): (node: DecoratorNode) => boolean {
+    return (node) => decorates(node, "capitalize");
   }
 
   visitStringLiteralExpression(node: StringLiteralExpression): void {

@@ -1,10 +1,11 @@
 import {
   ClassDeclaration,
+  DecoratorNode,
   FieldDeclaration,
   MethodDeclaration,
 } from "../../as";
 import { ClassDecorator, registerDecorator } from "../decorator";
-import { toString, getName } from "../utils";
+import { getName } from "../utils";
 
 class ListMembers extends ClassDecorator {
   visitFieldDeclaration(node: FieldDeclaration): void {
@@ -27,9 +28,8 @@ class ListMembers extends ClassDecorator {
     this.visit(node.members);
   }
 
-  get name(): string {
-    return "list";
-  }
+  get name(): string { return "list"; }
+
 }
 
 export = registerDecorator(new ListMembers());

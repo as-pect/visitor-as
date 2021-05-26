@@ -17,6 +17,17 @@ class Vec3 {
 }
 `;
 
+const GENERIC: string = `
+@list
+class GenericMethods {
+  nonGeneric(): void {}
+
+  foo<T>(t: T): void {}
+
+  faa<A,B>(): string { return "hello"; }
+}
+`
+
 describe("List", () => {
   it("should handle simple struct", () => {
     expect(compileExample(FOO, "./src/examples/list.ts")).toStrictEqual([
@@ -30,6 +41,13 @@ describe("List", () => {
       "x: f64",
       "y: i64",
       "z: u32",
+    ]);
+  });
+  it("should list methods", () => {
+    expect(compileExample(GENERIC, "./src/examples/list.ts")).toStrictEqual([
+      "nonGeneric: (): void",
+      "foo: (t: T): void",
+      "faa: (): string",
     ]);
   });
 });
