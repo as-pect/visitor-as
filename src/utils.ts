@@ -143,7 +143,12 @@ export function hasWarningMessage(emitter: DiagnosticEmitter): boolean {
   return hasMessage(emitter, DiagnosticCategory.WARNING);
 }
 
-function hasMessage(
+/**
+*
+* @param emitter DiagnosticEmitter
+* @returns return true if emitter have `category` message
+*/
+export function hasMessage(
   emitter: DiagnosticEmitter,
   category: DiagnosticCategory
 ): boolean {

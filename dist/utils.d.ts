@@ -1,4 +1,4 @@
-import { DecoratorNode, IdentifierExpression, DeclarationStatement, Source, Node, Program, ClassDeclaration, TypeNode, InterfaceDeclaration, DiagnosticEmitter } from "../as";
+import { DecoratorNode, IdentifierExpression, DeclarationStatement, Source, Node, Program, ClassDeclaration, TypeNode, InterfaceDeclaration, DiagnosticEmitter, DiagnosticCategory } from "../as";
 export declare function decorates(node: DecoratorNode, name: string): boolean;
 export declare function isDecorator(name: string): (node: DecoratorNode) => boolean;
 export declare function hasDecorator(node: DeclarationStatement | {
@@ -36,4 +36,10 @@ export declare function hasErrorMessage(emitter: DiagnosticEmitter): boolean;
 * @returns return true if emitter have WARNING message
 */
 export declare function hasWarningMessage(emitter: DiagnosticEmitter): boolean;
+/**
+*
+* @param emitter DiagnosticEmitter
+* @returns return true if emitter have `category` message
+*/
+export declare function hasMessage(emitter: DiagnosticEmitter, category: DiagnosticCategory): boolean;
 export {};
