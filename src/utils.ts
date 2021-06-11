@@ -10,6 +10,8 @@ import {
   TypeNode,
   NodeKind,
   InterfaceDeclaration,
+  DiagnosticEmitter,
+  DiagnosticCategory,
 } from "../as";
 import { ASTBuilder } from "./astBuilder";
 
@@ -121,4 +123,35 @@ export class StringBuilder {
   }
 
   get  last(): string { return this.sb[this.sb.length -1]}
+}
+
+/**
+ *
+ * @param emitter DiagnosticEmitter
+ * @returns return true if emitter have ERROR message
+ */
+ export function hasErrorMessage(emitter: DiagnosticEmitter): boolean {
+  return hasMessage(emitter, DiagnosticCategory.ERROR);
+}
+
+/**
+*
+* @param emitter DiagnosticEmitter
+* @returns return true if emitter have WARNING message
+*/
+export function hasWarningMessage(emitter: DiagnosticEmitter): boolean {
+  return hasMessage(emitter, DiagnosticCategory.WARNING);
+}
+
+function hasMessage(
+  emitter: DiagnosticEmitter,
+  category: DiagnosticCategory
+): boolean {
+  const diagnostics = emitter.diagnostics ? emitter.diagnostics : [];
+  for (const msg of diagnostics) {
+      if (msg.category === category) {
+          return true;
+      }
+  }
+  return false;
 }
