@@ -5,10 +5,10 @@ import {
   Source,
   Node,
   SourceKind,
+  Program,
   ClassDeclaration,
   TypeNode,
   NodeKind,
-  NamedTypeNode,
   InterfaceDeclaration,
 } from "../as";
 import { ASTBuilder } from "./astBuilder";
@@ -76,8 +76,12 @@ export function cloneNode<T extends Node>(node: T): T {
   return cloneDeep(node);
 }
 
-export function isUserEntry(source: Source): boolean {
-  return source.sourceKind == SourceKind.USER_ENTRY;
+export function isUserEntry(node: Node): boolean {
+  return node.range.source.sourceKind == SourceKind.USER_ENTRY;
+}
+
+export function isEntry(node: Node): boolean {
+  return isUserEntry(node) || node.range.source.sourceKind == SourceKind.LIBRARY_ENTRY;
 }
 
 export function className(_class: ClassDeclaration |  InterfaceDeclaration): string {
@@ -91,6 +95,16 @@ export function className(_class: ClassDeclaration |  InterfaceDeclaration): str
 
 export function isMethodNamed(name: string): (_: DeclarationStatement) => boolean {
   return (stmt: DeclarationStatement) => stmt.kind == NodeKind.METHODDECLARATION && toString(stmt.name) === name;
+}
+
+export function updateSource(program: Program, newSource: Source) {
+  const sources = program.sources;
+  for (let i = 0, len = sources.length; i < len; i++) {
+      if (sources[i].internalPath == newSource.internalPath) {
+          sources[i] = newSource;
+          break;
+      }
+  }
 }
 
 export class StringBuilder {
