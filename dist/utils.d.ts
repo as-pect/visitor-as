@@ -1,4 +1,4 @@
-import { DecoratorNode, IdentifierExpression, DeclarationStatement, Source, Node, ClassDeclaration, TypeNode, InterfaceDeclaration } from "../as";
+import { DecoratorNode, IdentifierExpression, DeclarationStatement, Source, Node, Program, ClassDeclaration, TypeNode, InterfaceDeclaration, DiagnosticEmitter, DiagnosticCategory } from "../as";
 export declare function decorates(node: DecoratorNode, name: string): boolean;
 export declare function isDecorator(name: string): (node: DecoratorNode) => boolean;
 export declare function hasDecorator(node: DeclarationStatement | {
@@ -13,13 +13,33 @@ interface Named {
 }
 export declare function getName(node: Node & Named | TypeNode): string;
 export declare function cloneNode<T extends Node>(node: T): T;
-export declare function isUserEntry(source: Source): boolean;
+export declare function isUserEntry(node: Node): boolean;
+export declare function isEntry(node: Node): boolean;
 export declare function className(_class: ClassDeclaration | InterfaceDeclaration): string;
 export declare function isMethodNamed(name: string): (_: DeclarationStatement) => boolean;
+export declare function updateSource(program: Program, newSource: Source): void;
 export declare class StringBuilder {
     private sb;
     push(s: string): void;
     finish(separator?: string): string;
     get last(): string;
 }
+/**
+ *
+ * @param emitter DiagnosticEmitter
+ * @returns return true if emitter have ERROR message
+ */
+export declare function hasErrorMessage(emitter: DiagnosticEmitter): boolean;
+/**
+*
+* @param emitter DiagnosticEmitter
+* @returns return true if emitter have WARNING message
+*/
+export declare function hasWarningMessage(emitter: DiagnosticEmitter): boolean;
+/**
+*
+* @param emitter DiagnosticEmitter
+* @returns return true if emitter have `category` message
+*/
+export declare function hasMessage(emitter: DiagnosticEmitter, category: DiagnosticCategory): boolean;
 export {};

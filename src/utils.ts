@@ -5,11 +5,13 @@ import {
   Source,
   Node,
   SourceKind,
+  Program,
   ClassDeclaration,
   TypeNode,
   NodeKind,
-  NamedTypeNode,
   InterfaceDeclaration,
+  DiagnosticEmitter,
+  DiagnosticCategory,
 } from "../as";
 import { ASTBuilder } from "./astBuilder";
 
@@ -76,8 +78,12 @@ export function cloneNode<T extends Node>(node: T): T {
   return cloneDeep(node);
 }
 
-export function isUserEntry(source: Source): boolean {
-  return source.sourceKind == SourceKind.USER_ENTRY;
+export function isUserEntry(node: Node): boolean {
+  return node.range.source.sourceKind == SourceKind.USER_ENTRY;
+}
+
+export function isEntry(node: Node): boolean {
+  return isUserEntry(node) || node.range.source.sourceKind == SourceKind.LIBRARY_ENTRY;
 }
 
 export function className(_class: ClassDeclaration |  InterfaceDeclaration): string {
@@ -91,6 +97,16 @@ export function className(_class: ClassDeclaration |  InterfaceDeclaration): str
 
 export function isMethodNamed(name: string): (_: DeclarationStatement) => boolean {
   return (stmt: DeclarationStatement) => stmt.kind == NodeKind.METHODDECLARATION && toString(stmt.name) === name;
+}
+
+export function updateSource(program: Program, newSource: Source) {
+  const sources = program.sources;
+  for (let i = 0, len = sources.length; i < len; i++) {
+      if (sources[i].internalPath == newSource.internalPath) {
+          sources[i] = newSource;
+          break;
+      }
+  }
 }
 
 export class StringBuilder {
@@ -107,4 +123,40 @@ export class StringBuilder {
   }
 
   get  last(): string { return this.sb[this.sb.length -1]}
+}
+
+/**
+ *
+ * @param emitter DiagnosticEmitter
+ * @returns return true if emitter have ERROR message
+ */
+ export function hasErrorMessage(emitter: DiagnosticEmitter): boolean {
+  return hasMessage(emitter, DiagnosticCategory.ERROR);
+}
+
+/**
+*
+* @param emitter DiagnosticEmitter
+* @returns return true if emitter have WARNING message
+*/
+export function hasWarningMessage(emitter: DiagnosticEmitter): boolean {
+  return hasMessage(emitter, DiagnosticCategory.WARNING);
+}
+
+/**
+*
+* @param emitter DiagnosticEmitter
+* @returns return true if emitter have `category` message
+*/
+export function hasMessage(
+  emitter: DiagnosticEmitter,
+  category: DiagnosticCategory
+): boolean {
+  const diagnostics = emitter.diagnostics ? emitter.diagnostics : [];
+  for (const msg of diagnostics) {
+      if (msg.category === category) {
+          return true;
+      }
+  }
+  return false;
 }
