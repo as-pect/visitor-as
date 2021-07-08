@@ -45,9 +45,9 @@ describe("List", () => {
   });
   it("should list methods", () => {
     expect(compileExample(GENERIC, "./src/examples/list.ts")).toStrictEqual([
-      "nonGeneric: (): void",
-      "foo: (t: T): void",
-      "faa: (): string",
+      "nonGeneric: () => void",
+      "foo<T>: (t: T) => void",
+      "faa<A, B>: () => string",
     ]);
   });
 });

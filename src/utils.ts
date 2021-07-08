@@ -10,8 +10,12 @@ import {
   TypeNode,
   NodeKind,
   InterfaceDeclaration,
-  DiagnosticEmitter,
+  FunctionDeclaration,
+  TypeName,
   DiagnosticCategory,
+  DiagnosticEmitter,
+  NamedTypeNode,
+  Range,
 } from "../as";
 import { ASTBuilder } from "./astBuilder";
 
@@ -66,12 +70,32 @@ interface Named {
 
 export function getName(node: Node & Named | TypeNode): string {
   if (node instanceof TypeNode) {
-    return node.range.toString();
+    if (node instanceof NamedTypeNode) {
+      let name = getTypeName(node.name)
+      const typeParameters = node.typeArguments;
+      if (typeParameters && typeParameters.length > 0) {
+        name += `<${typeParameters.map(getName).join(", ")}>`;
+      }
+      return name
+    } else if (node instanceof TypeName) {
+      return toString(node.identifier)
+    }
+    return "";
   }
-  if (node instanceof ClassDeclaration || node instanceof InterfaceDeclaration) {
+  if (node instanceof ClassDeclaration || node instanceof InterfaceDeclaration || node instanceof FunctionDeclaration) {
     return className(node);
+  } 
+  return toString(node.name);
+}
+
+
+export function getTypeName(node: TypeName): string {
+  let name = toString(node.identifier);
+  if (node.next) {
+    name += getTypeName(node.next);
   }
-  return node.name.range.toString();
+  return name;
+  
 }
 
 export function cloneNode<T extends Node>(node: T): T {
@@ -86,8 +110,8 @@ export function isEntry(node: Node): boolean {
   return isUserEntry(node) || node.range.source.sourceKind == SourceKind.LIBRARY_ENTRY;
 }
 
-export function className(_class: ClassDeclaration |  InterfaceDeclaration): string {
-  let name = _class.name.range.toString();
+export function className(_class: ClassDeclaration |  InterfaceDeclaration | FunctionDeclaration): string {
+  let name = toString(_class.name)
   const typeParameters = _class.typeParameters;
   if (typeParameters) {
     name += `<${typeParameters.map(getName).join(", ")}>`;
@@ -159,4 +183,13 @@ export function hasMessage(
       }
   }
   return false;
+}
+
+
+let isStdlibRegex =
+  /\~lib\/(?:array|arraybuffer|atomics|builtins|crypto|console|compat|dataview|date|diagnostics|error|function|iterator|map|math|number|object|process|reference|regexp|set|staticarray|string|symbol|table|typedarray|vector|rt\/?|bindings\/|shared\/typeinfo)|util\/|uri|polyfills|memory/;
+
+export function isStdlib(s: Source | { range: Range }): boolean {
+  let source = s instanceof Source ? s : s.range.source;
+  return isStdlibRegex.test(source.internalPath);
 }
