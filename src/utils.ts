@@ -68,6 +68,8 @@ interface Named {
   name: IdentifierExpression;
 }
 
+const OR_NULL = /\|.*null/;
+
 
 export function getName(node: Node & Named | TypeNode): string {
   if (node instanceof TypeNode) {
@@ -76,6 +78,9 @@ export function getName(node: Node & Named | TypeNode): string {
       const typeParameters = node.typeArguments;
       if (typeParameters && typeParameters.length > 0) {
         name += `<${typeParameters.map(getName).join(", ")}>`;
+      }
+      if (node.isNullable && !OR_NULL.test(name)) {
+        name = `${name} | null`;
       }
       return name
     } else if (node instanceof TypeName) {

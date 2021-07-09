@@ -25,6 +25,12 @@ class GenericMethods {
   foo<T>(t: T): void {}
 
   faa<A,B>(): string { return "hello"; }
+
+  orNull(): string | null { return null; }
+
+  orNullMap(): Map<string, string | null> | null {
+    return null;
+  }
 }
 `
 
@@ -48,6 +54,8 @@ describe("List", () => {
       "nonGeneric: () => void",
       "foo<T>: (t: T) => void",
       "faa<A, B>: () => string",
+      "orNull: () => string | null",
+      "orNullMap: () => Map<string, string | null> | null",
     ]);
   });
 });
