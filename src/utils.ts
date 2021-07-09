@@ -16,10 +16,11 @@ import {
   DiagnosticEmitter,
   NamedTypeNode,
   Range,
+  util,
 } from "../as";
 import { ASTBuilder } from "./astBuilder";
 
-const cloneDeep: <T>(t: T) => T = require("lodash.clonedeep");
+const cloneDeep: <T>(t: T) => T = require("lodash.clonedeep") as any;
 
 export function decorates(node: DecoratorNode, name: string): boolean {
   return (<IdentifierExpression>node.name).text === name;
@@ -193,3 +194,5 @@ export function isStdlib(s: Source | { range: Range }): boolean {
   let source = s instanceof Source ? s : s.range.source;
   return isStdlibRegex.test(source.internalPath);
 }
+
+export const indent = util.indent;

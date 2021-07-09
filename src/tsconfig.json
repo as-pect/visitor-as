@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "../dist",
     "inlineSourceMap": true,
     "inlineSources": true,
     "target": "esnext",
@@ -18,5 +19,5 @@
     "strict": true,
     "lib": ["esnext","esnext.string"]
   },
-  "include": ["src/**/*"]
+  "include": ["./**/*"]
 }

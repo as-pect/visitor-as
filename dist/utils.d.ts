@@ -1,4 +1,4 @@
-import { DecoratorNode, IdentifierExpression, DeclarationStatement, Source, Node, Program, ClassDeclaration, TypeNode, InterfaceDeclaration, FunctionDeclaration, TypeName, DiagnosticCategory, DiagnosticEmitter, Range } from "../as";
+import { DecoratorNode, IdentifierExpression, DeclarationStatement, Source, Node, Program, ClassDeclaration, TypeNode, InterfaceDeclaration, FunctionDeclaration, TypeName, DiagnosticCategory, DiagnosticEmitter, Range, util } from "../as";
 export declare function decorates(node: DecoratorNode, name: string): boolean;
 export declare function isDecorator(name: string): (node: DecoratorNode) => boolean;
 export declare function hasDecorator(node: DeclarationStatement | {
@@ -46,4 +46,5 @@ export declare function hasMessage(emitter: DiagnosticEmitter, category: Diagnos
 export declare function isStdlib(s: Source | {
     range: Range;
 }): boolean;
+export declare const indent: typeof util.indent;
 export {};

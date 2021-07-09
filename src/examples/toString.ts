@@ -7,7 +7,7 @@ import { not, isStdlib, className, toString, isMethodNamed, getName } from '../u
 
 class ToStringCallTransform extends ASTTransformVisitor {
   currentClass?: ClassDeclaration;
-  fields: string[];
+  fields!: string[];
 
   visitFieldDeclaration(node: FieldDeclaration): void {
     const name = getName(node);
