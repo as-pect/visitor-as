@@ -2,12 +2,12 @@
 const path = require("path");
 
 let ascPath = Object.getOwnPropertyNames(require.cache).filter((s) =>
-  s.endsWith("asc.js")
+  s.endsWith("assemblyscript/cli/asc.js")
 )[0];
 
 //@ts-ignore
 let assemblyscriptPath = Object.getOwnPropertyNames(require.cache).filter((s) =>
-  s.endsWith("assemblyscript.js")
+  s.endsWith("assemblyscript/dist/assemblyscript.js")
 )[0];
 
 let transformerPath;
