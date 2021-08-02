@@ -1066,7 +1066,9 @@ export class ASTBuilder extends BaseVisitor {
       sb.push("declare ");
     }
     var members = node.members;
-    if (members != null && members.length > 0) {
+    if (members == null) {
+      sb.push("export *");
+    } else if (members.length > 0) {
       let numMembers = members.length;
       sb.push("export {\n");
       let indentLevel = ++this.indentLevel;
