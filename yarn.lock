@@ -827,13 +827,14 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
-assemblyscript@^0.19.5:
-  version "0.19.5"
-  resolved "https://registry.yarnpkg.com/assemblyscript/-/assemblyscript-0.19.5.tgz#12f5976c41f6b866dd0d1aad5275dcd358a5d82f"
-  integrity sha512-mAx7gcwjJI5OSu2RcOlugHFNxKt/rtWn3vyp46cN1+uXb7YSS//rgO044+KKwfxnGvoWj0ClsU0dNt5eWoXF7A==
+assemblyscript@^0.19.22:
+  version "0.19.22"
+  resolved "https://registry.yarnpkg.com/assemblyscript/-/assemblyscript-0.19.22.tgz#ef7eb8939864bd1b7603a9772e8f32e1fcfb8975"
+  integrity sha512-+Rclbx0+BI3qAe9fjc8XGbSUDaayTtjINnD19I4MmfpT2R43c9YTQERP36676shkPxb1fisDFZeSTL65Da8Q2g==
   dependencies:
-    binaryen "101.0.0-nightly.20210604"
-    long "^4.0.0"
+    binaryen "102.0.0-nightly.20211028"
+    long "^5.2.0"
+    source-map-support "^0.5.20"
 
 astral-regex@^2.0.0:
   version "2.0.0"
@@ -911,10 +912,10 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-binaryen@101.0.0-nightly.20210604:
-  version "101.0.0-nightly.20210604"
-  resolved "https://registry.yarnpkg.com/binaryen/-/binaryen-101.0.0-nightly.20210604.tgz#3498a0a0c1108f3386b15ca79f1608425057db9e"
-  integrity sha512-aTgX1JDN8m3tTFK8g9hazJcEOdQl7mK4yVfElkKAh7q+TRUCaea4a2SMLr1z2xZL7s9N4lkrvrBblxRuEPvxWQ==
+binaryen@102.0.0-nightly.20211028:
+  version "102.0.0-nightly.20211028"
+  resolved "https://registry.yarnpkg.com/binaryen/-/binaryen-102.0.0-nightly.20211028.tgz#8f1efb0920afd34509e342e37f84313ec936afb2"
+  integrity sha512-GCJBVB5exbxzzvyt8MGDv/MeUjs6gkXDvf4xOIItRBptYl0Tz5sm1o/uG95YK0L0VeG5ajDu3hRtkBP2kzqC5w==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -2130,6 +2131,11 @@ long@^4.0.0:
   resolved "https://registry.yarnpkg.com/long/-/long-4.0.0.tgz#9a7b71cfb7d361a194ea555241c92f7468d5bf28"
   integrity sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==
 
+long@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/long/-/long-5.2.0.tgz#2696dadf4b4da2ce3f6f6b89186085d94d52fd61"
+  integrity sha512-9RTUNjK60eJbx3uz+TEGF7fUr29ZDxR5QzXcyDpeSfeH28S9ycINflOgOlppit5U+4kNTe83KQnMEerw7GmE8w==
+
 lru-cache@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-6.0.0.tgz#6d6fe6570ebd96aaf90fcad1dafa3b2566db3a94"
@@ -2536,6 +2542,14 @@ source-map-support@^0.5.17, source-map-support@^0.5.6:
   version "0.5.19"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.19.tgz#a98b62f86dcaf4f67399648c085291ab9e8fed61"
   integrity sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
+  dependencies:
+    buffer-from "^1.0.0"
+    source-map "^0.6.0"
+
+source-map-support@^0.5.20:
+  version "0.5.21"
+  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.21.tgz#04fe7c7f9e1ed2d662233c28cb2b35b9f63f6e4f"
+  integrity sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==
   dependencies:
     buffer-from "^1.0.0"
     source-map "^0.6.0"
