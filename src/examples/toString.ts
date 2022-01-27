@@ -1,13 +1,13 @@
 import { ASTTransformVisitor } from "..";
 import { Parser, ClassDeclaration, FieldDeclaration } from "../../as";
 import { SimpleParser } from "../simpleParser";
-import { not, isLibrary, className, toString, isMethodNamed, getName } from '../utils';
+import { not, isStdlib, className, toString, isMethodNamed, getName } from '../utils';
 
 
 
 class ToStringCallTransform extends ASTTransformVisitor {
   currentClass?: ClassDeclaration;
-  fields: string[];
+  fields!: string[];
 
   visitFieldDeclaration(node: FieldDeclaration): void {
     const name = getName(node);
@@ -39,7 +39,7 @@ class ToStringCallTransform extends ASTTransformVisitor {
   }
 
   afterParse(_: Parser): void {
-    let sources = _.sources.filter(not(isLibrary));
+    let sources = _.sources.filter(not(isStdlib));
     this.visit(sources);
   }
   

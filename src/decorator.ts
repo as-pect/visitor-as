@@ -10,7 +10,7 @@ import {
   DecoratorNode,
   DeclarationStatement,
 } from "../as";
-import { decorates, not, isLibrary, getDecorator } from "./utils";
+import { decorates, not, isStdlib } from "./utils";
 
 export function registerDecorator(decorator: DecoratorVisitor) {
   TopLevelDecorator.registerVisitor(decorator);
@@ -52,7 +52,7 @@ export abstract class Decorator extends PathTransformVisitor {
    * Default filter that removes library files
    */
   get sourceFilter(): (s: Source) => bool {
-    return not(isLibrary);
+    return not(isStdlib);
   }
 
   get decoratorMatcher(): (node: DecoratorNode) => boolean {

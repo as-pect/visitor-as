@@ -4,15 +4,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ASTBuilder = void 0;
 const as_1 = require("../as");
 const base_1 = require("./base");
+const utils_1 = require("./utils");
 // declare function i64_to_string(i: I64): string;
 // import { i64_to_string } from "../../../src/glue/i64"
 /** An AST builder. */
 class ASTBuilder extends base_1.BaseVisitor {
-    constructor() {
-        super(...arguments);
-        this.sb = [];
-        this.indentLevel = 0;
-    }
     _visit(node) {
         this.visitNode(node);
     }
@@ -22,6 +18,8 @@ class ASTBuilder extends base_1.BaseVisitor {
         builder.visitNode(node);
         return builder.finish();
     }
+    sb = [];
+    indentLevel = 0;
     visitNode(node) {
         switch (node.kind) {
             case as_1.NodeKind.SOURCE: {
@@ -256,7 +254,7 @@ class ASTBuilder extends base_1.BaseVisitor {
                 break;
             }
             default:
-                assert(false);
+                assert(false, node.kind.toString());
         }
     }
     visitSource(source) {
@@ -386,13 +384,13 @@ class ASTBuilder extends base_1.BaseVisitor {
         assert(numElements == values.length);
         if (numElements) {
             sb.push("{\n");
-            as_1.indent(sb, ++this.indentLevel);
+            utils_1.indent(sb, ++this.indentLevel);
             this.visitNode(names[0]);
             sb.push(": ");
             this.visitNode(values[0]);
             for (let i = 1; i < numElements; ++i) {
                 sb.push(",\n");
-                as_1.indent(sb, this.indentLevel);
+                utils_1.indent(sb, this.indentLevel);
                 let name = names[i];
                 let value = values[i];
                 if (name === value) {
@@ -405,7 +403,7 @@ class ASTBuilder extends base_1.BaseVisitor {
                 }
             }
             sb.push("\n");
-            as_1.indent(sb, --this.indentLevel);
+            utils_1.indent(sb, --this.indentLevel);
             sb.push("}");
         }
         else {
@@ -782,10 +780,10 @@ class ASTBuilder extends base_1.BaseVisitor {
             sb.push("{\n");
             let indentLevel = ++this.indentLevel;
             for (let i = 0; i < numStatements; ++i) {
-                as_1.indent(sb, indentLevel);
+                utils_1.indent(sb, indentLevel);
                 this.visitNodeAndTerminate(statements[i]);
             }
-            as_1.indent(sb, --this.indentLevel);
+            utils_1.indent(sb, --this.indentLevel);
             sb.push("}");
         }
         else {
@@ -869,18 +867,18 @@ class ASTBuilder extends base_1.BaseVisitor {
             sb.push(" {\n");
             let indentLevel = ++this.indentLevel;
             if (indexSignature) {
-                as_1.indent(sb, indentLevel);
+                utils_1.indent(sb, indentLevel);
                 this.visitNodeAndTerminate(indexSignature);
             }
             for (let i = 0, k = members.length; i < k; ++i) {
                 let member = members[i];
                 if (member.kind != as_1.NodeKind.FIELDDECLARATION ||
                     member.parameterIndex < 0) {
-                    as_1.indent(sb, indentLevel);
+                    utils_1.indent(sb, indentLevel);
                     this.visitNodeAndTerminate(member);
                 }
             }
-            as_1.indent(sb, --this.indentLevel);
+            utils_1.indent(sb, --this.indentLevel);
             sb.push("}");
         }
         else {
@@ -895,7 +893,7 @@ class ASTBuilder extends base_1.BaseVisitor {
             sb.push(" while (");
         }
         else {
-            as_1.indent(sb, this.indentLevel);
+            utils_1.indent(sb, this.indentLevel);
             sb.push("while (");
         }
         this.visitNode(node.condition);
@@ -921,15 +919,15 @@ class ASTBuilder extends base_1.BaseVisitor {
         if (numValues) {
             sb.push(" {\n");
             let indentLevel = ++this.indentLevel;
-            as_1.indent(sb, indentLevel);
+            utils_1.indent(sb, indentLevel);
             this.visitEnumValueDeclaration(node.values[0]);
             for (let i = 1; i < numValues; ++i) {
                 sb.push(",\n");
-                as_1.indent(sb, indentLevel);
+                utils_1.indent(sb, indentLevel);
                 this.visitEnumValueDeclaration(node.values[i]);
             }
             sb.push("\n");
-            as_1.indent(sb, --this.indentLevel);
+            utils_1.indent(sb, --this.indentLevel);
             sb.push("}");
         }
         else {
@@ -971,11 +969,11 @@ class ASTBuilder extends base_1.BaseVisitor {
             let numMembers = members.length;
             sb.push("export {\n");
             let indentLevel = ++this.indentLevel;
-            as_1.indent(sb, indentLevel);
+            utils_1.indent(sb, indentLevel);
             this.visitExportMember(members[0]);
             for (let i = 1; i < numMembers; ++i) {
                 sb.push(",\n");
-                as_1.indent(sb, indentLevel);
+                utils_1.indent(sb, indentLevel);
                 this.visitExportMember(members[i]);
             }
             --this.indentLevel;
@@ -1225,11 +1223,11 @@ class ASTBuilder extends base_1.BaseVisitor {
             if (numDeclarations) {
                 sb.push("{\n");
                 let indentLevel = ++this.indentLevel;
-                as_1.indent(sb, indentLevel);
+                utils_1.indent(sb, indentLevel);
                 this.visitImportDeclaration(declarations[0]);
                 for (let i = 1; i < numDeclarations; ++i) {
                     sb.push(",\n");
-                    as_1.indent(sb, indentLevel);
+                    utils_1.indent(sb, indentLevel);
                     this.visitImportDeclaration(declarations[i]);
                 }
                 --this.indentLevel;
@@ -1289,7 +1287,7 @@ class ASTBuilder extends base_1.BaseVisitor {
         var indentLevel = ++this.indentLevel;
         var members = node.members;
         for (let i = 0, k = members.length; i < k; ++i) {
-            as_1.indent(sb, indentLevel);
+            utils_1.indent(sb, indentLevel);
             this.visitNodeAndTerminate(members[i]);
         }
         --this.indentLevel;
@@ -1333,10 +1331,10 @@ class ASTBuilder extends base_1.BaseVisitor {
             sb.push(" {\n");
             let indentLevel = ++this.indentLevel;
             for (let i = 0, k = members.length; i < k; ++i) {
-                as_1.indent(sb, indentLevel);
+                utils_1.indent(sb, indentLevel);
                 this.visitNodeAndTerminate(members[i]);
             }
-            as_1.indent(sb, --this.indentLevel);
+            utils_1.indent(sb, --this.indentLevel);
             sb.push("}");
         }
         else {
@@ -1368,10 +1366,10 @@ class ASTBuilder extends base_1.BaseVisitor {
         var numStatements = statements.length;
         if (numStatements) {
             let indentLevel = ++this.indentLevel;
-            as_1.indent(sb, indentLevel);
+            utils_1.indent(sb, indentLevel);
             this.visitNodeAndTerminate(statements[0]);
             for (let i = 1; i < numStatements; ++i) {
-                as_1.indent(sb, indentLevel);
+                utils_1.indent(sb, indentLevel);
                 this.visitNodeAndTerminate(statements[i]);
             }
             --this.indentLevel;
@@ -1385,7 +1383,7 @@ class ASTBuilder extends base_1.BaseVisitor {
         var indentLevel = ++this.indentLevel;
         var cases = node.cases;
         for (let i = 0, k = cases.length; i < k; ++i) {
-            as_1.indent(sb, indentLevel);
+            utils_1.indent(sb, indentLevel);
             this.visitSwitchCase(cases[i]);
             sb.push("\n");
         }
@@ -1402,33 +1400,33 @@ class ASTBuilder extends base_1.BaseVisitor {
         var indentLevel = ++this.indentLevel;
         var statements = node.statements;
         for (let i = 0, k = statements.length; i < k; ++i) {
-            as_1.indent(sb, indentLevel);
+            utils_1.indent(sb, indentLevel);
             this.visitNodeAndTerminate(statements[i]);
         }
         var catchVariable = node.catchVariable;
         if (catchVariable) {
-            as_1.indent(sb, indentLevel - 1);
+            utils_1.indent(sb, indentLevel - 1);
             sb.push("} catch (");
             this.visitIdentifierExpression(catchVariable);
             sb.push(") {\n");
             let catchStatements = node.catchStatements;
             if (catchStatements) {
                 for (let i = 0, k = catchStatements.length; i < k; ++i) {
-                    as_1.indent(sb, indentLevel);
+                    utils_1.indent(sb, indentLevel);
                     this.visitNodeAndTerminate(catchStatements[i]);
                 }
             }
         }
         var finallyStatements = node.finallyStatements;
         if (finallyStatements) {
-            as_1.indent(sb, indentLevel - 1);
+            utils_1.indent(sb, indentLevel - 1);
             sb.push("} finally {\n");
             for (let i = 0, k = finallyStatements.length; i < k; ++i) {
-                as_1.indent(sb, indentLevel);
+                utils_1.indent(sb, indentLevel);
                 this.visitNodeAndTerminate(finallyStatements[i]);
             }
         }
-        as_1.indent(sb, indentLevel - 1);
+        utils_1.indent(sb, indentLevel - 1);
         sb.push("}");
     }
     visitTypeDeclaration(node) {
@@ -1530,7 +1528,7 @@ class ASTBuilder extends base_1.BaseVisitor {
         else {
             sb.push("\n");
         }
-        as_1.indent(sb, this.indentLevel);
+        utils_1.indent(sb, this.indentLevel);
     }
     serializeParameter(node) {
         var sb = this.sb;

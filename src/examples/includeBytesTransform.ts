@@ -7,7 +7,7 @@ import {
   LiteralKind,
   StringLiteralExpression,
 } from "../../as";
-import { not, isLibrary } from "../utils";
+import { not, isStdlib } from "../utils";
 import * as path from "path";
 import * as fs from "fs";
 
@@ -44,7 +44,7 @@ class IncludeBytesTransform extends TransformVisitor {
   }
 
   afterParse(_: Parser): void {
-    let sources = _.sources.filter(not(isLibrary));
+    let sources = _.sources.filter(not(isStdlib));
     this.visit(sources);
   }
 }

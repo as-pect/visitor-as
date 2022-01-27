@@ -5,7 +5,7 @@ import {
   MethodDeclaration,
 } from "../../as";
 import { ClassDecorator, registerDecorator } from "../decorator";
-import { getName } from "../utils";
+import { getName, toString } from "../utils";
 
 class ListMembers extends ClassDecorator {
   visitFieldDeclaration(node: FieldDeclaration): void {
@@ -20,7 +20,7 @@ class ListMembers extends ClassDecorator {
     if (name == "constructor") {
       return;
     }
-    const sig = getName(node.signature);
+    const sig = toString(node.signature);
     this.stdout.write(name + ": " + sig + "\n");
   }
 

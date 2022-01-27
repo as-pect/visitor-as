@@ -1,7 +1,6 @@
 // tslint:disable: as-internal-case
 
 import {
-  CharCode,
   CommonFlags,
   TypeNode,
   Node,
@@ -75,12 +74,13 @@ import {
   IntegerLiteralExpression,
   isTypeOmitted,
   operatorTokenToString,
-  indent,
   ForOfStatement,
   IndexSignatureNode,
   TemplateLiteralExpression,
+  util,
 } from "../as";
 import { BaseVisitor } from "./base";
+import { indent } from "./utils";
 
 // declare function i64_to_string(i: I64): string;
 // import { i64_to_string } from "../../../src/glue/i64"
@@ -344,7 +344,7 @@ export class ASTBuilder extends BaseVisitor {
         break;
       }
       default:
-        assert(false);
+        assert(false, node.kind.toString());
     }
   }
 
@@ -669,60 +669,60 @@ export class ASTBuilder extends BaseVisitor {
   visitStringLiteral(str: string): void {
     var sb = this.sb;
     sb.push('"');
-    this.visitRawString(str, CharCode.DOUBLEQUOTE);
+    this.visitRawString(str, util.CharCode.DOUBLEQUOTE);
     sb.push('"');
   }
 
-  private visitRawString(str: string, quote: CharCode): void {
+  private visitRawString(str: string, quote: util.CharCode): void {
     var sb = this.sb;
     var off = 0;
     var i = 0;
     for (let k = str.length; i < k; ) {
       switch (str.charCodeAt(i)) {
-        case CharCode.NULL: {
+        case util.CharCode.NULL: {
           if (i > off) sb.push(str.substring(off, (off = i + 1)));
           sb.push("\\0");
           off = ++i;
           break;
         }
-        case CharCode.BACKSPACE: {
+        case util.CharCode.BACKSPACE: {
           if (i > off) sb.push(str.substring(off, i));
           off = ++i;
           sb.push("\\b");
           break;
         }
-        case CharCode.TAB: {
+        case util.CharCode.TAB: {
           if (i > off) sb.push(str.substring(off, i));
           off = ++i;
           sb.push("\\t");
           break;
         }
-        case CharCode.LINEFEED: {
+        case util.CharCode.LINEFEED: {
           if (i > off) sb.push(str.substring(off, i));
           off = ++i;
           sb.push("\\n");
           break;
         }
-        case CharCode.VERTICALTAB: {
+        case util.CharCode.VERTICALTAB: {
           if (i > off) sb.push(str.substring(off, i));
           off = ++i;
           sb.push("\\v");
           break;
         }
-        case CharCode.FORMFEED: {
+        case util.CharCode.FORMFEED: {
           if (i > off) sb.push(str.substring(off, i));
           off = ++i;
           sb.push("\\f");
           break;
         }
-        case CharCode.CARRIAGERETURN: {
+        case util.CharCode.CARRIAGERETURN: {
           if (i > off) sb.push(str.substring(off, i));
           sb.push("\\r");
           off = ++i;
           break;
         }
-        case CharCode.DOUBLEQUOTE: {
-          if (quote == CharCode.DOUBLEQUOTE) {
+        case util.CharCode.DOUBLEQUOTE: {
+          if (quote == util.CharCode.DOUBLEQUOTE) {
             if (i > off) sb.push(str.substring(off, i));
             sb.push('\\"');
             off = ++i;
@@ -731,8 +731,8 @@ export class ASTBuilder extends BaseVisitor {
           }
           break;
         }
-        case CharCode.SINGLEQUOTE: {
-          if (quote == CharCode.SINGLEQUOTE) {
+        case util.CharCode.SINGLEQUOTE: {
+          if (quote == util.CharCode.SINGLEQUOTE) {
             if (i > off) sb.push(str.substring(off, i));
             sb.push("\\'");
             off = ++i;
@@ -741,14 +741,14 @@ export class ASTBuilder extends BaseVisitor {
           }
           break;
         }
-        case CharCode.BACKSLASH: {
+        case util.CharCode.BACKSLASH: {
           if (i > off) sb.push(str.substring(off, i));
           sb.push("\\\\");
           off = ++i;
           break;
         }
-        case CharCode.BACKTICK: {
-          if (quote == CharCode.BACKTICK) {
+        case util.CharCode.BACKTICK: {
+          if (quote == util.CharCode.BACKTICK) {
             if (i > off) sb.push(str.substring(off, i));
             sb.push("\\`");
             off = ++i;
@@ -777,13 +777,13 @@ export class ASTBuilder extends BaseVisitor {
     var expressions = node.expressions;
     if (tag) this.visitNode(tag);
     sb.push("`");
-    this.visitRawString(parts[0], CharCode.BACKTICK);
+    this.visitRawString(parts[0], util.CharCode.BACKTICK);
     assert(parts.length == expressions.length + 1);
     for (let i = 0, k = expressions.length; i < k; ++i) {
       sb.push("${");
       this.visitNode(expressions[i]);
       sb.push("}");
-      this.visitRawString(parts[i + 1], CharCode.BACKTICK);
+      this.visitRawString(parts[i + 1], util.CharCode.BACKTICK);
     }
     sb.push("`");
   }
@@ -865,8 +865,8 @@ export class ASTBuilder extends BaseVisitor {
       let lastCharPos = last.length - 1;
       if (
         lastCharPos >= 0 &&
-        (last.charCodeAt(lastCharPos) == CharCode.CLOSEBRACE ||
-          last.charCodeAt(lastCharPos) == CharCode.SEMICOLON)
+        (last.charCodeAt(lastCharPos) == util.CharCode.CLOSEBRACE ||
+          last.charCodeAt(lastCharPos) == util.CharCode.SEMICOLON)
       ) {
         sb.push("\n");
       } else {
