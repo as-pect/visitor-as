@@ -8,18 +8,30 @@
   "author": "Willem Wyndham",
   "license": "MIT",
   "private": false,
+  "type": "module",
   "scripts": {
     "test": "jest && asp",
-    "build": "rimraf dist/ && tsc -p src"
+    "test:jest": "npx jest",
+    "test:jest2": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "build": "rimraf dist/ && tsc -p src",
+    "list": "asc assembly/foo.ts --transform ./dist/examples/list --noEmit",
+    "capitalize": "asc assembly/strings.ts --transform ./dist/examples/capitalize --noEmit",
+    "exportAs": "asc assembly/exportAs.ts --transform ./dist/examples/exportAs --noEmit",
+    "functionCallTransform": "asc assembly/hello.ts --transform ./dist/examples/functionCallTransform --noEmit",
+    "includeBytesTransform": "asc assembly/foo.ts --transform ./dist/examples/includeBytesTransform --noEmit",
+    "toString": "asc assembly/foo.ts --transform ./dist/examples/toString --noEmit",
+    "sdf": "asc assembly/foo.ts --transform ./dist/examples/test --noEmit"
   },
   "peerDependencies": {
-    "assemblyscript": "^0.19.22"
+    "assemblyscript": "^0.20.6"
   },
   "devDependencies": {
     "@as-pect/cli": "^6.2.4",
+    "@assemblyscript/loader": "^0.20.6",
     "@types/jest": "^25.1.4",
+    "@types/lodash.clonedeep": "^4.5.7",
     "@types/node": "^15.3.1",
-    "assemblyscript": "^0.19.22",
+    "assemblyscript": "^0.20.6",
     "jest": "^27.0.6",
     "prettier": "^2.0.4",
     "rimraf": "^3.0.2",

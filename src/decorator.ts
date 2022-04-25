@@ -1,4 +1,4 @@
-import { PathTransformVisitor, mergeTransformer } from "./transformer";
+import { PathTransformVisitor, mergeTransformer } from "./transformer.js";
 import {
   ClassDeclaration,
   FieldDeclaration,
@@ -9,8 +9,8 @@ import {
   Source,
   DecoratorNode,
   DeclarationStatement,
-} from "../as";
-import { decorates, not, isStdlib } from "./utils";
+} from "assemblyscript/dist/assemblyscript.js";
+import { decorates, not, isStdlib } from "./utils.js";
 
 export function registerDecorator(decorator: DecoratorVisitor) {
   TopLevelDecorator.registerVisitor(decorator);

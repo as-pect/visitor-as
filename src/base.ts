@@ -77,9 +77,9 @@ import {
   LiteralKind,
   CommentNode,
   TemplateLiteralExpression,
-} from "../as";
+} from "assemblyscript/dist/assemblyscript.js";
 
-import { AbstractVisitor } from "./visitor";
+import { AbstractVisitor } from "./visitor.js";
 
 export class BaseVisitor extends AbstractVisitor<Node> {
   depth = 0;

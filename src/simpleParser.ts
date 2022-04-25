@@ -8,8 +8,8 @@ import {
   NamespaceDeclaration,
   ClassDeclaration,
   DeclarationStatement,
-} from "../as";
-import { RangeTransform } from "./transformRange";
+} from "assemblyscript/dist/assemblyscript.js";
+import { RangeTransform } from "./transformRange.js";
 
 export class SimpleParser {
   private static get parser(): Parser {

@@ -1,6 +1,6 @@
-import { TransformVisitor, SimpleParser } from "..";
-import { Node, Expression, Parser, CallExpression, IdentifierExpression } from "../../as";
-import { not, isLibrary } from '../utils';
+import { TransformVisitor, SimpleParser } from "../index.js";
+import { Node, Expression, Parser, CallExpression, IdentifierExpression } from "assemblyscript/dist/assemblyscript.js";
+import { not, isLibrary } from '../utils.js';
 
 class FunctionCallTransform extends TransformVisitor {
   visitCallExpression(node: CallExpression): Expression {
@@ -20,4 +20,4 @@ class FunctionCallTransform extends TransformVisitor {
   }
 }
 
-export = new FunctionCallTransform();
+export default new FunctionCallTransform();

@@ -1,6 +1,6 @@
 /// <reference types="assemblyscript/std/portable" />
-import { PathTransformVisitor } from "./transformer";
-import { ClassDeclaration, FieldDeclaration, MethodDeclaration, Parser, VariableDeclaration, FunctionDeclaration, Source, DecoratorNode, DeclarationStatement } from "../as";
+import { PathTransformVisitor } from "./transformer.js";
+import { ClassDeclaration, FieldDeclaration, MethodDeclaration, Parser, VariableDeclaration, FunctionDeclaration, Source, DecoratorNode, DeclarationStatement } from "assemblyscript/dist/assemblyscript.js";
 export declare function registerDecorator(decorator: DecoratorVisitor): typeof TopLevelDecorator;
 interface DecoratorVisitor extends PathTransformVisitor {
     decoratorMatcher: (node: DecoratorNode) => boolean;

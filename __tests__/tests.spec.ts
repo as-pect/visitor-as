@@ -1,5 +1,5 @@
 import { compileAndInit, compileExample } from "./setup";
-import { ASTBuilder, SimpleParser } from "../src";
+import { ASTBuilder, SimpleParser } from "../src/index";
 
 const FOO: string = `
 @list
@@ -88,18 +88,18 @@ export function main(): u32 {
 `
 
 describe("exportAs", () => {
-  it("should rename exported function", () => {
-    let res = compileAndInit(EXPORT_AS, "./src/examples/exportAs.ts");
+  it("should rename exported function", async () => {
+    let res = await compileAndInit(EXPORT_AS, "./src/examples/exportAs.ts");
     expect((<any>res.exports)["new"]()).toBe(42);
   })
 })
 
 describe('hello world transform', () => {
-  it("should not throw", () => {
-    compileAndInit("assert(foo() == 'hello world', 'should equal')", "./src/examples/functionCallTransform.ts")
+  it("should not throw", async () => {
+    await compileAndInit("assert(foo() == 'hello world', 'should equal')", "./src/examples/functionCallTransform.ts")
   });
-  it("should handle \`'s", () => {
-    compileAndInit("assert(foo() == `hello world`, 'should equal')", "./src/examples/functionCallTransform.ts")
+  it("should handle \`'s", async () => {
+    await compileAndInit("assert(foo() == `hello world`, 'should equal')", "./src/examples/functionCallTransform.ts")
   });
 });
 

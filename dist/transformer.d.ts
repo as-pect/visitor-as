@@ -1,8 +1,8 @@
-import { BaseVisitor } from "./base";
-import { Transform as _Transform } from "../as";
-import { ASTBuilder } from "./astBuilder";
-import { PathVisitor } from "./path";
-import { BaseTransformVisitor } from "./baseTransform";
+import { BaseVisitor } from "./base.js";
+import { Transform as _Transform } from "assemblyscript/dist/transform.js";
+import { ASTBuilder } from "./astBuilder.js";
+import { PathVisitor } from "./path.js";
+import { BaseTransformVisitor } from "./baseTransform.js";
 declare class Transform extends _Transform {
 }
 declare const ASTTransformVisitor_base: import("ts-mixer/dist/types/types").Class<[], BaseVisitor & Transform, {

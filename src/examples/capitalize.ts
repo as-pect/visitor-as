@@ -1,6 +1,6 @@
-import { cloneNode, decorates } from "../utils";
-import { VariableDecorator, registerDecorator } from "../decorator";
-import { DecoratorNode, StringLiteralExpression, TemplateLiteralExpression, VariableDeclaration } from "../../as";
+import { cloneNode, decorates } from "../utils.js";
+import { VariableDecorator, registerDecorator } from "../decorator.js";
+import { DecoratorNode, StringLiteralExpression, TemplateLiteralExpression, VariableDeclaration, Module, Parser } from "assemblyscript/dist/assemblyscript.js";
 
 class CapitalizeVisitor extends VariableDecorator {
   visitVariableDeclaration(node: VariableDeclaration): void {
@@ -9,6 +9,10 @@ class CapitalizeVisitor extends VariableDecorator {
 
   get decoratorMatcher(): (node: DecoratorNode) => boolean {
     return (node) => decorates(node, "capitalize");
+  }
+
+  afterParse(parser: Parser) {
+    // console.log(parser.)
   }
 
   visitStringLiteralExpression(node: StringLiteralExpression): void {
@@ -26,4 +30,4 @@ class CapitalizeVisitor extends VariableDecorator {
   }
 }
 
-export = registerDecorator(new CapitalizeVisitor());
+export default registerDecorator(new CapitalizeVisitor());

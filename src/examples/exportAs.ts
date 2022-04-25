@@ -2,10 +2,10 @@ import {
   LiteralKind,
   StringLiteralExpression,
   Program,
-  Transform,
   DeclaredElement,
-} from "../../as";
-import { getDecorator, hasDecorator, isLibrary, isUserEntry } from "../utils";
+} from "assemblyscript/dist/assemblyscript.js";
+import { Transform } from "assemblyscript/dist/transform.js";
+import { getDecorator, hasDecorator, isLibrary, isUserEntry } from "../utils.js";
 
 function getName(element: DeclaredElement): string {
   let decorator = getDecorator(element.declaration, "exportAs");
@@ -30,12 +30,12 @@ class Transformer extends Transform {
       for (let _export of file.exports?.values() || []) {
         if (_export != null && hasDecorator(_export, "exportAs")) {
           let newName = getName(_export);
-            file.exports?.delete(_export.name);
-            file.exports?.set(newName, _export);
+          file.exports?.delete(_export.name);
+          file.exports?.set(newName, _export);
         }
       }
     }
   }
 }
 
-export = Transformer;
+export default Transformer;

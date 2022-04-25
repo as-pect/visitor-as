@@ -77,9 +77,9 @@ import {
   CommentNode,
   DeclarationStatement,
   TemplateLiteralExpression,
-} from "../as";
+} from "assemblyscript/dist/assemblyscript.js";
 
-import { AbstractTransformVisitor } from "./visitor";
+import { AbstractTransformVisitor } from "./visitor.js";
 
 export class BaseTransformVisitor extends AbstractTransformVisitor<Node> {
   depth = 0;

@@ -1,5 +1,5 @@
-import { ASTTransformVisitor } from "..";
-import { Parser, ClassDeclaration, FieldDeclaration } from "../../as";
+import { ASTTransformVisitor } from "../index.js";
+import { Parser, ClassDeclaration, FieldDeclaration } from "assemblyscript/dist/assemblyscript.js";
 declare class ToStringCallTransform extends ASTTransformVisitor {
     currentClass?: ClassDeclaration;
     fields: string[];
@@ -7,4 +7,4 @@ declare class ToStringCallTransform extends ASTTransformVisitor {
     visitClassDeclaration(node: ClassDeclaration): void;
     afterParse(_: Parser): void;
 }
-export = ToStringCallTransform;
+export default ToStringCallTransform;
