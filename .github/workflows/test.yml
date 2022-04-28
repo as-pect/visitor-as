@@ -25,4 +25,4 @@ jobs:
       - name: test
         env:
           YARN_GPG: no 
-        run: yarn test
+        run: yarn test:mocha

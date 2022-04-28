@@ -10,9 +10,8 @@
   "private": false,
   "type": "module",
   "scripts": {
-    "test": "jest && asp",
-    "test:jest": "npx jest",
-    "test:jest2": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "test": "mocha && asp",
+    "test:mocha": "npx mocha",
     "build": "rimraf dist/ && tsc -p src"
   },
   "peerDependencies": {
@@ -21,14 +20,13 @@
   "devDependencies": {
     "@as-pect/cli": "^6.2.4",
     "@assemblyscript/loader": "^0.20.6",
-    "@types/jest": "^25.1.4",
     "@types/lodash.clonedeep": "^4.5.7",
     "@types/node": "^15.3.1",
     "assemblyscript": "^0.20.6",
-    "jest": "^27.0.6",
+    "chai": "^4.3.6",
+    "mocha": "^9.2.2",
     "prettier": "^2.0.4",
     "rimraf": "^3.0.2",
-    "ts-jest": "^27.0.3",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.5"
   },
