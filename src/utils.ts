@@ -90,18 +90,19 @@ export function getName(node: Node & Named | TypeNode): string {
   }
   if (node instanceof ClassDeclaration || node instanceof InterfaceDeclaration || node instanceof FunctionDeclaration) {
     return className(node);
-  } 
+  }
   return toString(node.name);
 }
 
 
 export function getTypeName(node: TypeName): string {
-  let name = toString(node.identifier);
-  if (node.next) {
-    name += getTypeName(node.next);
+  const partNames = [];
+  let currentNode: TypeName | null = node;
+  while (currentNode) {
+    partNames.push(toString(currentNode.identifier));
+    currentNode = currentNode.next;
   }
-  return name;
-  
+  return partNames.join(".");
 }
 
 export function cloneNode<T extends Node>(node: T): T {
