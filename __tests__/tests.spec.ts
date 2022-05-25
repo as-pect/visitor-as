@@ -7,6 +7,7 @@ class Foo {
   a: u8;
   b: bool;
   i: i32;
+  c: Animal.Cat;
 }
 `;
 
@@ -40,6 +41,7 @@ describe("List", () => {
       "a: u8",
       "b: bool",
       "i: i32",
+      "c: Animal.Cat",
     ]);
   });
   it("should list fields defined in constructor", () => {
