@@ -3,9 +3,9 @@ import {
   DecoratorNode,
   FieldDeclaration,
   MethodDeclaration,
-} from "../../as";
-import { ClassDecorator, registerDecorator } from "../decorator";
-import { getName, toString } from "../utils";
+} from "assemblyscript/dist/assemblyscript.js";
+import { ClassDecorator, registerDecorator } from "../decorator.js";
+import { getName, toString } from "../utils.js";
 
 class ListMembers extends ClassDecorator {
   visitFieldDeclaration(node: FieldDeclaration): void {
@@ -32,4 +32,4 @@ class ListMembers extends ClassDecorator {
 
 }
 
-export = registerDecorator(new ListMembers());
+export default registerDecorator(new ListMembers());

@@ -1,4 +1,4 @@
-import { TransformVisitor, SimpleParser } from "..";
+import { TransformVisitor, SimpleParser } from "../index.js";
 import {
   Expression,
   Parser,
@@ -6,8 +6,8 @@ import {
   IdentifierExpression,
   LiteralKind,
   StringLiteralExpression,
-} from "../../as";
-import { not, isStdlib } from "../utils";
+} from "assemblyscript/dist/assemblyscript.js";
+import { not, isStdlib } from "../utils.js";
 import * as path from "path";
 import * as fs from "fs";
 
@@ -49,4 +49,4 @@ class IncludeBytesTransform extends TransformVisitor {
   }
 }
 
-export = IncludeBytesTransform;
+export default IncludeBytesTransform;

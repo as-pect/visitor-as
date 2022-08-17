@@ -17,10 +17,11 @@ import {
   NamedTypeNode,
   Range,
   util,
-} from "../as";
-import { ASTBuilder } from "./astBuilder";
+} from "assemblyscript/dist/assemblyscript.js";
+import { ASTBuilder } from "./astBuilder.js";
+import cloneDeep from "lodash.clonedeep";
 
-const cloneDeep: <T>(t: T) => T = require("lodash.clonedeep") as any;
+// const cloneDeep: <T>(t: T) => T = require("lodash.clonedeep") as any;
 
 export function decorates(node: DecoratorNode, name: string): boolean {
   return (<IdentifierExpression>node.name).text === name;

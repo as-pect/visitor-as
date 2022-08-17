@@ -1,7 +1,10 @@
-import { compileAndInit, compileExample } from "./setup";
-import { ASTBuilder, SimpleParser } from "../src";
+import { compileAndInit, compileExample } from "./setup.js";
+import { ASTBuilder, SimpleParser } from "../dist/index.js";
+import mocha from "mocha"
+const { describe, it } = mocha
+import { expect } from "chai"
 
-const FOO: string = `
+const FOO = `
 @list
 class Foo {
   a: u8;
@@ -11,14 +14,14 @@ class Foo {
 }
 `;
 
-const VEC: string = `
+const VEC = `
 @list
 class Vec3 {
   constructor(public x: f64 = 0, public y: i64 = 0, public z: u32 = 0) {}
 }
 `;
 
-const GENERIC: string = `
+const GENERIC = `
 @list
 class GenericMethods {
   nonGeneric(): void {}
@@ -36,23 +39,23 @@ class GenericMethods {
 `
 
 describe("List", () => {
-  it("should handle simple struct", () => {
-    expect(compileExample(FOO, "./src/examples/list.ts")).toStrictEqual([
+  it("should handle simple struct", async () => {
+    expect(await compileExample(FOO, "./dist/examples/list.js")).to.deep.equal([
       "a: u8",
       "b: bool",
       "i: i32",
       "c: Animal.Cat",
     ]);
   });
-  it("should list fields defined in constructor", () => {
-    expect(compileExample(VEC, "./src/examples/list.ts")).toStrictEqual([
+  it("should list fields defined in constructor", async () => {
+    expect(await compileExample(VEC, "./dist/examples/list.js")).to.deep.equal([
       "x: f64",
       "y: i64",
       "z: u32",
     ]);
   });
-  it("should list methods", () => {
-    expect(compileExample(GENERIC, "./src/examples/list.ts")).toStrictEqual([
+  it("should list methods", async () => {
+    expect(await compileExample(GENERIC, "./dist/examples/list.js")).to.deep.equal([
       "nonGeneric: () => void",
       "foo<T>: (t: T) => void",
       "faa<A, B>: () => string",
@@ -62,7 +65,7 @@ describe("List", () => {
   });
 });
 
-const HelloWorldYay: string = `
+const HelloWorldYay = `
 @capitalize
 const hello = \`hello\`;
 @capitalize
@@ -72,10 +75,10 @@ const yay = 'yay';
 `;
 
 describe("Capitilize", () => {
-  it("should handle simple struct", () => {
+  it("should handle simple struct", async () => {
     expect(
-      compileExample(HelloWorldYay, "./src/examples/capitalize.ts")
-    ).toStrictEqual(["hello -> HELLO", "world -> WORLD", "yay -> YAY"]);
+      await compileExample(HelloWorldYay, "./dist/examples/capitalize.js")
+    ).to.deep.equal(["hello -> HELLO", "world -> WORLD", "yay -> YAY"]);
   });
 });
 
@@ -90,29 +93,29 @@ export function main(): u32 {
 `
 
 describe("exportAs", () => {
-  it("should rename exported function", () => {
-    let res = compileAndInit(EXPORT_AS, "./src/examples/exportAs.ts");
-    expect((<any>res.exports)["new"]()).toBe(42);
+  it("should rename exported function", async () => {
+    let res = await compileAndInit(EXPORT_AS, "./dist/examples/exportAs.js");
+    expect(res.exports["new"]()).to.equal(42);
   })
 })
 
 describe('hello world transform', () => {
-  it("should not throw", () => {
-    compileAndInit("assert(foo() == 'hello world', 'should equal')", "./src/examples/functionCallTransform.ts")
+  it("should not throw", async () => {
+    await compileAndInit("assert(foo() == 'hello world', 'should equal')", "./dist/examples/functionCallTransform.js")
   });
-  it("should handle \`'s", () => {
-    compileAndInit("assert(foo() == `hello world`, 'should equal')", "./src/examples/functionCallTransform.ts")
+  it("should handle \`'s", async () => {
+    await compileAndInit("assert(foo() == `hello world`, 'should equal')", "./dist/examples/functionCallTransform.js")
   });
 });
 
-function expr(s: string): void {
+function expr(s) {
   expect(ASTBuilder.build(SimpleParser.parseExpression(s)))
-    .toBe(s)
+    .to.equal(s)
 }
 
-function stmt(s: string): void {
+function stmt(s) {
   expect(ASTBuilder.build(SimpleParser.parseStatement(s)))
-    .toBe(s)
+    .to.equal(s)
 }
 
 const foo = `
@@ -124,7 +127,7 @@ class Foo {
 
 describe("Parser", () => {
   describe("Expressions", () => {
-    it("binary", ()=>{
+    it("binary", () => {
       expr("1 + 1");
     });
 
@@ -134,21 +137,21 @@ describe("Parser", () => {
   });
 
   describe("Statements", () => {
-    it("assignment", ()=>{
+    it("assignment", () => {
       stmt("let x = 1");
     });
 
   });
 
   describe("top level", () => {
-    let _class: any;
+    let _class;
     beforeEach(() => {
       _class = SimpleParser.parseTopLevelStatement(foo);
     });
 
     it("should have a field", () => {
-      expect(_class.members.length).toBe(1);
-      expect(_class.members[0].name.range.toString()).toBe("f");
+      expect(_class.members.length).to.equal(1);
+      expect(_class.members[0].name.range.toString()).to.equal("f");
     });
 
     it("should be able to add member", () => {
@@ -157,7 +160,7 @@ describe("Parser", () => {
       `
       let methodAST = SimpleParser.parseClassMember(method, _class);
       _class.members.push(methodAST);
-      expect(_class.members[1].name.text).toBe("getF");
+      expect(_class.members[1].name.text).to.equal("getF");
     })
   })
 

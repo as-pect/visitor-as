@@ -1,5 +1,5 @@
-import {Node} from "../as"
-import { BaseTransformVisitor } from "./baseTransform";
+import { Node } from "assemblyscript/dist/assemblyscript.js"
+import { BaseTransformVisitor } from "./baseTransform.js";
 
 
 

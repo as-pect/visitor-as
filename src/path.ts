@@ -1,9 +1,9 @@
 import {
   Node,
-} from "../as";
+} from "assemblyscript/dist/assemblyscript.js";
 
-import { BaseVisitor } from "./base";
-import { utils } from ".";
+import { BaseVisitor } from "./base.js";
+import { utils } from "./index.js";
 
 export class PathVisitor extends BaseVisitor {
   currentPath: Node[] = [];

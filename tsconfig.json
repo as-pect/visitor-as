@@ -3,7 +3,7 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "target": "esnext",
-    "module": "commonjs",
+    "module": "esnext",
     "downlevelIteration": true,
     "preserveConstEnums": true,
     "alwaysStrict": true,
@@ -14,9 +14,13 @@
     "allowJs": false,
     "strictNullChecks": true,
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop":true,
     "declaration": true,
     "strict": true,
-    "lib": ["esnext","esnext.string"]
+    "lib": ["esnext","esnext.string"],
+    "outDir": "dist"
+    
   },
   "include": ["src/**/*"]
 }

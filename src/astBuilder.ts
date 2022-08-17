@@ -78,9 +78,9 @@ import {
   IndexSignatureNode,
   TemplateLiteralExpression,
   util,
-} from "../as";
-import { BaseVisitor } from "./base";
-import { indent } from "./utils";
+} from "assemblyscript/dist/assemblyscript.js";
+import { BaseVisitor } from "./base.js";
+import { indent } from "./utils.js";
 
 // declare function i64_to_string(i: I64): string;
 // import { i64_to_string } from "../../../src/glue/i64"

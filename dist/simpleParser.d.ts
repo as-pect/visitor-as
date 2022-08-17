@@ -1,4 +1,4 @@
-import { Expression, Statement, NamespaceDeclaration, ClassDeclaration, DeclarationStatement } from "../as";
+import { Expression, Statement, NamespaceDeclaration, ClassDeclaration, DeclarationStatement } from "assemblyscript/dist/assemblyscript.js";
 export declare class SimpleParser {
     private static get parser();
     private static getTokenizer;

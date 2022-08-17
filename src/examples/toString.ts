@@ -1,7 +1,7 @@
-import { ASTTransformVisitor } from "..";
-import { Parser, ClassDeclaration, FieldDeclaration } from "../../as";
-import { SimpleParser } from "../simpleParser";
-import { not, isStdlib, className, toString, isMethodNamed, getName } from '../utils';
+import { ASTTransformVisitor } from "../index.js";
+import { Parser, ClassDeclaration, FieldDeclaration } from "assemblyscript/dist/assemblyscript.js";
+import { SimpleParser } from "../simpleParser.js";
+import { not, isStdlib, className, toString, isMethodNamed, getName } from '../utils.js';
 
 
 
@@ -46,4 +46,4 @@ class ToStringCallTransform extends ASTTransformVisitor {
 }
 
 
-export = ToStringCallTransform;
+export default ToStringCallTransform;
