@@ -1,6 +1,6 @@
 {
   "name": "visitor-as",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "description": "A generic visitor framework for AssemblyScript",
   "main": "dist/index.js",
   "types": "dist",
@@ -15,7 +15,7 @@
     "build": "rimraf dist/ && tsc -p src"
   },
   "peerDependencies": {
-    "assemblyscript": "^0.20.19"
+    "assemblyscript": "^0.21.2"
   },
   "devDependencies": {
     "@assemblyscript/loader": "^0.21.2",
