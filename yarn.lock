@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@assemblyscript/loader@^0.20.19":
-  "integrity" "sha512-NWB85L5zgGOkc/XBlZfyBNDEu0k8t/WFcpyo7TXA4ICpG+CYbSjbzV91ynn6uWc9DIgvaFsK7kC64jP7eGGwcw=="
-  "resolved" "https://registry.npmjs.org/@assemblyscript/loader/-/loader-0.20.19.tgz"
-  "version" "0.20.19"
+"@assemblyscript/loader@^0.21.2":
+  "integrity" "sha512-juTN3RvtHzr/CEr4PD6SEBj6pSBrmf0x2DqWFCTho9rNJOann0KEe8OdRH01/xiJkynSTxGHAm9o9tAM5sUwuQ=="
+  "resolved" "https://registry.npmjs.org/@assemblyscript/loader/-/loader-0.21.2.tgz"
+  "version" "0.21.2"
 
 "@cspotcode/source-map-support@^0.8.0":
   "integrity" "sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw=="
@@ -119,12 +119,12 @@
   "resolved" "https://registry.npmjs.org/argparse/-/argparse-2.0.1.tgz"
   "version" "2.0.1"
 
-"assemblyscript@^0.20.19":
-  "integrity" "sha512-IJN2CaAwCdRgTSZz3GiuYyXtXIjETBrlzky9ww9jFlEgH8i0pNFt6MAS3viogkofem+rcY6Fhr/clk+b6LWLBw=="
-  "resolved" "https://registry.npmjs.org/assemblyscript/-/assemblyscript-0.20.19.tgz"
-  "version" "0.20.19"
+"assemblyscript@^0.21.2":
+  "integrity" "sha512-p8XhdkxQxggJbA8O95iu0yUjOqIX1iy9T6D+BABzT0PUHOZbKrNgES/0aC+DgnmTN0V6EQ6XajRM2uiJ9Nt2Xw=="
+  "resolved" "https://registry.npmjs.org/assemblyscript/-/assemblyscript-0.21.2.tgz"
+  "version" "0.21.2"
   dependencies:
-    "binaryen" "109.0.0-nightly.20220813"
+    "binaryen" "109.0.0-nightly.20220826"
     "long" "^5.2.0"
 
 "assertion-error@^1.1.0":
@@ -142,10 +142,10 @@
   "resolved" "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz"
   "version" "2.2.0"
 
-"binaryen@109.0.0-nightly.20220813":
-  "integrity" "sha512-u85Ti3LiGRrV0HqdNDRknalkx7QiCSL0jNsEsT522nnZacWxUaSJEILphxc2OnzmHVtdiWBE3c4lEzlU3ZEyDw=="
-  "resolved" "https://registry.npmjs.org/binaryen/-/binaryen-109.0.0-nightly.20220813.tgz"
-  "version" "109.0.0-nightly.20220813"
+"binaryen@109.0.0-nightly.20220826":
+  "integrity" "sha512-c4I7HTm0yn+CO54Imt2sRHct2bEwlTDRGtIAJCwFyLssfUvb4FH3DaaRHNrcB8T1llvw1oWfYzBhO6tgIo2Grg=="
+  "resolved" "https://registry.npmjs.org/binaryen/-/binaryen-109.0.0-nightly.20220826.tgz"
+  "version" "109.0.0-nightly.20220826"
 
 "brace-expansion@^1.1.7":
   "integrity" "sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA=="
