@@ -15,7 +15,7 @@ class IncludeBytesTransform extends TransformVisitor {
   visitCallExpression(node: CallExpression): Expression {
     if (node.expression instanceof IdentifierExpression) {
       if (node.expression.text == "includeBytes") {
-        if (!node.args[0].isLiteralKind(LiteralKind.STRING))
+        if (!node.args[0].isLiteralKind(LiteralKind.String))
           throw "[Error] includeBytes requires a constant literal filename";
         let arg0 = node.args[0] as StringLiteralExpression;
         let filename = path.join(

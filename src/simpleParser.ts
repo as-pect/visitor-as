@@ -9,7 +9,6 @@ import {
   ClassDeclaration,
   DeclarationStatement,
 } from "assemblyscript/dist/assemblyscript.js";
-import { RangeTransform } from "./transformRange.js";
 
 export class SimpleParser {
   private static get parser(): Parser {
@@ -17,7 +16,7 @@ export class SimpleParser {
   }
 
   private static getTokenizer(s: string, file: string = "index.ts"): Tokenizer {
-    return new Tokenizer(new Source(SourceKind.USER, file, s));
+    return new Tokenizer(new Source(SourceKind.User, file, s));
   }
 
   static parseExpression(s: string): Expression {

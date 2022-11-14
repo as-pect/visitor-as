@@ -102,244 +102,244 @@ export class ASTBuilder extends BaseVisitor {
 
   visitNode(node: Node): void {
     switch (node.kind) {
-      case NodeKind.SOURCE: {
+      case NodeKind.Source: {
         this.visitSource(<Source>node);
         break;
       }
 
       // types
 
-      case NodeKind.NAMEDTYPE: {
+      case NodeKind.NamedType: {
         this.visitNamedTypeNode(<NamedTypeNode>node);
         break;
       }
-      case NodeKind.FUNCTIONTYPE: {
+      case NodeKind.FunctionType: {
         this.visitFunctionTypeNode(<FunctionTypeNode>node);
         break;
       }
-      case NodeKind.TYPEPARAMETER: {
+      case NodeKind.TypeParameter: {
         this.visitTypeParameter(<TypeParameterNode>node);
         break;
       }
 
       // expressions
 
-      case NodeKind.FALSE:
-      case NodeKind.NULL:
-      case NodeKind.SUPER:
-      case NodeKind.THIS:
-      case NodeKind.TRUE:
-      case NodeKind.CONSTRUCTOR:
-      case NodeKind.IDENTIFIER: {
+      case NodeKind.False:
+      case NodeKind.Null:
+      case NodeKind.Super:
+      case NodeKind.This:
+      case NodeKind.True:
+      case NodeKind.Constructor:
+      case NodeKind.Identifier: {
         this.visitIdentifierExpression(<IdentifierExpression>node);
         break;
       }
-      case NodeKind.ASSERTION: {
+      case NodeKind.Assertion: {
         this.visitAssertionExpression(<AssertionExpression>node);
         break;
       }
-      case NodeKind.BINARY: {
+      case NodeKind.Binary: {
         this.visitBinaryExpression(<BinaryExpression>node);
         break;
       }
-      case NodeKind.CALL: {
+      case NodeKind.Call: {
         this.visitCallExpression(<CallExpression>node);
         break;
       }
-      case NodeKind.CLASS: {
+      case NodeKind.Class: {
         this.visitClassExpression(<ClassExpression>node);
         break;
       }
-      case NodeKind.COMMA: {
+      case NodeKind.Comma: {
         this.visitCommaExpression(<CommaExpression>node);
         break;
       }
-      case NodeKind.ELEMENTACCESS: {
+      case NodeKind.ElementAccess: {
         this.visitElementAccessExpression(<ElementAccessExpression>node);
         break;
       }
-      case NodeKind.FUNCTION: {
+      case NodeKind.Function: {
         this.visitFunctionExpression(<FunctionExpression>node);
         break;
       }
-      case NodeKind.INSTANCEOF: {
+      case NodeKind.InstanceOf: {
         this.visitInstanceOfExpression(<InstanceOfExpression>node);
         break;
       }
-      case NodeKind.LITERAL: {
+      case NodeKind.Literal: {
         this.visitLiteralExpression(<LiteralExpression>node);
         break;
       }
-      case NodeKind.NEW: {
+      case NodeKind.New: {
         this.visitNewExpression(<NewExpression>node);
         break;
       }
-      case NodeKind.PARENTHESIZED: {
+      case NodeKind.Parenthesized: {
         this.visitParenthesizedExpression(<ParenthesizedExpression>node);
         break;
       }
-      case NodeKind.PROPERTYACCESS: {
+      case NodeKind.PropertyAccess: {
         this.visitPropertyAccessExpression(<PropertyAccessExpression>node);
         break;
       }
-      case NodeKind.TERNARY: {
+      case NodeKind.Ternary: {
         this.visitTernaryExpression(<TernaryExpression>node);
         break;
       }
-      case NodeKind.UNARYPOSTFIX: {
+      case NodeKind.UnaryPostfix: {
         this.visitUnaryPostfixExpression(<UnaryPostfixExpression>node);
         break;
       }
-      case NodeKind.UNARYPREFIX: {
+      case NodeKind.UnaryPrefix: {
         this.visitUnaryPrefixExpression(<UnaryPrefixExpression>node);
         break;
       }
 
       // statements
 
-      case NodeKind.BLOCK: {
+      case NodeKind.Block: {
         this.visitBlockStatement(<BlockStatement>node);
         break;
       }
-      case NodeKind.BREAK: {
+      case NodeKind.Break: {
         this.visitBreakStatement(<BreakStatement>node);
         break;
       }
-      case NodeKind.CONTINUE: {
+      case NodeKind.Continue: {
         this.visitContinueStatement(<ContinueStatement>node);
         break;
       }
-      case NodeKind.DO: {
+      case NodeKind.Do: {
         this.visitDoStatement(<DoStatement>node);
         break;
       }
-      case NodeKind.EMPTY: {
+      case NodeKind.Empty: {
         this.visitEmptyStatement(<EmptyStatement>node);
         break;
       }
-      case NodeKind.EXPORT: {
+      case NodeKind.Export: {
         this.visitExportStatement(<ExportStatement>node);
         break;
       }
-      case NodeKind.EXPORTDEFAULT: {
+      case NodeKind.ExportDefault: {
         this.visitExportDefaultStatement(<ExportDefaultStatement>node);
         break;
       }
-      case NodeKind.EXPORTIMPORT: {
+      case NodeKind.ExportImport: {
         this.visitExportImportStatement(<ExportImportStatement>node);
         break;
       }
-      case NodeKind.EXPRESSION: {
+      case NodeKind.Expression: {
         this.visitExpressionStatement(<ExpressionStatement>node);
         break;
       }
-      case NodeKind.FOR: {
+      case NodeKind.For: {
         this.visitForStatement(<ForStatement>node);
         break;
       }
-      case NodeKind.FOROF: {
+      case NodeKind.ForOf: {
         this.visitForOfStatement(<ForOfStatement>node);
         break;
       }
-      case NodeKind.IF: {
+      case NodeKind.If: {
         this.visitIfStatement(<IfStatement>node);
         break;
       }
-      case NodeKind.IMPORT: {
+      case NodeKind.Import: {
         this.visitImportStatement(<ImportStatement>node);
         break;
       }
-      case NodeKind.RETURN: {
+      case NodeKind.Return: {
         this.visitReturnStatement(<ReturnStatement>node);
         break;
       }
-      case NodeKind.SWITCH: {
+      case NodeKind.Switch: {
         this.visitSwitchStatement(<SwitchStatement>node);
         break;
       }
-      case NodeKind.THROW: {
+      case NodeKind.Throw: {
         this.visitThrowStatement(<ThrowStatement>node);
         break;
       }
-      case NodeKind.TRY: {
+      case NodeKind.Try: {
         this.visitTryStatement(<TryStatement>node);
         break;
       }
-      case NodeKind.VARIABLE: {
+      case NodeKind.Variable: {
         this.visitVariableStatement(<VariableStatement>node);
         break;
       }
-      case NodeKind.WHILE: {
+      case NodeKind.While: {
         this.visitWhileStatement(<WhileStatement>node);
         break;
       }
 
       // declaration statements
 
-      case NodeKind.CLASSDECLARATION: {
+      case NodeKind.ClassDeclaration: {
         this.visitClassDeclaration(<ClassDeclaration>node);
         break;
       }
-      case NodeKind.ENUMDECLARATION: {
+      case NodeKind.EnumDeclaration: {
         this.visitEnumDeclaration(<EnumDeclaration>node);
         break;
       }
-      case NodeKind.ENUMVALUEDECLARATION: {
+      case NodeKind.EnumValueDeclaration: {
         this.visitEnumValueDeclaration(<EnumValueDeclaration>node);
         break;
       }
-      case NodeKind.FIELDDECLARATION: {
+      case NodeKind.FieldDeclaration: {
         this.visitFieldDeclaration(<FieldDeclaration>node);
         break;
       }
-      case NodeKind.FUNCTIONDECLARATION: {
+      case NodeKind.FunctionDeclaration: {
         this.visitFunctionDeclaration(<FunctionDeclaration>node);
         break;
       }
-      case NodeKind.IMPORTDECLARATION: {
+      case NodeKind.ImportDeclaration: {
         this.visitImportDeclaration(<ImportDeclaration>node);
         break;
       }
-      case NodeKind.INTERFACEDECLARATION: {
+      case NodeKind.InterfaceDeclaration: {
         this.visitInterfaceDeclaration(<InterfaceDeclaration>node);
         break;
       }
-      case NodeKind.METHODDECLARATION: {
+      case NodeKind.MethodDeclaration: {
         this.visitMethodDeclaration(<MethodDeclaration>node);
         break;
       }
-      case NodeKind.NAMESPACEDECLARATION: {
+      case NodeKind.NamespaceDeclaration: {
         this.visitNamespaceDeclaration(<NamespaceDeclaration>node);
         break;
       }
-      case NodeKind.TYPEDECLARATION: {
+      case NodeKind.TypeDeclaration: {
         this.visitTypeDeclaration(<TypeDeclaration>node);
         break;
       }
-      case NodeKind.VARIABLEDECLARATION: {
+      case NodeKind.VariableDeclaration: {
         this.visitVariableDeclaration(<VariableDeclaration>node);
         break;
       }
 
       // other
 
-      case NodeKind.DECORATOR: {
+      case NodeKind.Decorator: {
         this.serializeDecorator(<DecoratorNode>node);
         break;
       }
-      case NodeKind.EXPORTMEMBER: {
+      case NodeKind.ExportMember: {
         this.visitExportMember(<ExportMember>node);
         break;
       }
-      case NodeKind.PARAMETER: {
+      case NodeKind.Parameter: {
         this.serializeParameter(<ParameterNode>node);
         break;
       }
-      case NodeKind.SWITCHCASE: {
+      case NodeKind.SwitchCase: {
         this.visitSwitchCase(<SwitchCase>node);
         break;
       }
-      case NodeKind.INDEXSIGNATURE: {
+      case NodeKind.IndexSignature: {
         this.visitIndexSignature(<IndexSignatureNode>node);
         break;
       }
@@ -359,11 +359,11 @@ export class ASTBuilder extends BaseVisitor {
 
   visitTypeNode(node: TypeNode): void {
     switch (node.kind) {
-      case NodeKind.NAMEDTYPE: {
+      case NodeKind.NamedType: {
         this.visitNamedTypeNode(<NamedTypeNode>node);
         break;
       }
-      case NodeKind.FUNCTIONTYPE: {
+      case NodeKind.FunctionType: {
         this.visitFunctionTypeNode(<FunctionTypeNode>node);
         break;
       }
@@ -505,25 +505,25 @@ export class ASTBuilder extends BaseVisitor {
   visitAssertionExpression(node: AssertionExpression): void {
     var sb = this.sb;
     switch (node.assertionKind) {
-      case AssertionKind.PREFIX: {
+      case AssertionKind.Prefix: {
         sb.push("<");
         this.visitTypeNode(assert(node.toType));
         sb.push(">");
         this.visitNode(node.expression);
         break;
       }
-      case AssertionKind.AS: {
+      case AssertionKind.As: {
         this.visitNode(node.expression);
         sb.push(" as ");
         this.visitTypeNode(assert(node.toType));
         break;
       }
-      case AssertionKind.NONNULL: {
+      case AssertionKind.NonNull: {
         this.visitNode(node.expression);
         sb.push("!");
         break;
       }
-      case AssertionKind.CONST: {
+      case AssertionKind.Const: {
         this.visitNode(node.expression);
         sb.push(" as const");
         break;
@@ -617,31 +617,31 @@ export class ASTBuilder extends BaseVisitor {
 
   visitLiteralExpression(node: LiteralExpression): void {
     switch (node.literalKind) {
-      case LiteralKind.FLOAT: {
+      case LiteralKind.Float: {
         this.visitFloatLiteralExpression(<FloatLiteralExpression>node);
         break;
       }
-      case LiteralKind.INTEGER: {
+      case LiteralKind.Integer: {
         this.visitIntegerLiteralExpression(<IntegerLiteralExpression>node);
         break;
       }
-      case LiteralKind.STRING: {
+      case LiteralKind.String: {
         this.visitStringLiteralExpression(<StringLiteralExpression>node);
         break;
       }
-      case LiteralKind.TEMPLATE: {
+      case LiteralKind.Template: {
         this.visitTemplateLiteralExpression(<TemplateLiteralExpression>node);
         break;
       }
-      case LiteralKind.REGEXP: {
+      case LiteralKind.RegExp: {
         this.visitRegexpLiteralExpression(<RegexpLiteralExpression>node);
         break;
       }
-      case LiteralKind.ARRAY: {
+      case LiteralKind.Array: {
         this.visitArrayLiteralExpression(<ArrayLiteralExpression>node);
         break;
       }
-      case LiteralKind.OBJECT: {
+      case LiteralKind.Object: {
         this.visitObjectLiteralExpression(<ObjectLiteralExpression>node);
         break;
       }
@@ -669,7 +669,7 @@ export class ASTBuilder extends BaseVisitor {
   visitStringLiteral(str: string): void {
     var sb = this.sb;
     sb.push('"');
-    this.visitRawString(str, util.CharCode.DOUBLEQUOTE);
+    this.visitRawString(str, util.CharCode.DoubleQuote);
     sb.push('"');
   }
 
@@ -679,50 +679,50 @@ export class ASTBuilder extends BaseVisitor {
     var i = 0;
     for (let k = str.length; i < k; ) {
       switch (str.charCodeAt(i)) {
-        case util.CharCode.NULL: {
+        case util.CharCode.Null: {
           if (i > off) sb.push(str.substring(off, (off = i + 1)));
           sb.push("\\0");
           off = ++i;
           break;
         }
-        case util.CharCode.BACKSPACE: {
+        case util.CharCode.Backslash: {
           if (i > off) sb.push(str.substring(off, i));
           off = ++i;
           sb.push("\\b");
           break;
         }
-        case util.CharCode.TAB: {
+        case util.CharCode.Tab: {
           if (i > off) sb.push(str.substring(off, i));
           off = ++i;
           sb.push("\\t");
           break;
         }
-        case util.CharCode.LINEFEED: {
+        case util.CharCode.LineFeed: {
           if (i > off) sb.push(str.substring(off, i));
           off = ++i;
           sb.push("\\n");
           break;
         }
-        case util.CharCode.VERTICALTAB: {
+        case util.CharCode.VerticalTab: {
           if (i > off) sb.push(str.substring(off, i));
           off = ++i;
           sb.push("\\v");
           break;
         }
-        case util.CharCode.FORMFEED: {
+        case util.CharCode.FormFeed: {
           if (i > off) sb.push(str.substring(off, i));
           off = ++i;
           sb.push("\\f");
           break;
         }
-        case util.CharCode.CARRIAGERETURN: {
+        case util.CharCode.CarriageReturn: {
           if (i > off) sb.push(str.substring(off, i));
           sb.push("\\r");
           off = ++i;
           break;
         }
-        case util.CharCode.DOUBLEQUOTE: {
-          if (quote == util.CharCode.DOUBLEQUOTE) {
+        case util.CharCode.DoubleQuote: {
+          if (quote == util.CharCode.DoubleQuote) {
             if (i > off) sb.push(str.substring(off, i));
             sb.push('\\"');
             off = ++i;
@@ -731,8 +731,8 @@ export class ASTBuilder extends BaseVisitor {
           }
           break;
         }
-        case util.CharCode.SINGLEQUOTE: {
-          if (quote == util.CharCode.SINGLEQUOTE) {
+        case util.CharCode.SingleQuote: {
+          if (quote == util.CharCode.SingleQuote) {
             if (i > off) sb.push(str.substring(off, i));
             sb.push("\\'");
             off = ++i;
@@ -741,14 +741,14 @@ export class ASTBuilder extends BaseVisitor {
           }
           break;
         }
-        case util.CharCode.BACKSLASH: {
+        case util.CharCode.Backslash: {
           if (i > off) sb.push(str.substring(off, i));
           sb.push("\\\\");
           off = ++i;
           break;
         }
-        case util.CharCode.BACKTICK: {
-          if (quote == util.CharCode.BACKTICK) {
+        case util.CharCode.Backtick: {
+          if (quote == util.CharCode.Backtick) {
             if (i > off) sb.push(str.substring(off, i));
             sb.push("\\`");
             off = ++i;
@@ -777,13 +777,13 @@ export class ASTBuilder extends BaseVisitor {
     var expressions = node.expressions;
     if (tag) this.visitNode(tag);
     sb.push("`");
-    this.visitRawString(parts[0], util.CharCode.BACKTICK);
+    this.visitRawString(parts[0], util.CharCode.Backtick);
     assert(parts.length == expressions.length + 1);
     for (let i = 0, k = expressions.length; i < k; ++i) {
       sb.push("${");
       this.visitNode(expressions[i]);
       sb.push("}");
-      this.visitRawString(parts[i + 1], util.CharCode.BACKTICK);
+      this.visitRawString(parts[i + 1], util.CharCode.Backtick);
     }
     sb.push("`");
   }
@@ -826,11 +826,11 @@ export class ASTBuilder extends BaseVisitor {
 
   visitUnaryExpression(node: UnaryExpression): void {
     switch (node.kind) {
-      case NodeKind.UNARYPOSTFIX: {
+      case NodeKind.UnaryPostfix: {
         this.visitUnaryPostfixExpression(<UnaryPostfixExpression>node);
         break;
       }
-      case NodeKind.UNARYPREFIX: {
+      case NodeKind.UnaryPrefix: {
         this.visitUnaryPrefixExpression(<UnaryPrefixExpression>node);
         break;
       }
@@ -856,8 +856,8 @@ export class ASTBuilder extends BaseVisitor {
     var sb = this.sb;
     if (
       !sb.length || // leading EmptyStatement
-      node.kind == NodeKind.VARIABLE || // potentially assigns a FunctionExpression
-      node.kind == NodeKind.EXPRESSION // potentially assigns a FunctionExpression
+      node.kind == NodeKind.Variable || // potentially assigns a FunctionExpression
+      node.kind == NodeKind.Expression // potentially assigns a FunctionExpression
     ) {
       sb.push(";\n");
     } else {
@@ -865,8 +865,8 @@ export class ASTBuilder extends BaseVisitor {
       let lastCharPos = last.length - 1;
       if (
         lastCharPos >= 0 &&
-        (last.charCodeAt(lastCharPos) == util.CharCode.CLOSEBRACE ||
-          last.charCodeAt(lastCharPos) == util.CharCode.SEMICOLON)
+        (last.charCodeAt(lastCharPos) == util.CharCode.CloseBrace ||
+          last.charCodeAt(lastCharPos) == util.CharCode.Semicolon)
       ) {
         sb.push("\n");
       } else {
@@ -926,7 +926,7 @@ export class ASTBuilder extends BaseVisitor {
     } else {
       this.serializeExternalModifiers(node);
     }
-    if (node.is(CommonFlags.ABSTRACT)) sb.push("abstract ");
+    if (node.is(CommonFlags.Abstract)) sb.push("abstract ");
     if (node.name.text.length) {
       sb.push("class ");
       this.visitIdentifierExpression(node.name);
@@ -973,7 +973,7 @@ export class ASTBuilder extends BaseVisitor {
       for (let i = 0, k = members.length; i < k; ++i) {
         let member = members[i];
         if (
-          member.kind != NodeKind.FIELDDECLARATION ||
+          member.kind != NodeKind.FieldDeclaration ||
           (<FieldDeclaration>member).parameterIndex < 0
         ) {
           indent(sb, indentLevel);
@@ -990,8 +990,8 @@ export class ASTBuilder extends BaseVisitor {
   visitDoStatement(node: DoStatement): void {
     var sb = this.sb;
     sb.push("do ");
-    this.visitNode(node.statement);
-    if (node.statement.kind == NodeKind.BLOCK) {
+    this.visitNode(node.body);
+    if (node.body.kind == NodeKind.Block) {
       sb.push(" while (");
     } else {
       indent(sb, this.indentLevel);
@@ -1012,7 +1012,7 @@ export class ASTBuilder extends BaseVisitor {
     } else {
       this.serializeExternalModifiers(node);
     }
-    if (node.is(CommonFlags.CONST)) sb.push("const ");
+    if (node.is(CommonFlags.Const)) sb.push("const ");
     sb.push("enum ");
     this.visitIdentifierExpression(node.name);
     var values = node.values;
@@ -1095,23 +1095,23 @@ export class ASTBuilder extends BaseVisitor {
   visitExportDefaultStatement(node: ExportDefaultStatement): void {
     var declaration = node.declaration;
     switch (declaration.kind) {
-      case NodeKind.ENUMDECLARATION: {
+      case NodeKind.EnumDeclaration: {
         this.visitEnumDeclaration(<EnumDeclaration>declaration, true);
         break;
       }
-      case NodeKind.FUNCTIONDECLARATION: {
+      case NodeKind.FunctionDeclaration: {
         this.visitFunctionDeclaration(<FunctionDeclaration>declaration, true);
         break;
       }
-      case NodeKind.CLASSDECLARATION: {
+      case NodeKind.ClassDeclaration: {
         this.visitClassDeclaration(<ClassDeclaration>declaration, true);
         break;
       }
-      case NodeKind.INTERFACEDECLARATION: {
+      case NodeKind.InterfaceDeclaration: {
         this.visitInterfaceDeclaration(<InterfaceDeclaration>declaration, true);
         break;
       }
-      case NodeKind.NAMESPACEDECLARATION: {
+      case NodeKind.NamespaceDeclaration: {
         this.visitNamespaceDeclaration(<NamespaceDeclaration>declaration, true);
         break;
       }
@@ -1134,7 +1134,7 @@ export class ASTBuilder extends BaseVisitor {
     this.serializeAccessModifiers(node);
     this.visitIdentifierExpression(node.name);
     var sb = this.sb;
-    if (node.flags & CommonFlags.DEFINITELY_ASSIGNED) {
+    if (node.flags & CommonFlags.DefinitelyAssigned) {
       sb.push("!");
     }
     var type = node.type;
@@ -1171,7 +1171,7 @@ export class ASTBuilder extends BaseVisitor {
       sb.push(";");
     }
     sb.push(") ");
-    this.visitNode(node.statement);
+    this.visitNode(node.body);
   }
 
   visitForOfStatement(node: ForOfStatement): void {
@@ -1181,7 +1181,7 @@ export class ASTBuilder extends BaseVisitor {
     sb.push(" of ");
     this.visitNode(node.iterable);
     sb.push(") ");
-    this.visitNode(node.statement);
+    this.visitNode(node.body);
   }
 
   visitFunctionDeclaration(
@@ -1226,7 +1226,7 @@ export class ASTBuilder extends BaseVisitor {
         sb.push(">");
       }
     }
-    if (node.arrowKind == ArrowKind.ARROW_SINGLE) {
+    if (node.arrowKind == ArrowKind.Single) {
       let parameters = signature.parameters;
       assert(parameters.length == 1);
       assert(!signature.explicitThisType);
@@ -1253,7 +1253,7 @@ export class ASTBuilder extends BaseVisitor {
     var returnType = signature.returnType;
     if (node.arrowKind) {
       if (body) {
-        if (node.arrowKind == ArrowKind.ARROW_SINGLE) {
+        if (node.arrowKind == ArrowKind.Single) {
           assert(isTypeOmitted(returnType));
         } else {
           if (isTypeOmitted(returnType)) {
@@ -1273,7 +1273,7 @@ export class ASTBuilder extends BaseVisitor {
     } else {
       if (
         !isTypeOmitted(returnType) &&
-        !node.isAny(CommonFlags.CONSTRUCTOR | CommonFlags.SET)
+        !node.isAny(CommonFlags.Constructor | CommonFlags.Set)
       ) {
         sb.push("): ");
         this.visitTypeNode(returnType);
@@ -1294,12 +1294,12 @@ export class ASTBuilder extends BaseVisitor {
     sb.push(") ");
     var ifTrue = node.ifTrue;
     this.visitNode(ifTrue);
-    if (ifTrue.kind != NodeKind.BLOCK) {
+    if (ifTrue.kind != NodeKind.Block) {
       sb.push(";\n");
     }
     var ifFalse = node.ifFalse;
     if (ifFalse) {
-      if (ifTrue.kind == NodeKind.BLOCK) {
+      if (ifTrue.kind == NodeKind.Block) {
         sb.push(" else ");
       } else {
         sb.push("else ");
@@ -1409,9 +1409,9 @@ export class ASTBuilder extends BaseVisitor {
       }
     }
     this.serializeAccessModifiers(node);
-    if (node.is(CommonFlags.GET)) {
+    if (node.is(CommonFlags.Get)) {
       this.sb.push("get ");
-    } else if (node.is(CommonFlags.SET)) {
+    } else if (node.is(CommonFlags.Set)) {
       this.sb.push("set ");
     }
     this.visitFunctionCommon(node);
@@ -1510,7 +1510,7 @@ export class ASTBuilder extends BaseVisitor {
     var sb = this.sb;
     sb.push("try {\n");
     var indentLevel = ++this.indentLevel;
-    var statements = node.statements;
+    var statements = node.bodyStatements;
     for (let i = 0, k = statements.length; i < k; ++i) {
       indent(sb, indentLevel);
       this.visitNodeAndTerminate(statements[i]);
@@ -1572,7 +1572,7 @@ export class ASTBuilder extends BaseVisitor {
     this.visitIdentifierExpression(node.name);
     var type = node.type;
     var sb = this.sb;
-    if (node.flags & CommonFlags.DEFINITELY_ASSIGNED) {
+    if (node.flags & CommonFlags.DefinitelyAssigned) {
       sb.push("!");
     }
     if (type) {
@@ -1599,9 +1599,9 @@ export class ASTBuilder extends BaseVisitor {
     var firstDeclaration = declarations[0];
     this.serializeExternalModifiers(firstDeclaration);
     sb.push(
-      firstDeclaration.is(CommonFlags.CONST)
+      firstDeclaration.is(CommonFlags.Const)
         ? "const "
-        : firstDeclaration.is(CommonFlags.LET)
+        : firstDeclaration.is(CommonFlags.Let)
         ? "let "
         : "var "
     );
@@ -1616,12 +1616,12 @@ export class ASTBuilder extends BaseVisitor {
     var sb = this.sb;
     sb.push("while (");
     this.visitNode(node.condition);
-    var statement = node.statement;
-    if (statement.kind == NodeKind.EMPTY) {
+    var statement = node.body;
+    if (statement.kind == NodeKind.Empty) {
       sb.push(")");
     } else {
       sb.push(") ");
-      this.visitNode(node.statement);
+      this.visitNode(node.body);
     }
   }
 
@@ -1656,14 +1656,14 @@ export class ASTBuilder extends BaseVisitor {
     if (implicitFieldDeclaration) {
       this.serializeAccessModifiers(implicitFieldDeclaration);
     }
-    if (kind == ParameterKind.REST) {
+    if (kind == ParameterKind.Rest) {
       sb.push("...");
     }
     this.visitIdentifierExpression(node.name);
     var type = node.type;
     var initializer = node.initializer;
     if (type) {
-      if (kind == ParameterKind.OPTIONAL && !initializer) sb.push("?");
+      if (kind == ParameterKind.Optional && !initializer) sb.push("?");
       if (!isTypeOmitted(type)) {
         sb.push(": ");
         this.visitTypeNode(type);
@@ -1677,30 +1677,30 @@ export class ASTBuilder extends BaseVisitor {
 
   serializeExternalModifiers(node: DeclarationStatement): void {
     var sb = this.sb;
-    if (node.is(CommonFlags.EXPORT)) {
+    if (node.is(CommonFlags.Export)) {
       sb.push("export ");
-    } else if (node.is(CommonFlags.IMPORT)) {
+    } else if (node.is(CommonFlags.Import)) {
       sb.push("import ");
-    } else if (node.is(CommonFlags.DECLARE)) {
+    } else if (node.is(CommonFlags.Declare)) {
       sb.push("declare ");
     }
   }
 
   serializeAccessModifiers(node: DeclarationStatement): void {
     var sb = this.sb;
-    if (node.is(CommonFlags.PUBLIC)) {
+    if (node.is(CommonFlags.Public)) {
       sb.push("public ");
-    } else if (node.is(CommonFlags.PRIVATE)) {
+    } else if (node.is(CommonFlags.Private)) {
       sb.push("private ");
-    } else if (node.is(CommonFlags.PROTECTED)) {
+    } else if (node.is(CommonFlags.Protected)) {
       sb.push("protected ");
     }
-    if (node.is(CommonFlags.STATIC)) {
+    if (node.is(CommonFlags.Static)) {
       sb.push("static ");
-    } else if (node.is(CommonFlags.ABSTRACT)) {
+    } else if (node.is(CommonFlags.Abstract)) {
       sb.push("abstract ");
     }
-    if (node.is(CommonFlags.READONLY)) {
+    if (node.is(CommonFlags.Readonly)) {
       sb.push("readonly ");
     }
   }

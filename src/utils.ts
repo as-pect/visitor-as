@@ -111,11 +111,11 @@ export function cloneNode<T extends Node>(node: T): T {
 }
 
 export function isUserEntry(node: Node): boolean {
-  return node.range.source.sourceKind == SourceKind.USER_ENTRY;
+  return node.range.source.sourceKind == SourceKind.UserEntry;
 }
 
 export function isEntry(node: Node): boolean {
-  return isUserEntry(node) || node.range.source.sourceKind == SourceKind.LIBRARY_ENTRY;
+  return isUserEntry(node) || node.range.source.sourceKind == SourceKind.LibraryEntry;
 }
 
 export function className(_class: ClassDeclaration |  InterfaceDeclaration | FunctionDeclaration): string {
@@ -128,7 +128,7 @@ export function className(_class: ClassDeclaration |  InterfaceDeclaration | Fun
 }
 
 export function isMethodNamed(name: string): (_: DeclarationStatement) => boolean {
-  return (stmt: DeclarationStatement) => stmt.kind == NodeKind.METHODDECLARATION && toString(stmt.name) === name;
+  return (stmt: DeclarationStatement) => stmt.kind == NodeKind.MethodDeclaration && toString(stmt.name) === name;
 }
 
 export function updateSource(program: Program, newSource: Source) {
@@ -163,7 +163,7 @@ export class StringBuilder {
  * @returns return true if emitter have ERROR message
  */
  export function hasErrorMessage(emitter: DiagnosticEmitter): boolean {
-  return hasMessage(emitter, DiagnosticCategory.ERROR);
+  return hasMessage(emitter, DiagnosticCategory.Error);
 }
 
 /**
@@ -172,7 +172,7 @@ export class StringBuilder {
 * @returns return true if emitter have WARNING message
 */
 export function hasWarningMessage(emitter: DiagnosticEmitter): boolean {
-  return hasMessage(emitter, DiagnosticCategory.WARNING);
+  return hasMessage(emitter, DiagnosticCategory.Warning);
 }
 
 /**

@@ -15,7 +15,7 @@ function getName(element: DeclaredElement): string {
   if (decorator.args.length != 1) {
     throw Error(`exportAs expects 1 argument but got ${decorator.args.length}`);
   }
-  if (!decorator.args[0].isLiteralKind(LiteralKind.STRING)) {
+  if (!decorator.args[0].isLiteralKind(LiteralKind.String)) {
     throw Error("exportAs expects a string argument");
   }
   return (<StringLiteralExpression>decorator.args[0]).value;
