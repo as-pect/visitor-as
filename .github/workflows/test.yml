@@ -11,11 +11,11 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest, macos-latest]
-        nodeversion: ['14.x', '15.x']
+        nodeversion: ['16.x', '18.x', '19.x']
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js v"${{ matrix.nodeversion }}""
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - name: Use Node.js v${{ matrix.nodeversion }}
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.nodeversion }}
       - name: Install dependencies
