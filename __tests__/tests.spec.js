@@ -162,6 +162,10 @@ describe("Parser", () => {
       _class.members.push(methodAST);
       expect(_class.members[1].name.text).to.equal("getF");
     })
+
+    it("should be able to import something", () => {
+      SimpleParser.parseTopLevelStatement("import { x } from 'y'");
+    });
   })
 
 });
