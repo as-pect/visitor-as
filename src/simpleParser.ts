@@ -39,7 +39,10 @@ export class SimpleParser {
     s: string,
     namespace?: NamespaceDeclaration | null
   ): Statement {
-    const res = this.parser.parseTopLevelStatement(this.getTokenizer(s), namespace);
+    const t = this.getTokenizer(s);
+    const p = this.parser;
+    p.currentSource = t.source;
+    const res = p.parseTopLevelStatement(t, namespace);
     if (res == null) {
       throw new Error("Failed to parse the top level statement: '" + s + "'");
     }
